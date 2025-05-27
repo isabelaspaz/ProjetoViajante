@@ -10,7 +10,7 @@ public class HashUtil {
     public static String gerarHashSHA256(String senha) {
 
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
             byte[] hash = digest.digest(senha.getBytes(StandardCharsets.UTF_8));
 
             StringBuilder hexString = new StringBuilder();
