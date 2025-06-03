@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.projetoViajante.dto.UsuarioDTO;
 import com.projetoViajante.entity.Usuario;
+import com.projetoViajante.entity.Viagem;
 import com.projetoViajante.service.UsuarioService;
 import com.projetoViajante.util.HashUtil;
 
@@ -30,7 +31,7 @@ public class UsuarioServiceImp implements UsuarioService {
 
     @Override
     public Optional<Usuario> buscarUsuario(Long id){
-        return null;
+        return usuarioRepo.findById(id);
     };
     @Override
     public Usuario atualizarUsuario(Long id, UsuarioDTO usuarioDTO){
