@@ -1,0 +1,11 @@
+{
+  "titulo": "viagemTeste",
+  "dataPartida": "25/05/2025",
+  "dataChegada": "26/05/2025",
+  "usuario": {
+    "id": 4,
+    "nome": "Zoey Desstroyer",
+    "email": "emailteste@gmail.com",
+    "senha": "0a3fd85d00c79751921f1c260b9641ae37655446cc07db3d697362e49fb128b3e1e4d0891554f42e2529c92a937a7ac6c2e13386983431a810e4be775f3ed148"
+  }
+}
