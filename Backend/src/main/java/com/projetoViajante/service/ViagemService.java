@@ -1,18 +1,20 @@
 package com.projetoViajante.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.projetoViajante.dto.ViagemDTO;
 import com.projetoViajante.entity.Viagem;
 
 public interface ViagemService {
-    Viagem salvar(ViagemDTO viagemDTO); 
 
-    List<Viagem> listarViagem();
+    Viagem salvar(ViagemDTO viagemDTO);
 
-    void deletarViagem(Long id);
+    List<Viagem> listarViagem(Long usuario_id);
 
-    Viagem AtualizarViagem(Long id, ViagemDTO viagemDTO);
+    Optional<Viagem> buscarPorId(Long id);
 
+    void deletarViagem(Long id, Long usuario_id);
+
+    Viagem atualizarViagem(Long idViagem, Long idUsuario, ViagemDTO viagemDTO);
 }
-

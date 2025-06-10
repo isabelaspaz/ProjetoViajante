@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,9 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projetoViajante.dto.UsuarioDTO;
 import com.projetoViajante.entity.Usuario;
 import com.projetoViajante.service.imp.UsuarioServiceImp;
-
-
-
 
 @RestController
 @RequestMapping("/usuario")
@@ -24,7 +22,7 @@ public class UsuarioController {
     private UsuarioServiceImp usuarioService;
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<?> salvar(@RequestBody UsuarioDTO usuarioDTO) {
 
         try {
             Usuario user = usuarioService.cadastrarUsuario(usuarioDTO);
@@ -34,13 +32,25 @@ public class UsuarioController {
         }
 
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
         return usuarioService.buscarUsuario(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
     @GetMapping("/ping")
-public ResponseEntity<String> ping() {
-    return ResponseEntity.ok("pong");
+    public ResponseEntity<String> ping() {
+        return ResponseEntity.ok("pong");
+    }
+
+    @PutMapping("/{id}")
+public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+    try {
+        Usuario user = usuarioService.atualizarUsuario(id, usuarioDTO);
+        return ResponseEntity.ok(user);
+    } catch (RuntimeException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }
 
 
