@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name= "Usuário")
+@Table(name= "Usuario")
 @Data
 @NoArgsConstructor
 public class Usuario {
@@ -22,9 +22,8 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length =50, unique = true)
     private String nome;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, length =50, unique = true)
     private String email;
     private String senha;
     

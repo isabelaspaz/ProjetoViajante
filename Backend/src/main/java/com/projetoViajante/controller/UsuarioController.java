@@ -1,7 +1,12 @@
 package com.projetoViajante.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +19,7 @@ import com.projetoViajante.dto.UsuarioDTO;
 import com.projetoViajante.entity.Usuario;
 import com.projetoViajante.service.imp.UsuarioServiceImp;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -43,15 +49,29 @@ public class UsuarioController {
         return ResponseEntity.ok("pong");
     }
 
-    @PutMapping("/{id}")
-public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
-    try {
-        Usuario user = usuarioService.atualizarUsuario(id, usuarioDTO);
-        return ResponseEntity.ok(user);
-    } catch (RuntimeException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
-}
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> usuario) {
+        Optional<Usuario> user = usuarioService.autenticarUsuario(usuario.get("email"), usuario.get("senha"));
 
+        if (user.isPresent()) {
+            Usuario u = user.get();
+            Map<String, Object> resposta = new HashMap<>();
+            resposta.put("id", u.getId());
+            resposta.put("nome", u.getNome());
+            return ResponseEntity.ok(resposta);
+        }
+
+        return ResponseEntity.status(401).body("Credenciais inválidas");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+        try {
+            Usuario user = usuarioService.atualizarUsuario(id, usuarioDTO);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }

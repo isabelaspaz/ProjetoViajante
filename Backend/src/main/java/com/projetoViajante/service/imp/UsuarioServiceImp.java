@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.projetoViajante.dto.UsuarioDTO;
 import com.projetoViajante.entity.Usuario;
-import com.projetoViajante.entity.Viagem;
 import com.projetoViajante.service.UsuarioService;
 import com.projetoViajante.util.HashUtil;
 
@@ -31,22 +30,35 @@ public class UsuarioServiceImp implements UsuarioService {
     @Override
     public Optional<Usuario> buscarUsuario(Long id) {
         return usuarioRepo.findById(id);
-    };
+    }
+
+    ;
 
     @Override
     public Usuario atualizarUsuario(Long id, UsuarioDTO usuarioDTO) {
         Usuario user = usuarioRepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id " + id));
-    
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id " + id));
+
         user.setNome(usuarioDTO.getNome());
         user.setEmail(usuarioDTO.getEmail());
-    
+
         return usuarioRepo.save(user);
     }
-    
 
     @Override
     public void deletarUsuario(Long id) {
     };
+    @Override
+    public Optional<Usuario> autenticarUsuario(String email, String senha) {
+        Optional<Usuario> userOpt = usuarioRepo.findByEmail(email);
+        if (userOpt.isPresent()) {
+            Usuario user = userOpt.get();
+            String hashSenha = HashUtil.gerarHashSHA256(senha);
+            if (user.getSenha().equals(hashSenha)) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
+    }
 
 }

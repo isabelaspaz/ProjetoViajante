@@ -16,4 +16,7 @@ public interface UsuarioService {
     Usuario atualizarUsuario(Long id, UsuarioDTO usuarioDTO);
 
     void deletarUsuario(Long id);
+
+    Optional<Usuario> autenticarUsuario(String email, String senha);
+
 }
