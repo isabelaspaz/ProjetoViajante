@@ -1,9 +1,5 @@
 package com.projetoViajante.dto;
 
-import java.util.List;
-
-import com.projetoViajante.entity.Viagem;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

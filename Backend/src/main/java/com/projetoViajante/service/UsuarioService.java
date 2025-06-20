@@ -1,7 +1,5 @@
 package com.projetoViajante.service;
 
-
-
 import java.util.Optional;
 
 import com.projetoViajante.dto.UsuarioDTO;

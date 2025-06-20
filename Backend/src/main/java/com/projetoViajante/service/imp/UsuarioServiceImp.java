@@ -48,6 +48,7 @@ public class UsuarioServiceImp implements UsuarioService {
     @Override
     public void deletarUsuario(Long id) {
     };
+    
     @Override
     public Optional<Usuario> autenticarUsuario(String email, String senha) {
         Optional<Usuario> userOpt = usuarioRepo.findByEmail(email);

@@ -22,9 +22,12 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
-    @Column(nullable = false, length =50, unique = true)
+
+    @Column(nullable = false, unique = true)
     private String email;
+
     private String senha;
     
     @OneToMany(mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -42,7 +45,4 @@ public class Usuario {
         this.senha = senha;
         this.viagens = viagens;
     }
-
-   
-
 }
