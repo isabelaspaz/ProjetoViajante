@@ -58,6 +58,7 @@ public class LugarServiceImp implements LugarService {
         return Optional.empty();
     }
      */
+    
     @Override
     public Lugar atualizarLugar(Long idLugar, LugarDTO lugarDTO) {
         Lugar lugar = lugarRepo.findById(idLugar)

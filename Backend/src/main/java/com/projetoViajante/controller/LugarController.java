@@ -13,13 +13,12 @@ import com.projetoViajante.dto.LugarDTO;
 import com.projetoViajante.entity.Lugar;
 import com.projetoViajante.service.imp.LugarServiceImp;
 
-
-
 @RestController
 @RequestMapping("/lugar")
 public class LugarController {
 
     private final LugarServiceImp lugarServiceImp;
+
     public LugarController(LugarServiceImp lugarServiceImp) {
         this.lugarServiceImp = lugarServiceImp;
     }
@@ -34,25 +33,25 @@ public class LugarController {
         }
     }
 
-    // buscar pelo ID do User
-    @GetMapping("/{id}")
-    public ResponseEntity<Lugar> buscarLugar(@PathVariable Long id) {
-        return lugarServiceImp.listarLugar(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+    // buscar pelo ID da Viagem
+    @GetMapping("/{idViagem}")
+    public ResponseEntity<Lugar> buscarLugar(@PathVariable Long idViagem) {
+        return lugarServiceImp.listarLugar(idViagem)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/att/{idLugar}")
     public ResponseEntity<?> attLugar(
-        @PathVariable("idLugar") Long idLugar, 
-        @RequestBody LugarDTO lugarDTO) {
+            @PathVariable("idLugar") Long idLugar,
+            @RequestBody LugarDTO lugarDTO) {
 
-            try {
-                Lugar lugarAtualizado = lugarServiceImp.atualizarLugar(idLugar, lugarDTO);
-                return ResponseEntity.ok(lugarAtualizado);
-            } catch (Exception error) {
-                return ResponseEntity.status(403).body(error.getMessage());
-            }
+        try {
+            Lugar lugarAtualizado = lugarServiceImp.atualizarLugar(idLugar, lugarDTO);
+            return ResponseEntity.ok(lugarAtualizado);
+        } catch (Exception error) {
+            return ResponseEntity.status(403).body(error.getMessage());
+        }
     }
-    
+
 }
