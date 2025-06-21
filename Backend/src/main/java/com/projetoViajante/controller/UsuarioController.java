@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioServiceImp usuarioService;
+
+    private final UsuarioServiceImp usuarioServiceImp;
+    
+    public UsuarioController(UsuarioServiceImp usuarioServiceImp){
+        this.usuarioServiceImp = usuarioServiceImp;
+    }
 
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody UsuarioDTO usuarioDTO) {
@@ -73,5 +80,16 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarUsuario(@PathVariable long id){
+        try {
+            usuarioServiceImp.deletarUsuario(id);
+            return ResponseEntity.noContent().build();
+        }  catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 }

@@ -2,18 +2,24 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Componentes/Login/Login";
 import Menu from "./Componentes/Menu/Menu";
+import Viagem from "./Componentes/Viagem/Viagem"; // ✅ Importação correta
+// Você pode importar os outros componentes reais (Mochila, Despesas, etc.) se já tiver criado
 
-function Viagens() {
-  return <h2>Bem-vindo às Viagens</h2>;
-}
 function Mochila() {
   return <h2>Sua Mochila</h2>;
 }
+
 function Despesas() {
   return <h2>Controle de Despesas</h2>;
 }
+
 function Configuracoes() {
-  return <h2>Configurações</h2>;
+  return (
+    <div>
+      <Menu />
+      <h2>Configurações</h2>
+    </div>
+  );
 }
 
 function App() {
@@ -26,14 +32,13 @@ function App() {
           path="/" 
           element={<Login setUsuario={setUsuario} />} 
         />
-        {/* Se quiser proteger rotas, use lógica condicional */}
         <Route 
           path="/menu" 
           element={usuario ? <Menu /> : <Navigate to="/" replace />} 
         />
         <Route 
           path="/viagens" 
-          element={usuario ? <Viagens /> : <Navigate to="/" replace />} 
+          element={usuario ? <Viagem usuario={usuario} /> : <Navigate to="/" replace />} 
         />
         <Route 
           path="/mochila" 
@@ -47,7 +52,6 @@ function App() {
           path="/configuracoes" 
           element={usuario ? <Configuracoes /> : <Navigate to="/" replace />} 
         />
-        {/* Rota curinga para redirecionar */}
         <Route 
           path="*" 
           element={<Navigate to="/" replace />} 
