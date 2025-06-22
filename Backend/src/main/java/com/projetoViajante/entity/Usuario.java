@@ -2,9 +2,12 @@ package com.projetoViajante.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,7 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name= "Usuario")
+@Table(name = "Usuario")
 @Data
 @NoArgsConstructor
 public class Usuario {
@@ -29,8 +32,10 @@ public class Usuario {
     private String email;
 
     private String senha;
-    
-    @OneToMany(mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+
+ 
+    @OneToMany(mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JsonManagedReference 
     private List<Viagem> viagens;
 
     public Usuario(String nome, String email, String senha) {

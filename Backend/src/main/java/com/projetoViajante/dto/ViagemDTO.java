@@ -19,14 +19,11 @@ public class ViagemDTO {
     private Long numero;
     private String cidade;
     private String estado;
-    private Long UsuarioID;
+    private Long usuarioId; 
 
-    
     public ViagemDTO(String titulo, String dataPartida, String dataChegada) {
         this.titulo = titulo;
         this.dataPartida = dataPartida;
         this.dataChegada = dataChegada;
     }
-
-    
 }

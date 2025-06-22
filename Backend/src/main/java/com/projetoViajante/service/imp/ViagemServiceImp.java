@@ -22,34 +22,30 @@ public class ViagemServiceImp implements ViagemService {
     @Autowired
     private UsuarioRepo usuarioRepo;
 
+    @Override
+    public Viagem salvar(ViagemDTO viagemDTO) {
+        Long usuarioId = viagemDTO.getUsuarioId(); // ✅ Nome correto
+        if (usuarioId == null) {
+            throw new RuntimeException("Usuário inválido: ID é obrigatório");
+        }
 
+        Usuario usuario = usuarioRepo.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id " + usuarioId));
 
-   @Override
-public Viagem salvar(ViagemDTO viagemDTO) {
-    Long usuarioId = viagemDTO.getUsuarioID();
-    if (usuarioId == null) {
-        throw new RuntimeException("Usuário inválido: ID é obrigatório");
+        Viagem viagem = new Viagem();
+        viagem.setTitulo(viagemDTO.getTitulo());
+        viagem.setDataPartida(viagemDTO.getDataPartida());
+        viagem.setDataChegada(viagemDTO.getDataChegada());
+        viagem.setBairro(viagemDTO.getBairro());
+        viagem.setCep(viagemDTO.getCep());
+        viagem.setRua(viagemDTO.getRua());
+        viagem.setNumero(viagemDTO.getNumero());
+        viagem.setCidade(viagemDTO.getCidade());
+        viagem.setEstado(viagemDTO.getEstado());
+        viagem.setUsuario(usuario);
+
+        return viagemRepo.save(viagem);
     }
-
-    Usuario usuario = usuarioRepo.findById(usuarioId)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id " + usuarioId));
-
-
-    Viagem viagem = new Viagem();
-    viagem.setTitulo(viagemDTO.getTitulo());
-    viagem.setDataPartida(viagemDTO.getDataPartida());
-    viagem.setDataChegada(viagemDTO.getDataChegada());
-    viagem.setBairro(viagemDTO.getBairro());
-    viagem.setCep(viagemDTO.getCep());
-    viagem.setRua(viagemDTO.getRua());
-    viagem.setNumero(viagemDTO.getNumero());
-    viagem.setCidade(viagemDTO.getCidade());
-    viagem.setEstado(viagemDTO.getEstado());
-    viagem.setUsuario(usuario);
-
-    return viagemRepo.save(viagem);
-}
-
 
     @Override
     public List<Viagem> listarViagem(Long usuario_id) {
@@ -93,5 +89,4 @@ public Viagem salvar(ViagemDTO viagemDTO) {
 
         return viagemRepo.save(viagem);
     }
-
 }

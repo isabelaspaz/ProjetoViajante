@@ -1,14 +1,34 @@
-// ItemViagem.jsx
 const ItemViagem = ({
   viagem,
   editandoId,
+  setEditandoId,
   formEdicao,
   setFormEdicao,
-  setEditandoId,
   salvarEdicao,
   deletarViagem,
-  formatarData
+  formatarData,
 }) => {
+  const estaEditando = editandoId === viagem.id;
+
+  const validarDatas = () => {
+    const hoje = new Date().toISOString().split("T")[0]; // Formato yyyy-mm-dd
+    if (formEdicao.dataPartida < hoje) {
+      alert("A data de partida não pode ser anterior à data atual.");
+      return false;
+    }
+    if (formEdicao.dataChegada < formEdicao.dataPartida) {
+      alert("A data de chegada não pode ser anterior à data de partida.");
+      return false;
+    }
+    return true;
+  };
+
+  const salvarComValidacao = () => {
+    if (validarDatas()) {
+      salvarEdicao();
+    }
+  };
+
   return (
     <li
       style={{
@@ -19,24 +39,33 @@ const ItemViagem = ({
         backgroundColor: "#f9f9f9",
       }}
     >
-      {editandoId === viagem.id ? (
+      {estaEditando ? (
         <>
           <input
             type="text"
             value={formEdicao.titulo}
-            onChange={(e) => setFormEdicao({ ...formEdicao, titulo: e.target.value })}
+            onChange={(e) =>
+              setFormEdicao((prev) => ({ ...prev, titulo: e.target.value }))
+            }
+            placeholder="Título"
           />
+          <br />
           <input
             type="date"
             value={formEdicao.dataPartida}
-            onChange={(e) => setFormEdicao({ ...formEdicao, dataPartida: e.target.value })}
+            onChange={(e) =>
+              setFormEdicao((prev) => ({ ...prev, dataPartida: e.target.value }))
+            }
           />
           <input
             type="date"
             value={formEdicao.dataChegada}
-            onChange={(e) => setFormEdicao({ ...formEdicao, dataChegada: e.target.value })}
+            onChange={(e) =>
+              setFormEdicao((prev) => ({ ...prev, dataChegada: e.target.value }))
+            }
           />
-          <button onClick={salvarEdicao}>Salvar</button>
+          <br />
+          <button onClick={salvarComValidacao}>Salvar</button>
           <button onClick={() => setEditandoId(null)}>Cancelar</button>
         </>
       ) : (
@@ -49,8 +78,19 @@ const ItemViagem = ({
           <br />
           Local: {viagem.cidade}, {viagem.estado}
           <br />
-          <button onClick={() => setEditandoId(viagem.id)}>Editar</button>
-          <button onClick={() => deletarViagem(viagem.id)}>Deletar</button>
+          <button
+            onClick={() => {
+              setEditandoId(viagem.id);
+              setFormEdicao({
+                titulo: viagem.titulo,
+                dataPartida: viagem.dataPartida,
+                dataChegada: viagem.dataChegada,
+              });
+            }}
+          >
+            Editar
+          </button>
+          <button onClick={() => deletarViagem(viagem.id)}>Excluir</button>
         </>
       )}
     </li>

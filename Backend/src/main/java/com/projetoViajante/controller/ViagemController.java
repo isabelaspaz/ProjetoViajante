@@ -54,11 +54,6 @@ public class ViagemController {
         return ResponseEntity.ok(viagens);
     }
 
-    @GetMapping("/ping")
-    public ResponseEntity<String> ping() {
-        return ResponseEntity.ok("pong");
-    }
-
     @DeleteMapping("/{id}/usuario/{usuarioId}")
     public ResponseEntity<?> deletarViagem(@PathVariable Long id, @PathVariable Long usuarioId) {
         try {
@@ -79,8 +74,7 @@ public class ViagemController {
             Viagem viagemAtualizada = viagemServiceImp.atualizarViagem(idViagem, idUsuario, viagemDTO);
             return ResponseEntity.ok(viagemAtualizada);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(403).body(e.getMessage()); // 403 se não tiver permissão
+            return ResponseEntity.status(403).body(e.getMessage());
         }
     }
-
 }

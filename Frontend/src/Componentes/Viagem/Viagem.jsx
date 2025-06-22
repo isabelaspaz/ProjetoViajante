@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Menu from "../Menu/Menu";
 import CadastroViagem from "./CadastroViagem";
 import ItemViagem from "./ItemViagem";
@@ -7,13 +7,6 @@ import "./Viagem.css";
 const Viagem = ({ usuario }) => {
   const [viagens, setViagens] = useState([]);
   const [erro, setErro] = useState(null);
-  const [editandoId, setEditandoId] = useState(null);
-  const [formEdicao, setFormEdicao] = useState({
-    titulo: "",
-    dataPartida: "",
-    dataChegada: "",
-  });
-
   const [novaViagem, setNovaViagem] = useState({
     titulo: "",
     dataPartida: "",
@@ -26,27 +19,40 @@ const Viagem = ({ usuario }) => {
     numero: "",
   });
 
+  const [editandoId, setEditandoId] = useState(null);
+  const [formEdicao, setFormEdicao] = useState({
+    titulo: "",
+    dataPartida: "",
+    dataChegada: "",
+  });
+
   const formatarData = (data) => {
     if (!data) return "-";
     return new Date(data).toLocaleDateString("pt-BR");
   };
 
-  const buscarViagens = async () => {
+  const buscarViagens = useCallback(async () => {
     try {
       const resposta = await fetch(
         `http://localhost:8080/viagem/usuario/${usuario.id}`
       );
       if (!resposta.ok) throw new Error("Erro ao buscar viagens");
+
       const dados = await resposta.json();
-      setViagens(dados);
+      console.log("Viagens recebidas:", dados);
+
+      // Garante que seja sempre um array
+      if (Array.isArray(dados)) {
+        setViagens(dados);
+      } else {
+        setViagens([dados]);
+      }
     } catch (err) {
       setErro(`Erro ao carregar viagens: ${err.message}`);
     }
-  };
+  }, [usuario.id]); // Adicionando 'usuario.id' como dependência
 
-  const validarCep = (cep) => /^[0-9]{5}-?[0-9]{3}$/.test(cep);
-
-  const preencherEnderecoViaCep = async () => {
+  const preencherEnderecoViaCep = useCallback(async () => {
     try {
       if (!validarCep(novaViagem.cep)) return;
 
@@ -66,52 +72,91 @@ const Viagem = ({ usuario }) => {
     } catch (e) {
       setErro(`Erro ao preencher endereço: ${e.message}`);
     }
-  };
+  }, [novaViagem.cep]); // Adicionando 'novaViagem.cep' como dependência
 
-  const cadastrarViagem = async () => {
-    try {
-      if (!validarCep(novaViagem.cep)) throw new Error("CEP inválido.");
+  const validarCep = (cep) => /^[0-9]{5}-?[0-9]{3}$/.test(cep);
 
-      const corpo = {
-        titulo: novaViagem.titulo,
-        dataPartida: novaViagem.dataPartida,
-        dataChegada: novaViagem.dataChegada,
-        cep: parseInt(novaViagem.cep.replace("-", "")),
-        rua: novaViagem.rua,
-        bairro: novaViagem.bairro,
-        cidade: novaViagem.cidade,
-        estado: novaViagem.estado,
-        numero: novaViagem.numero ? parseInt(novaViagem.numero) : 0,
-        usuarioID: usuario.id,
-      };
-
-      const resposta = await fetch("http://localhost:8080/viagem", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(corpo),
-      });
-
-      if (!resposta.ok) throw new Error(await resposta.text());
-
-      setNovaViagem({
-        titulo: "",
-        dataPartida: "",
-        dataChegada: "",
-        cep: "",
-        rua: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
-        numero: "",
-      });
-
-      buscarViagens();
-    } catch (err) {
-      setErro(`Erro ao cadastrar viagem: ${err.message}`);
+  const validarDatas = (dataPartida, dataChegada) => {
+    const hoje = new Date().toISOString().split("T")[0]; // Formato yyyy-mm-dd
+    if (dataPartida < hoje) {
+      alert("A data de partida não pode ser anterior à data atual.");
+      return false;
     }
+    if (dataChegada < dataPartida) {
+      alert("A data de chegada não pode ser anterior à data de partida.");
+      return false;
+    }
+    return true;
   };
+
+const cadastrarViagem = async () => {
+  console.log('usuario.id:', usuario.id);
+
+  if (!usuario?.id) {
+    setErro("Usuário não encontrado, por favor faça login.");
+    return;
+  }
+
+  if (!validarDatas(novaViagem.dataPartida, novaViagem.dataChegada)) {
+    return; // Não faz o cadastro se as datas não forem válidas
+  }
+
+  try {
+    if (!validarCep(novaViagem.cep)) throw new Error("CEP inválido.");
+
+const corpo = {
+  titulo: novaViagem.titulo,
+  dataPartida: novaViagem.dataPartida,
+  dataChegada: novaViagem.dataChegada,
+  cep: parseInt(novaViagem.cep.replace("-", "")),
+  rua: novaViagem.rua,
+  bairro: novaViagem.bairro,
+  cidade: novaViagem.cidade,
+  estado: novaViagem.estado,
+  numero: novaViagem.numero ? parseInt(novaViagem.numero) : 0,
+  usuarioId: usuario.id,
+};
+
+    const resposta = await fetch("http://localhost:8080/viagem", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(corpo),
+    });
+
+    // Log da resposta
+    const textoErro = await resposta.text();
+    console.log('Texto de erro (se houver):', textoErro);  // Verifique a mensagem de erro
+
+    if (!resposta.ok) {
+      throw new Error(textoErro || 'Erro desconhecido');
+    }
+
+    setNovaViagem({
+      titulo: "",
+      dataPartida: "",
+      dataChegada: "",
+      cep: "",
+      rua: "",
+      bairro: "",
+      cidade: "",
+      estado: "",
+      numero: "",
+    });
+
+    buscarViagens();
+  } catch (err) {
+    setErro(`Erro ao cadastrar viagem: ${err.message}`);
+  }
+};
+
+
+
 
   const salvarEdicao = async () => {
+    if (!validarDatas(formEdicao.dataPartida, formEdicao.dataChegada)) {
+      return; // Não salva a edição se as datas não forem válidas
+    }
+
     try {
       const resposta = await fetch(
         `http://localhost:8080/viagem/${editandoId}/usuario/${usuario.id}`,
@@ -142,9 +187,7 @@ const Viagem = ({ usuario }) => {
     try {
       const resposta = await fetch(
         `http://localhost:8080/viagem/${id}/usuario/${usuario.id}`,
-        {
-          method: "DELETE",
-        }
+        { method: "DELETE" }
       );
 
       if (!resposta.ok) throw new Error(await resposta.text());
@@ -156,11 +199,11 @@ const Viagem = ({ usuario }) => {
 
   useEffect(() => {
     if (usuario?.id) buscarViagens();
-  }, [usuario]);
+  }, [usuario, buscarViagens]);  // Adicionando 'buscarViagens' como dependência
 
   useEffect(() => {
     if (novaViagem.cep.length >= 8) preencherEnderecoViaCep();
-  }, [novaViagem.cep]);
+  }, [novaViagem.cep, preencherEnderecoViaCep]);  // Adicionando 'preencherEnderecoViaCep' como dependência
 
   return (
     <>
@@ -184,9 +227,9 @@ const Viagem = ({ usuario }) => {
                 key={viagem.id}
                 viagem={viagem}
                 editandoId={editandoId}
+                setEditandoId={setEditandoId}
                 formEdicao={formEdicao}
                 setFormEdicao={setFormEdicao}
-                setEditandoId={setEditandoId}
                 salvarEdicao={salvarEdicao}
                 deletarViagem={deletarViagem}
                 formatarData={formatarData}
