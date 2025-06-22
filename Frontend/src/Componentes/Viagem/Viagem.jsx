@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
+import CadastroViagem from "./CadastroViagem";
+import ItemViagem from "./ItemViagem";
 import "./Viagem.css";
 
 const Viagem = ({ usuario }) => {
@@ -11,6 +13,7 @@ const Viagem = ({ usuario }) => {
     dataPartida: "",
     dataChegada: "",
   });
+
   const [novaViagem, setNovaViagem] = useState({
     titulo: "",
     dataPartida: "",
@@ -30,7 +33,9 @@ const Viagem = ({ usuario }) => {
 
   const buscarViagens = async () => {
     try {
-      const resposta = await fetch(`http://localhost:8080/viagem/usuario/${usuario.id}`);
+      const resposta = await fetch(
+        `http://localhost:8080/viagem/usuario/${usuario.id}`
+      );
       if (!resposta.ok) throw new Error("Erro ao buscar viagens");
       const dados = await resposta.json();
       setViagens(dados);
@@ -99,32 +104,27 @@ const Viagem = ({ usuario }) => {
         estado: "",
         numero: "",
       });
+
       buscarViagens();
     } catch (err) {
       setErro(`Erro ao cadastrar viagem: ${err.message}`);
     }
   };
 
-  const editarViagem = (viagem) => {
-    setEditandoId(viagem.id);
-    setFormEdicao({
-      titulo: viagem.titulo,
-      dataPartida: viagem.dataPartida,
-      dataChegada: viagem.dataChegada,
-    });
-  };
-
   const salvarEdicao = async () => {
     try {
-      const resposta = await fetch(`http://localhost:8080/viagem/${editandoId}/usuario/${usuario.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          titulo: formEdicao.titulo,
-          dataPartida: formEdicao.dataPartida,
-          dataChegada: formEdicao.dataChegada,
-        }),
-      });
+      const resposta = await fetch(
+        `http://localhost:8080/viagem/${editandoId}/usuario/${usuario.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            titulo: formEdicao.titulo,
+            dataPartida: formEdicao.dataPartida,
+            dataChegada: formEdicao.dataChegada,
+          }),
+        }
+      );
 
       if (!resposta.ok) throw new Error(await resposta.text());
 
@@ -138,10 +138,15 @@ const Viagem = ({ usuario }) => {
 
   const deletarViagem = async (id) => {
     if (!window.confirm("Deseja realmente deletar esta viagem?")) return;
+
     try {
-      const resposta = await fetch(`http://localhost:8080/viagem/${id}/usuario/${usuario.id}`, {
-        method: "DELETE",
-      });
+      const resposta = await fetch(
+        `http://localhost:8080/viagem/${id}/usuario/${usuario.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
       if (!resposta.ok) throw new Error(await resposta.text());
       buscarViagens();
     } catch (err) {
@@ -164,93 +169,28 @@ const Viagem = ({ usuario }) => {
         <h2>Minhas Viagens</h2>
         {erro && <p style={{ color: "red" }}>{erro}</p>}
 
-        <div style={{ marginBottom: "2rem" }}>
-          <h3>Cadastrar nova viagem</h3>
-          <input
-            type="text"
-            placeholder="Título"
-            value={novaViagem.titulo}
-            onChange={(e) => setNovaViagem({ ...novaViagem, titulo: e.target.value })}
-          />
-          <input
-            type="date"
-            value={novaViagem.dataPartida}
-            onChange={(e) => setNovaViagem({ ...novaViagem, dataPartida: e.target.value })}
-          />
-          <input
-            type="date"
-            value={novaViagem.dataChegada}
-            onChange={(e) => setNovaViagem({ ...novaViagem, dataChegada: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="CEP"
-            value={novaViagem.cep}
-            onChange={(e) => setNovaViagem({ ...novaViagem, cep: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Número"
-            value={novaViagem.numero}
-            onChange={(e) => setNovaViagem({ ...novaViagem, numero: e.target.value })}
-          />
-          <input type="text" placeholder="Rua" value={novaViagem.rua} disabled />
-          <input type="text" placeholder="Bairro" value={novaViagem.bairro} disabled />
-          <input type="text" placeholder="Cidade" value={novaViagem.cidade} disabled />
-          <input type="text" placeholder="Estado" value={novaViagem.estado} disabled />
-          <button onClick={cadastrarViagem}>Cadastrar</button>
-        </div>
+        <CadastroViagem
+          novaViagem={novaViagem}
+          setNovaViagem={setNovaViagem}
+          cadastrarViagem={cadastrarViagem}
+        />
 
         {viagens.length === 0 ? (
           <p>Nenhuma viagem encontrada.</p>
         ) : (
           <ul style={{ listStyle: "none", padding: 0 }}>
             {viagens.map((viagem) => (
-              <li
+              <ItemViagem
                 key={viagem.id}
-                style={{
-                  marginBottom: "1rem",
-                  padding: "1rem",
-                  border: "1px solid #ccc",
-                  borderRadius: "8px",
-                  backgroundColor: "#f9f9f9",
-                }}
-              >
-                {editandoId === viagem.id ? (
-                  <>
-                    <input
-                      type="text"
-                      value={formEdicao.titulo}
-                      onChange={(e) => setFormEdicao({ ...formEdicao, titulo: e.target.value })}
-                    />
-                    <input
-                      type="date"
-                      value={formEdicao.dataPartida}
-                      onChange={(e) => setFormEdicao({ ...formEdicao, dataPartida: e.target.value })}
-                    />
-                    <input
-                      type="date"
-                      value={formEdicao.dataChegada}
-                      onChange={(e) => setFormEdicao({ ...formEdicao, dataChegada: e.target.value })}
-                    />
-                    <button onClick={salvarEdicao}>Salvar</button>
-                    <button onClick={() => setEditandoId(null)}>Cancelar</button>
-                  </>
-                ) : (
-                  <>
-                    <strong>{viagem.titulo}</strong>
-                    <br />
-                    Partida: {formatarData(viagem.dataPartida)}
-                    <br />
-                    Chegada: {formatarData(viagem.dataChegada)}
-                    <br />
-                    Local: {viagem.cidade}, {viagem.estado}
-                    <br />
-                    <button onClick={() => editarViagem(viagem)}>Editar</button>
-                    <button onClick={() => deletarViagem(viagem.id)}>Deletar</button>
-                  </>
-                )}
-              </li>
+                viagem={viagem}
+                editandoId={editandoId}
+                formEdicao={formEdicao}
+                setFormEdicao={setFormEdicao}
+                setEditandoId={setEditandoId}
+                salvarEdicao={salvarEdicao}
+                deletarViagem={deletarViagem}
+                formatarData={formatarData}
+              />
             ))}
           </ul>
         )}

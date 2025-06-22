@@ -1,33 +1,35 @@
 .navbar {
-  background-color: #282c34;
-  padding: 1rem;
-  color: white;
+  background-color: #0077b6;
+  padding: 1rem 2rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  color: rgb(189, 0, 0);
 }
 
 .navbar-title {
   font-size: 1.5rem;
-}
-
-.navbar-menu {
-  display: flex;
+  font-weight: bold;
 }
 
 .navbar-list {
-  list-style: none;
   display: flex;
+  list-style: none;
   gap: 1rem;
   margin: 0;
   padding: 0;
 }
 
-.navbar-list li a {
-  color: white;
+.navbar-list a {
+  background-color: white;
+  color: #0077b6;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: bold;
   text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-.navbar-list li a:hover {
-  text-decoration: underline;
+.navbar-list a:hover {
+  background-color: #e0e0e0;
 }

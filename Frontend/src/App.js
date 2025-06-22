@@ -2,8 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Componentes/Login/Login";
 import Menu from "./Componentes/Menu/Menu";
-import Viagem from "./Componentes/Viagem/Viagem"; // ✅ Importação correta
-// Você pode importar os outros componentes reais (Mochila, Despesas, etc.) se já tiver criado
+import Viagem from "./Componentes/Viagem/Viagem"; 
 
 function Mochila() {
   return <h2>Sua Mochila</h2>;
