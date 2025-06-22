@@ -13,6 +13,8 @@ public interface DespesaService {
 
     Despesa atualizarDespesa (Long idDespesa, DespesaDTO despesaDTO);
 
-    void deletarDespesa (Long id, Long despesa_id);
+    void deletarDespesa (Long idDespesa);
+    //void deletarDespesa (Long idDespesa, Long idUsuario);
+    //void deletarDespesa (Long id, Long despesa_id);
     
 }

@@ -3,6 +3,7 @@ package com.projetoViajante.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,4 +62,27 @@ public class DespesaController {
         }
     }
 
+    @DeleteMapping("/{idDespesa}")
+    public ResponseEntity<?> deletarUsuario(@PathVariable Long idDespesa){
+        try {
+            despesaServiceImp.deletarDespesa(idDespesa);
+            return ResponseEntity.noContent().build();
+        }  catch (RuntimeException error) {
+            return ResponseEntity.badRequest().body(error.getMessage());
+        }
+    }
+
+    /*
+    @DeleteMapping("/{idDespesa}/usuario/{idUsuario}")
+    public ResponseEntity<?> deletarDespesa(
+            @PathVariable("idDespesa") Long idDespesa,
+            @PathVariable("idUsuario") Long idUsuario) {
+        try {
+            despesaServiceImp.deletarDespesa(idDespesa, idUsuario);
+            return ResponseEntity.noContent().build();
+        } catch (Exception error) {
+            return ResponseEntity.status(403).body(error.getMessage());
+        }
+    }
+    */
 }

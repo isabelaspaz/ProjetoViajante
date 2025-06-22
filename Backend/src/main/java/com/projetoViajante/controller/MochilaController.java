@@ -1,6 +1,7 @@
 package com.projetoViajante.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +56,16 @@ public class MochilaController {
             return ResponseEntity.ok(mochilaAtualizada);
         } catch (Exception error) {
             return ResponseEntity.status(403).body(error.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{idMochila}")
+    public ResponseEntity<?> deletarMochila(@PathVariable Long idMochila){
+        try {
+            mochilaServiceImp.deletarMochila(idMochila);
+            return ResponseEntity.noContent().build();
+        }  catch (RuntimeException error) {
+            return ResponseEntity.badRequest().body(error.getMessage());
         }
     }
 

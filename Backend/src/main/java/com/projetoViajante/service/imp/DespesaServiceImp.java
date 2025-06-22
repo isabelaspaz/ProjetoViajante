@@ -60,8 +60,28 @@ public class DespesaServiceImp implements DespesaService {
     }
 
     @Override
-    public void deletarDespesa(Long id, Long despesa_id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void deletarDespesa(Long idDespesa) {
+        despesaRepo.deleteById(idDespesa);
     }
+
+    /*
+    @Override
+    public void deletarDespesa(Long idDespesa, Long idUsuario) {
+        
+        Optional<Despesa> optionalDespesa = despesaRepo.findById(idDespesa);
+
+        if (optionalDespesa.isEmpty()) {
+            throw new RuntimeException("Despesa não encontrada com o ID: " + idDespesa);
+        }
+
+        Despesa despesa = optionalDespesa.get();
+
+        if (!despesa.getUsuario().getId().equals(idUsuario)) {
+            throw new RuntimeException("Usuário não tem permissão para deletar esta viagem.");
+        }
+
+        despesaRepo.deleteById(idDespesa);
+    }
+    */
 
 }

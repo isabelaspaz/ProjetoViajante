@@ -13,5 +13,6 @@ public interface MochilaItemService {
 
     MochilaItem atualizarMochilaItem (Long id, MochilaItemDTO mochilaItemDTO);
 
-    void deletarMochilaItem (Long id, Long mochilaItem_id);
+    void deletarMochilaItem (Long idMochilaItem);
+    //void deletarMochilaItem (Long id, Long mochilaItem_id);
 }

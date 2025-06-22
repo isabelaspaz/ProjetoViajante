@@ -13,6 +13,7 @@ public interface MochilaService {
 
     Mochila atualizarMochila (Long id, MochilaDTO mochilaDTO);
 
-    void deletarMochila (Long id, Long mochila_id);
+    void deletarMochila (Long idMochila);
+    //void deletarMochila (Long id, Long mochila_id);
     
 }

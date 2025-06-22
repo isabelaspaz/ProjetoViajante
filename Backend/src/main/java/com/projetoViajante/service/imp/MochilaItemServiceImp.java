@@ -59,9 +59,8 @@ public class MochilaItemServiceImp implements MochilaItemService {
     }
 
     @Override
-    public void deletarMochilaItem(Long id, Long mochilaItem_id) {
-        // TODO Auto-generated method stub
-
+    public void deletarMochilaItem(Long idMochilaItem) {
+        mochilaItemRepo.deleteById(idMochilaItem);
     }
 
 }

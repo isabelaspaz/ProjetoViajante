@@ -58,9 +58,8 @@ public class MochilaServiceImp implements MochilaService {
     }
 
     @Override
-    public void deletarMochila(Long id, Long mochila_id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletarMochila'");
+    public void deletarMochila(Long idMochila) {
+        mochilaRepo.deleteById(idMochila);
     }
 
 }
