@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://cadastro2:3306/cadastro2
+      SPRING_DATASOURCE_USERNAME: teste
+      SPRING_DATASOURCE_PASSWORD: teste
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      cadastro2:
+        condition: service_healthy
+    networks:
+      - backend
+
+  cadastro2:
+    image: mysql:8.0
+    container_name: cadastro2
+    restart: always
+    environment:
+      - MYSQL_DATABASE=cadastro2
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=teste
+      - MYSQL_PASSWORD=teste
+    ports:
+      - '4306:3306'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

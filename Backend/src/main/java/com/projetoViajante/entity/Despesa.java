@@ -1,5 +1,7 @@
 package com.projetoViajante.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,10 +29,12 @@ public class Despesa {
     private Long preco;
 
     @ManyToOne
+    @JsonIgnore 
     @JoinColumn(name = "viagem_id")
     private Viagem viagem;
 
     @ManyToOne
+    @JsonIgnore 
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     

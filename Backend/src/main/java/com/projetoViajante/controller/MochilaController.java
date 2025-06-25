@@ -1,26 +1,20 @@
 package com.projetoViajante.controller;
 
+import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.projetoViajante.dto.MochilaDTO;
 import com.projetoViajante.entity.Mochila;
 import com.projetoViajante.service.imp.MochilaServiceImp;
 import com.projetoViajante.service.imp.ViagemServiceImp;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/mochila")
 public class MochilaController {
 
     private final ViagemServiceImp viagemServiceImp;
-
     private final MochilaServiceImp mochilaServiceImp;
 
     public MochilaController(MochilaServiceImp mochilaServiceImp, ViagemServiceImp viagemServiceImp) {
@@ -38,19 +32,16 @@ public class MochilaController {
         }
     }
 
-    // buscar pelo ID da Viagem
     @GetMapping("/{idViagem}")
-    public ResponseEntity<Mochila> buscarMochila(@PathVariable Long idViagem) {
-        return mochilaServiceImp.listarMochila(idViagem)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<List<Mochila>> buscarMochilas(@PathVariable Long idViagem) {
+        List<Mochila> mochilas = mochilaServiceImp.listarMochila(idViagem);
+        return ResponseEntity.ok(mochilas);
     }
 
     @PutMapping("/att/{idMochila}")
     public ResponseEntity<?> attMochila(
             @PathVariable("idMochila") Long idMochila,
             @RequestBody MochilaDTO mochilaDTO) {
-
         try {
             Mochila mochilaAtualizada = mochilaServiceImp.atualizarMochila(idMochila, mochilaDTO);
             return ResponseEntity.ok(mochilaAtualizada);
@@ -60,13 +51,12 @@ public class MochilaController {
     }
 
     @DeleteMapping("/{idMochila}")
-    public ResponseEntity<?> deletarMochila(@PathVariable Long idMochila){
+    public ResponseEntity<?> deletarMochila(@PathVariable Long idMochila) {
         try {
             mochilaServiceImp.deletarMochila(idMochila);
             return ResponseEntity.noContent().build();
-        }  catch (RuntimeException error) {
+        } catch (RuntimeException error) {
             return ResponseEntity.badRequest().body(error.getMessage());
         }
     }
-
 }

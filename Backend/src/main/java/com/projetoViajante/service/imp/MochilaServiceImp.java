@@ -1,6 +1,6 @@
 package com.projetoViajante.service.imp;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,10 +40,10 @@ public class MochilaServiceImp implements MochilaService {
         return mochilaRepo.save(mochila);
     }
 
-    @Override
-    public Optional<Mochila> listarMochila(Long viagem_id) {
-        return mochilaRepo.findByViagemId(viagem_id);
-    }
+@Override
+public List<Mochila> listarMochila(Long viagem_id) {
+    return mochilaRepo.findAllByViagemId(viagem_id);
+}
 
     @Override
     public Mochila atualizarMochila(Long idMochila, MochilaDTO mochilaDTO) {

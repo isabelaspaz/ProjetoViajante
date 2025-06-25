@@ -1,0 +1,128 @@
+/* Despesas.css */
+
+/* Estilo global */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+/* Container principal */
+h2 {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+div {
+  margin-bottom: 20px;
+}
+
+/* Estilo dos cards das viagens */
+div > div {
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 1rem 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+div > div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Título da viagem */
+h3 {
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+h3:hover {
+  text-decoration: underline;
+}
+
+/* Estilo da lista de despesas */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+/* Botão de Excluir */
+button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #d32f2f;
+}
+
+/* Estilo do formulário de adicionar despesa */
+input {
+  padding: 8px;
+  margin: 0.5rem 0;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button[type="button"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  margin-top: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="button"]:hover {
+  background-color: #388e3c;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+  div > div {
+    padding: 15px;
+  }
+
+  input, button[type="button"] {
+    width: 100%;
+  }
+}

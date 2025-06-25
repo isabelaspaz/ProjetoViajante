@@ -3,6 +3,7 @@ package com.projetoViajante.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import com.projetoViajante.entity.MochilaItem;
 import com.projetoViajante.service.imp.MochilaItemServiceImp;
 import com.projetoViajante.service.imp.MochilaServiceImp;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/mochilaItem")
 public class MochilaItemController {
