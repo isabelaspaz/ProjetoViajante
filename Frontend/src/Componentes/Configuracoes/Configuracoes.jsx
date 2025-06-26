@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Menu from '../Menu/Menu';
+import FormularioUsuario from './FormularioUsuario';
+import MensagensFeedback from './MensagensFeedback';
 
 const Configuracoes = ({ usuario }) => {
   const [nome, setNome] = useState(usuario?.nome || '');
@@ -9,7 +11,6 @@ const Configuracoes = ({ usuario }) => {
   const [mensagemErro, setMensagemErro] = useState('');
   const [mensagemSucesso, setMensagemSucesso] = useState('');
 
-  // Verifica se o usuário está logado
   useEffect(() => {
     if (!usuario) {
       setMensagemErro('Você precisa estar logado para acessar esta página.');
@@ -21,12 +22,8 @@ const Configuracoes = ({ usuario }) => {
     setMensagemErro('');
     setMensagemSucesso('');
 
-    const usuarioDTO = {
-      nome,
-      email,  // Captura o email do usuário logado
-    };
+    const usuarioDTO = { nome, email };
 
-    // Verifica se a senha foi alterada
     if (novaSenha && confirmarNovaSenha) {
       if (novaSenha !== confirmarNovaSenha) {
         setMensagemErro("As senhas não coincidem.");
@@ -38,9 +35,7 @@ const Configuracoes = ({ usuario }) => {
     try {
       const res = await fetch(`http://localhost:8080/usuario/${usuario.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(usuarioDTO),
       });
 
@@ -60,54 +55,19 @@ const Configuracoes = ({ usuario }) => {
       <Menu />
       <h2>Configurações de Conta</h2>
 
-      {mensagemErro && <p style={{ color: 'red' }}>{mensagemErro}</p>}
-      {mensagemSucesso && <p style={{ color: 'green' }}>{mensagemSucesso}</p>}
+      <MensagensFeedback erro={mensagemErro} sucesso={mensagemSucesso} />
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="nome">Nome</label>
-          <input
-            type="text"
-            id="nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="email">E-mail</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="novaSenha">Nova Senha (opcional)</label>
-          <input
-            type="password"
-            id="novaSenha"
-            value={novaSenha}
-            onChange={(e) => setNovaSenha(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="confirmarNovaSenha">Confirmar Nova Senha</label>
-          <input
-            type="password"
-            id="confirmarNovaSenha"
-            value={confirmarNovaSenha}
-            onChange={(e) => setConfirmarNovaSenha(e.target.value)}
-          />
-        </div>
-
-        <button type="submit">Salvar Alterações</button>
-      </form>
+      <FormularioUsuario
+        nome={nome}
+        setNome={setNome}
+        email={email}
+        setEmail={setEmail}
+        novaSenha={novaSenha}
+        setNovaSenha={setNovaSenha}
+        confirmarNovaSenha={confirmarNovaSenha}
+        setConfirmarNovaSenha={setConfirmarNovaSenha}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

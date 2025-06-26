@@ -1,11 +1,14 @@
+import React from "react";
+
 const CadastroViagem = ({ novaViagem, setNovaViagem, cadastrarViagem }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNovaViagem((prev) => ({ ...prev, [name]: value }));
+    const novoValor = name === "cep" ? value.replace(/\D/g, "") : value;
+    setNovaViagem((prev) => ({ ...prev, [name]: novoValor }));
   };
 
   const validarDatas = () => {
-    const hoje = new Date().toISOString().split("T")[0]; // Formato yyyy-mm-dd
+    const hoje = new Date().toISOString().split("T")[0];
     if (novaViagem.dataPartida < hoje) {
       alert("A data de partida não pode ser anterior à data atual.");
       return false;

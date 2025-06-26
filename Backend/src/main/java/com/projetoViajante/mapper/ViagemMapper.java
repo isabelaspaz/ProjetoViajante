@@ -9,6 +9,7 @@ import com.projetoViajante.entity.Viagem;
 @Component
 public class ViagemMapper {
 
+    // Método para converter de ViagemDTO para Viagem (entidade)
     public Viagem toEntity(ViagemDTO dto) {
         Viagem viagem = new Viagem();
         viagem.setTitulo(dto.getTitulo());
@@ -21,6 +22,7 @@ public class ViagemMapper {
         viagem.setCidade(dto.getCidade());
         viagem.setEstado(dto.getEstado());
 
+        // Verificando se o usuário foi passado no DTO e atribuindo à entidade
         if (dto.getUsuarioId() != null) {
             Usuario usuario = new Usuario();
             usuario.setId(dto.getUsuarioId());
@@ -30,21 +32,23 @@ public class ViagemMapper {
         return viagem;
     }
 
+    // Método para converter de Viagem (entidade) para ViagemDTO
     public ViagemDTO toDTO(Viagem entity) {
-
-        ViagemDTO dto = new ViagemDTO(entity.getId(), entity.getTitulo(), entity.getDataPartida(),
-                entity.getDataChegada(), entity.getCep(), entity.getRua(), entity.getBairro(), entity.getNumero(),
-                entity.getCidade(), entity.getEstado(), entity.getUsuario().getId());
-
-        /*
-        if (entity.getUsuario() != null) {
-            UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setId(entity.getUsuario().getId());
-            dto.setUsuario(usuarioDTO);
-        }
-        */
+        // Criando o DTO e preenchendo com os dados da entidade
+        ViagemDTO dto = new ViagemDTO(
+            entity.getId(),
+            entity.getTitulo(),
+            entity.getDataPartida(),
+            entity.getDataChegada(),
+            entity.getCep(),
+            entity.getRua(),
+            entity.getBairro(),
+            entity.getNumero(),
+            entity.getCidade(),
+            entity.getEstado(),
+            entity.getUsuario() != null ? entity.getUsuario().getId() : null
+        );
 
         return dto;
     }
-
 }

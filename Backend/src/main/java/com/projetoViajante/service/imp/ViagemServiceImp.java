@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projetoViajante.dto.ViagemDTO;
-import com.projetoViajante.entity.Usuario;
 import com.projetoViajante.entity.Viagem;
+import com.projetoViajante.mapper.ViagemMapper;
 import com.projetoViajante.repository.UsuarioRepo;
 import com.projetoViajante.repository.ViagemRepo;
 import com.projetoViajante.service.ViagemService;
@@ -22,6 +22,9 @@ public class ViagemServiceImp implements ViagemService {
     @Autowired
     private UsuarioRepo usuarioRepo;
 
+    @Autowired
+    private ViagemMapper viagemMapper; // Injetando o ViagemMapper
+
     @Override
     public Viagem salvar(ViagemDTO viagemDTO) {
         Long usuarioId = viagemDTO.getUsuarioId(); // ✅ Nome correto
@@ -29,22 +32,15 @@ public class ViagemServiceImp implements ViagemService {
             throw new RuntimeException("Usuário inválido: ID é obrigatório");
         }
 
-        Usuario usuario = usuarioRepo.findById(usuarioId)
+        // Obtendo o usuário
+        var usuario = usuarioRepo.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id " + usuarioId));
 
-        Viagem viagem = new Viagem();
-        viagem.setTitulo(viagemDTO.getTitulo());
-        viagem.setDataPartida(viagemDTO.getDataPartida());
-        viagem.setDataChegada(viagemDTO.getDataChegada());
-        viagem.setBairro(viagemDTO.getBairro());
-        viagem.setCep(viagemDTO.getCep());
-        viagem.setRua(viagemDTO.getRua());
-        viagem.setNumero(viagemDTO.getNumero());
-        viagem.setCidade(viagemDTO.getCidade());
-        viagem.setEstado(viagemDTO.getEstado());
-        viagem.setUsuario(usuario);
+        // Convertendo o ViagemDTO para entidade Viagem usando o mapper
+        Viagem viagem = viagemMapper.toEntity(viagemDTO);
+        viagem.setUsuario(usuario); // Associando o usuário à viagem
 
-        return viagemRepo.save(viagem);
+        return viagemRepo.save(viagem); // Salvando a viagem no repositório
     }
 
     @Override
@@ -71,7 +67,7 @@ public class ViagemServiceImp implements ViagemService {
             throw new RuntimeException("Usuário não tem permissão para deletar esta viagem.");
         }
 
-        viagemRepo.deleteById(id);
+        viagemRepo.deleteById(id); // Deletando a viagem
     }
 
     @Override
@@ -83,10 +79,11 @@ public class ViagemServiceImp implements ViagemService {
             throw new RuntimeException("Usuário não tem permissão para atualizar esta viagem.");
         }
 
+        // Atualizando os dados da viagem com as informações do DTO
         viagem.setTitulo(viagemDTO.getTitulo());
         viagem.setDataPartida(viagemDTO.getDataPartida());
         viagem.setDataChegada(viagemDTO.getDataChegada());
 
-        return viagemRepo.save(viagem);
+        return viagemRepo.save(viagem); // Salvando a viagem atualizada
     }
 }

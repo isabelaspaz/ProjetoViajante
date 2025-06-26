@@ -1,168 +1,225 @@
-/* Definindo a tipografia e o estilo geral */
+/* Resetando algumas propriedades básicas */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Corpo do layout */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Helvetica', sans-serif;
   background-color: #f4f4f4;
   color: #333;
   line-height: 1.6;
   padding: 20px;
 }
 
-/* Títulos e subtítulos */
-h1, h2, h3, h4 {
-  font-weight: bold;
-  color: #222;
-  margin-bottom: 10px;
-}
-
-/* Container principal */
-div {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Estilo para os blocos de viagem */
-h1 {
+/* Header - Menu */
+header {
+  background-color: #003580; /* Azul Booking */
+  padding: 20px 0;
+  color: white;
   text-align: center;
-  color: #444;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-h3 {
-  color: #007bff;
-  cursor: pointer;
-  transition: color 0.3s ease;
+header h1 {
+  margin: 0;
 }
 
-h3:hover {
-  color: #0056b3;
+/* Títulos principais */
+h1, h2, h3 {
+  font-weight: 600;
+  color: #333;
 }
 
-/* Estilo das mochilas */
-div > div {
-  background-color: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Seção Viagem */
+.viagem-container {
+  margin-top: 30px;
+}
+
+.viagem-container h1 {
+  font-size: 2rem;
   margin-bottom: 15px;
 }
 
-input[type="text"],
-input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+.viagem-container p {
   font-size: 1rem;
-  transition: border 0.3s ease;
+  color: #777;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus {
-  border-color: #007bff;
-  outline: none;
+/* Listagem de Viagens */
+.viagem-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
 }
 
+.viagem-item {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.viagem-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.viagem-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #003580;
+}
+
+/* Cards das mochilas */
+.card-mochila {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-mochila:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-mochila h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #003580;
+  margin-bottom: 10px;
+}
+
+/* Botões */
 button {
-  background-color: #007bff;
+  background-color: #003580;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 10px 15px;
   cursor: pointer;
-  font-size: 1rem;
+  border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #005bb5;
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #bbb;
   cursor: not-allowed;
 }
 
-/* Estilo dos formulários */
-div > div input[type="text"],
-div > div input[type="number"] {
-  width: 48%;
-  margin-right: 2%;
+/* Formulários */
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 10px;
   margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
-div > div input[type="number"]:last-child {
-  margin-right: 0;
+input[type="text"]:focus, input[type="number"]:focus {
+  outline: none;
+  border-color: #003580;
 }
 
-/* Formulário de edição de item */
-input[type="text"]:focus::placeholder,
-input[type="number"]:focus::placeholder {
-  color: transparent;
-}
-
-label {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-  display: inline-block;
-  color: #333;
-}
-
-/* Estilo dos itens */
-strong {
-  display: block;
-  margin-bottom: 5px;
-  color: #444;
-}
-
-button {
-  margin-left: 10px;
-}
-
-h4 {
+/* Listagem de Itens dentro da Mochila */
+.item-lista {
   margin-top: 20px;
-  font-size: 1.2rem;
-  color: #555;
 }
 
-/* Botões de editar e excluir */
-button.edit, button.remove {
-  background-color: #ffc107;
-}
-
-button.remove {
-  background-color: #dc3545;
-}
-
-button.edit:hover {
-  background-color: #e0a800;
-}
-
-button.remove:hover {
-  background-color: #c82333;
-}
-
-/* Estilo dos containers de lista */
-div > div > div {
-  border-left: 2px solid #007bff;
-  padding-left: 20px;
+.item-lista div {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Para responsividade, ajustando os inputs no mobile */
+.item-lista div button {
+  background-color: #e74c3c;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.item-lista div button:hover {
+  background-color: #c0392b;
+}
+
+/* Adicionar Item */
+.form-item {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.form-item input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-item button {
+  width: 100%;
+  background-color: #003580;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: white;
+}
+
+.form-item button:hover {
+  background-color: #005bb5;
+}
+
+/* Container de Mochilas */
+.mochila-container {
+  margin-top: 30px;
+}
+
+.mochila-container h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.mochila-container .form-item {
+  margin-bottom: 30px;
+}
+
+.mochila-container p {
+  color: #777;
+  font-size: 1rem;
+}
+
+.mochila-container .card-mochila {
+  margin-bottom: 20px;
+}
+
+/* Alinhamento Responsivo */
 @media (max-width: 768px) {
-  div > div input[type="text"],
-  div > div input[type="number"] {
-    width: 100%;
-    margin-right: 0;
+  .viagem-lista {
+    grid-template-columns: 1fr;
   }
 
-  div > div > div {
-    padding-left: 10px;
+  .form-item button {
+    width: auto;
   }
 }
