@@ -20,7 +20,9 @@ function App() {
         <Route path="/viagens" element={usuario ? <Viagem usuario={usuario} /> : <Navigate to="/" replace />} />
         <Route path="/mochila" element={usuario ? <Mochila usuario={usuario} /> : <Navigate to="/" replace />} />
         <Route path="/despesas" element={usuario ? <Despesas usuario={usuario} /> : <Navigate to="/" replace />} />
-        <Route path="/configuracoes" element={usuario ? <Configuracoes usuario={usuario} /> : <Navigate to="/" replace />} />
+        
+        <Route path="/configuracoes" element={usuario ? <Configuracoes usuario={usuario} setUsuario={setUsuario} /> : <Navigate to="/" replace />} />
+        
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

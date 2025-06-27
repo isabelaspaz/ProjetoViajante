@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import FormNovaMochila from "./FormNovaMochila";
-import ItemLista from "./ItemLista";
-import FormNovoItem from "./FormNovoItem";
+import MochilaCard from "./MochilaCard";
 import "./Mochila.css";
 
 const MochilaLista = ({ mochilas, viagemId, recarregarMochilas }) => {
@@ -21,13 +20,11 @@ const MochilaLista = ({ mochilas, viagemId, recarregarMochilas }) => {
 
       <div className="mochilas-grid">
         {mochilas.map((mochila) => (
-          <div className="mochila-coluna" key={mochila.id}>
-            <h3>{mochila.titulo}</h3>
-            <p>Peso Total: {mochila.pesoTotalAprox}kg</p>
-            <h4>Itens:</h4>
-            <ItemLista itens={mochila.mochilaItens} recarregar={recarregarMochilas} />
-            <FormNovoItem mochilaId={mochila.id} recarregar={recarregarMochilas} />
-          </div>
+          <MochilaCard
+            key={mochila.id}
+            mochila={mochila}
+            recarregar={recarregarMochilas}
+          />
         ))}
       </div>
     </div>

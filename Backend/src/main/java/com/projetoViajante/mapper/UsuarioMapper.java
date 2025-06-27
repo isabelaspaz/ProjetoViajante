@@ -12,16 +12,17 @@ public class UsuarioMapper {
         Usuario usuario = new Usuario();
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
-        usuario.setSenha(dto.getSenha());
-
+        usuario.setSenha(dto.getSenha()); // usado no cadastro
         return usuario;
     }
 
     public UsuarioDTO toDTO(Usuario entity) {
-
-        UsuarioDTO dto = new UsuarioDTO(entity.getId(), entity.getNome(), entity.getEmail(), entity.getSenha());
-
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setId(entity.getId());
+        dto.setNome(entity.getNome());
+        dto.setEmail(entity.getEmail());
+        dto.setSenha(entity.getSenha()); // usado para autenticação ou exibição, depende da necessidade
+        // dto.setNovaSenha(null); -> opcional, geralmente não preenche novaSenha no retorno
         return dto;
     }
-    
 }

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Menu from '../Menu/Menu';
 import FormularioUsuario from './FormularioUsuario';
 import MensagensFeedback from './MensagensFeedback';
-import './Configuracoes.css'; // Certifique-se de criar esse arquivo com o CSS sugerido
+import './Configuracoes.css';
 
-const Configuracoes = ({ usuario }) => {
+const Configuracoes = ({ usuario, setUsuario }) => {
   const [nome, setNome] = useState(usuario?.nome || '');
   const [email, setEmail] = useState(usuario?.email || '');
   const [novaSenha, setNovaSenha] = useState('');
@@ -41,6 +41,11 @@ const Configuracoes = ({ usuario }) => {
       });
 
       if (res.ok) {
+        const dadosAtualizados = await res.json();
+        setNome(dadosAtualizados.nome);
+        setEmail(dadosAtualizados.email);
+        setNovaSenha('');
+        setConfirmarNovaSenha('');
         setMensagemSucesso("Dados atualizados com sucesso!");
       } else {
         const erro = await res.text();
@@ -49,6 +54,32 @@ const Configuracoes = ({ usuario }) => {
     } catch (error) {
       setMensagemErro('Erro ao atualizar dados. Tente novamente.');
     }
+  };
+
+  const handleExcluir = async () => {
+    if (!window.confirm("Tem certeza que deseja excluir sua conta? Essa ação é irreversível.")) return;
+
+    try {
+      const res = await fetch(`http://localhost:8080/usuario/${usuario.id}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        alert("Conta excluída com sucesso!");
+        setUsuario(null);
+        window.location.href = '/';
+      } else {
+        const erro = await res.text();
+        setMensagemErro(erro);
+      }
+    } catch (error) {
+      setMensagemErro('Erro ao excluir conta. Tente novamente.');
+    }
+  };
+
+  const handleSair = () => {
+    setUsuario(null);
+    window.location.href = '/';
   };
 
   return (
@@ -70,6 +101,37 @@ const Configuracoes = ({ usuario }) => {
           setConfirmarNovaSenha={setConfirmarNovaSenha}
           handleSubmit={handleSubmit}
         />
+
+        <button
+          style={{
+            marginTop: '1rem',
+            backgroundColor: '#e74c3c',
+            color: 'white',
+            border: 'none',
+            padding: '0.7rem 1.2rem',
+            borderRadius: '8px',
+            cursor: 'pointer',
+          }}
+          onClick={handleExcluir}
+        >
+          Excluir Conta
+        </button>
+
+        <button
+          style={{
+            marginTop: '1rem',
+            backgroundColor: '#3498db',
+            color: 'white',
+            border: 'none',
+            padding: '0.7rem 1.2rem',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            marginLeft: '10px',
+          }}
+          onClick={handleSair}
+        >
+          Sair
+        </button>
       </div>
     </div>
   );

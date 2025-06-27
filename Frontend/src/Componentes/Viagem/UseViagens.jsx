@@ -1,7 +1,6 @@
-// UseViagens.js
 import { useState, useEffect, useCallback } from "react";
 
-export default function UseViagens(usuarioId) {
+export default function useViagens(usuarioId) {
   const [viagens, setViagens] = useState([]);
   const [erro, setErro] = useState(null);
 
@@ -25,7 +24,6 @@ export default function UseViagens(usuarioId) {
     dataChegada: "",
   });
 
-  // Buscar viagens do usuário
   const buscarViagens = useCallback(async () => {
     try {
       const resp = await fetch(`http://localhost:8080/viagem/usuario/${usuarioId}`);
@@ -34,11 +32,10 @@ export default function UseViagens(usuarioId) {
       setViagens(Array.isArray(dados) ? dados : [dados]);
       setErro(null);
     } catch (err) {
-      setErro(err.message);
+      console.log(err);
     }
   }, [usuarioId]);
 
-  // Preencher endereço pelo CEP usando API externa
   const preencherEnderecoViaCep = useCallback(async () => {
     if (!/^\d{8}$/.test(novaViagem.cep)) return;
 
@@ -70,7 +67,6 @@ export default function UseViagens(usuarioId) {
     }
   }, [novaViagem.cep, preencherEnderecoViaCep]);
 
-  // Cadastrar nova viagem
   const cadastrarViagem = async () => {
     try {
       const resp = await fetch("http://localhost:8080/viagem", {
@@ -97,10 +93,9 @@ export default function UseViagens(usuarioId) {
     }
   };
 
-  // Salvar edição da viagem
   const salvarEdicao = async () => {
     try {
-      const resp = await fetch(`http://localhost:8080/viagem/${editandoId}`, {
+      const resp = await fetch(`http://localhost:8080/viagem/${editandoId}/usuario/${usuarioId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formEdicao),
@@ -114,17 +109,23 @@ export default function UseViagens(usuarioId) {
     }
   };
 
-  // Deletar viagem
-  const deletarViagem = async (id) => {
-    try {
-      const resp = await fetch(`http://localhost:8080/viagem/${id}`, { method: "DELETE" });
-      if (!resp.ok) throw new Error("Erro ao deletar viagem");
-      await buscarViagens();
-      setErro(null);
-    } catch (err) {
-      setErro(err.message);
-    }
-  };
+const deletarViagem = async (id) => {
+  try {
+    const resp = await fetch(`http://localhost:8080/viagem/${id}/usuario/${usuarioId}`, {
+      method: "DELETE",
+    });
+    if (!resp.ok) throw new Error("Erro ao deletar viagem");
+
+    // Remove a viagem do estado diretamente:
+    setViagens((prev) => prev.filter((v) => v.id !== id));
+
+    setErro(null);
+  } catch (err) {
+    setErro(err.message);
+  }
+};
+
+
 
   return {
     viagens,

@@ -1,7 +1,7 @@
 import Menu from "../Menu/Menu";
 import CadastroViagem from "./CadastroViagem";
 import ItemViagem from "./ItemViagem";
-import UseViagens from "./UseViagens";
+import useViagens from "./UseViagens";
 import "./Viagem.css";
 
 const Viagem = ({ usuario }) => {
@@ -9,7 +9,7 @@ const Viagem = ({ usuario }) => {
     viagens, erro, novaViagem, setNovaViagem,
     cadastrarViagem, editandoId, setEditandoId,
     formEdicao, setFormEdicao, salvarEdicao, deletarViagem
-  } = UseViagens(usuario.id);
+  } = useViagens(usuario.id);
 
   const formatarData = (data) => {
     if (!data) return "-";

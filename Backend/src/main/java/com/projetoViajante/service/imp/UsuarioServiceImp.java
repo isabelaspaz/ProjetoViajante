@@ -50,12 +50,17 @@ public class UsuarioServiceImp implements UsuarioService {
         usuario.setNome(usuarioDTO.getNome());
         usuario.setEmail(usuarioDTO.getEmail());
 
+        if (usuarioDTO.getNovaSenha() != null && !usuarioDTO.getNovaSenha().isBlank()) {
+            String senhaHash = HashUtil.gerarHashSHA256(usuarioDTO.getNovaSenha());
+            usuario.setSenha(senhaHash);
+        }
+
         return usuarioRepo.save(usuario);
     }
 
     @Override
     public void deletarUsuario(Long id) {
-        usuarioRepo.deleteById(id); 
+        usuarioRepo.deleteById(id);
     }
 
     @Override
@@ -68,6 +73,6 @@ public class UsuarioServiceImp implements UsuarioService {
                 return Optional.of(usuario);
             }
         }
-        return Optional.empty(); 
+        return Optional.empty();
     }
 }
