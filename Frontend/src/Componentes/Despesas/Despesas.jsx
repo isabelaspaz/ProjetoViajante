@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import ListaViagens from "./ListaViagens";
-import "./Despesas.css";
 
 const Despesas = ({ usuario }) => {
   const [viagens, setViagens] = useState([]);
@@ -11,54 +10,88 @@ const Despesas = ({ usuario }) => {
 
   useEffect(() => {
     fetch(`http://localhost:8080/viagem/usuario/${usuario.id}`)
-      .then((res) => res.json())
-      .then(setViagens);
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Erro ao buscar viagens");
+        const text = await res.text();
+        return text ? JSON.parse(text) : [];
+      })
+      .then(setViagens)
+      .catch((e) => console.error(e));
   }, [usuario]);
 
-  const toggleViagem = async (viagemId) => {
+  const carregarDespesas = async (viagemId) => {
+    try {
+      const res = await fetch(`http://localhost:8080/despesa/${viagemId}`);
+      if (!res.ok) throw new Error("Erro ao buscar despesas");
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : [];
+      setDespesasPorViagem((prev) => ({ ...prev, [viagemId]: data }));
+    } catch (e) {
+      console.error(e);
+      setDespesasPorViagem((prev) => ({ ...prev, [viagemId]: [] }));
+    }
+  };
+
+  const toggleViagem = (viagemId) => {
     if (selectedViagem === viagemId) {
       setSelectedViagem(null);
     } else {
       setSelectedViagem(viagemId);
-      const res = await fetch(`http://localhost:8080/despesa/${viagemId}`);
-      const data = await res.json();
-      setDespesasPorViagem((prev) => ({ ...prev, [viagemId]: data }));
+      carregarDespesas(viagemId);
     }
   };
 
   const adicionarDespesa = async (viagemId) => {
-    const dto = { ...novaDespesa, quantidade: Number(novaDespesa.quantidade), preco: Number(novaDespesa.preco), viagemId };
-    const res = await fetch("http://localhost:8080/despesa", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dto),
-    });
-    if (res.ok) {
-      setNovaDespesa({ nome: "", quantidade: "", preco: "" });
-      toggleViagem(viagemId);
+    const dto = {
+      ...novaDespesa,
+      quantidade: Number(novaDespesa.quantidade),
+      preco: Number(novaDespesa.preco),
+      viagemId,
+    };
+    try {
+      const res = await fetch("http://localhost:8080/despesa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dto),
+      });
+      if (res.ok) {
+        setNovaDespesa({ nome: "", quantidade: "", preco: "" });
+        carregarDespesas(viagemId);
+      } else {
+        console.error("Erro ao adicionar despesa");
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
   const excluirDespesa = async (despesaId, viagemId) => {
-    const res = await fetch(`http://localhost:8080/despesa/${despesaId}`, { method: "DELETE" });
-    if (res.ok) toggleViagem(viagemId);
+    try {
+      const res = await fetch(`http://localhost:8080/despesa/${despesaId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) carregarDespesas(viagemId);
+      else console.error("Erro ao excluir despesa");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
     <div>
       <Menu />
       <h2>Despesas por Viagem</h2>
-      <ViagemLista viagens={viagens} selectedViagemId={selectedViagem} onToggle={toggleViagem} />
-      {selectedViagem && (
-        <>
-          <ListaDespesas despesas={despesasPorViagem[selectedViagem] || []} onExcluir={(id) => excluirDespesa(id, selectedViagem)} />
-          <FormDespesa
-            novaDespesa={novaDespesa}
-            setNovaDespesa={setNovaDespesa}
-            onAdicionar={() => adicionarDespesa(selectedViagem)}
-          />
-        </>
-      )}
+      <ListaViagens
+        viagens={viagens}
+        viagemAbertaId={selectedViagem}
+        setViagemAbertaId={toggleViagem}
+        carregarDespesas={carregarDespesas}
+        despesasPorViagem={despesasPorViagem}
+        novaDespesa={novaDespesa}
+        setNovaDespesa={setNovaDespesa}
+        adicionarDespesa={adicionarDespesa}
+        excluirDespesa={excluirDespesa}
+      />
     </div>
   );
 };

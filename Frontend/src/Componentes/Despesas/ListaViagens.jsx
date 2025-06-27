@@ -20,7 +20,7 @@ const ListaViagens = ({
         isAberta={viagemAbertaId === viagem.id}
         setAberta={setViagemAbertaId}
         carregarDespesas={carregarDespesas}
-        despesas={despesasPorViagem[viagem.id]}
+        despesas={despesasPorViagem[viagem.id] || []}
         novaDespesa={novaDespesa}
         setNovaDespesa={setNovaDespesa}
         adicionarDespesa={adicionarDespesa}

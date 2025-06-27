@@ -1,225 +1,90 @@
-/* Resetando algumas propriedades básicas */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Corpo do layout */
-body {
-  font-family: 'Helvetica', sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  line-height: 1.6;
-  padding: 20px;
-}
-
-/* Header - Menu */
-header {
-  background-color: #003580; /* Azul Booking */
-  padding: 20px 0;
-  color: white;
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-header h1 {
-  margin: 0;
-}
-
-/* Títulos principais */
-h1, h2, h3 {
-  font-weight: 600;
-  color: #333;
-}
-
-/* Seção Viagem */
-.viagem-container {
-  margin-top: 30px;
-}
-
-.viagem-container h1 {
-  font-size: 2rem;
-  margin-bottom: 15px;
-}
-
-.viagem-container p {
-  font-size: 1rem;
-  color: #777;
-}
-
-/* Listagem de Viagens */
-.viagem-lista {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+.mochilas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Alinha os cards à esquerda */
   gap: 20px;
-}
-
-.viagem-item {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.viagem-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.viagem-item h3 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-  color: #003580;
-}
-
-/* Cards das mochilas */
-.card-mochila {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin-bottom: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card-mochila:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.card-mochila h3 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #003580;
-  margin-bottom: 10px;
-}
-
-/* Botões */
-button {
-  background-color: #003580;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #005bb5;
-}
-
-button:disabled {
-  background-color: #bbb;
-  cursor: not-allowed;
-}
-
-/* Formulários */
-input[type="text"], input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-input[type="text"]:focus, input[type="number"]:focus {
-  outline: none;
-  border-color: #003580;
-}
-
-/* Listagem de Itens dentro da Mochila */
-.item-lista {
   margin-top: 20px;
 }
 
-.item-lista div {
+/* Cada mochila como uma coluna com seus itens abaixo */
+.mochila-coluna {
+  flex: 1 1 calc(33.333% - 20px); /* 3 por linha com gap */
+  min-width: 250px;
+  max-width: 100%;
   background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 15px;
-  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .mochila-coluna {
+    flex: 1 1 calc(50% - 20px); /* 2 por linha em telas médias */
+  }
+}
+
+@media (max-width: 600px) {
+  .mochila-coluna {
+    flex: 1 1 100%; /* 1 por linha em telas pequenas */
+  }
+}
+
+.mochila-coluna h3 {
+  font-size: 1.2rem;
+  color: #003580;
   margin-bottom: 10px;
+  text-align: center;
+}
+
+.mochila-coluna p {
+  font-size: 0.95rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mochila-coluna h4 {
+  font-size: 1rem;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* Lista de itens da mochila */
+.mochila-coluna .item-lista {
+  margin-top: 10px;
+}
+
+.mochila-coluna .item-lista div {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.item-lista div button {
-  background-color: #e74c3c;
-  padding: 5px 10px;
-  font-size: 0.8rem;
-  border-radius: 5px;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.item-lista div button:hover {
-  background-color: #c0392b;
-}
-
-/* Adicionar Item */
-.form-item {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.form-item input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+/* Estilo para formulário de nova mochila */
+form input,
+form button {
+  margin: 5px 0;
+  padding: 8px;
+  font-size: 0.95rem;
+  border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-.form-item button {
-  width: 100%;
-  background-color: #003580;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
+form button {
+  background-color: #820ad1;
   color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.form-item button:hover {
-  background-color: #005bb5;
-}
-
-/* Container de Mochilas */
-.mochila-container {
-  margin-top: 30px;
-}
-
-.mochila-container h2 {
-  font-size: 2rem;
-  margin-bottom: 15px;
-}
-
-.mochila-container .form-item {
-  margin-bottom: 30px;
-}
-
-.mochila-container p {
-  color: #777;
-  font-size: 1rem;
-}
-
-.mochila-container .card-mochila {
-  margin-bottom: 20px;
-}
-
-/* Alinhamento Responsivo */
-@media (max-width: 768px) {
-  .viagem-lista {
-    grid-template-columns: 1fr;
-  }
-
-  .form-item button {
-    width: auto;
-  }
+form button:hover {
+  background-color: #6a0cbf;
 }

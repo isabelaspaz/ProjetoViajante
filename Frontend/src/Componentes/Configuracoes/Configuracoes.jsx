@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Menu from '../Menu/Menu';
 import FormularioUsuario from './FormularioUsuario';
 import MensagensFeedback from './MensagensFeedback';
+import './Configuracoes.css'; // Certifique-se de criar esse arquivo com o CSS sugerido
 
 const Configuracoes = ({ usuario }) => {
   const [nome, setNome] = useState(usuario?.nome || '');
@@ -53,21 +54,23 @@ const Configuracoes = ({ usuario }) => {
   return (
     <div>
       <Menu />
-      <h2>Configurações de Conta</h2>
+      <div className="configuracoes-container">
+        <h2>Configurações de Conta</h2>
 
-      <MensagensFeedback erro={mensagemErro} sucesso={mensagemSucesso} />
+        <MensagensFeedback erro={mensagemErro} sucesso={mensagemSucesso} />
 
-      <FormularioUsuario
-        nome={nome}
-        setNome={setNome}
-        email={email}
-        setEmail={setEmail}
-        novaSenha={novaSenha}
-        setNovaSenha={setNovaSenha}
-        confirmarNovaSenha={confirmarNovaSenha}
-        setConfirmarNovaSenha={setConfirmarNovaSenha}
-        handleSubmit={handleSubmit}
-      />
+        <FormularioUsuario
+          nome={nome}
+          setNome={setNome}
+          email={email}
+          setEmail={setEmail}
+          novaSenha={novaSenha}
+          setNovaSenha={setNovaSenha}
+          confirmarNovaSenha={confirmarNovaSenha}
+          setConfirmarNovaSenha={setConfirmarNovaSenha}
+          handleSubmit={handleSubmit}
+        />
+      </div>
     </div>
   );
 };

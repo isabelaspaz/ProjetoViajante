@@ -1,0 +1,20 @@
+.configuracoes-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .configuracoes-container h2 {
+    color: #820ad1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .configuracoes-container form {
+    text-align: left;
+  }
+  
