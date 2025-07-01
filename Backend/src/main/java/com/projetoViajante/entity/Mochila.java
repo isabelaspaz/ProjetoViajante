@@ -13,15 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Mochila")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Mochila {
 
     @Id
@@ -43,5 +37,69 @@ public class Mochila {
 
     @OneToMany(mappedBy = "mochila", cascade = CascadeType.ALL)
     private List<MochilaItem> mochilaItens;
+
+    public Mochila() {
+    }
+
+    public Mochila(Long id, String titulo, Long pesoTotalAprox, Viagem viagem, Usuario usuario,
+            List<MochilaItem> mochilaItens) {
+        this.id = id;
+        this.titulo = titulo;
+        this.pesoTotalAprox = pesoTotalAprox;
+        this.viagem = viagem;
+        this.usuario = usuario;
+        this.mochilaItens = mochilaItens;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Long getPesoTotalAprox() {
+        return pesoTotalAprox;
+    }
+
+    public void setPesoTotalAprox(Long pesoTotalAprox) {
+        this.pesoTotalAprox = pesoTotalAprox;
+    }
+
+    public Viagem getViagem() {
+        return viagem;
+    }
+
+    public void setViagem(Viagem viagem) {
+        this.viagem = viagem;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<MochilaItem> getMochilaItens() {
+        return mochilaItens;
+    }
+
+    public void setMochilaItens(List<MochilaItem> mochilaItens) {
+        this.mochilaItens = mochilaItens;
+    }
+
+
+    
     
 }

@@ -54,13 +54,13 @@ public class ViagemController {
         return ResponseEntity.ok(viagens);
     }
 
-    @DeleteMapping("/{id}/usuario/{usuarioId}")
-    public ResponseEntity<?> deletarViagem(@PathVariable Long id, @PathVariable Long usuarioId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarViagem(@PathVariable Long id) {
         try {
-            viagemServiceImp.deletarViagem(id, usuarioId);
-            return ResponseEntity.noContent().build();
+            viagemServiceImp.deletarViagem(id);
+            return ResponseEntity.ok("Viagem deletada com sucesso.");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(403).body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

@@ -13,6 +13,8 @@ import com.projetoViajante.repository.UsuarioRepo;
 import com.projetoViajante.repository.ViagemRepo;
 import com.projetoViajante.service.ViagemService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ViagemServiceImp implements ViagemService {
 
@@ -23,24 +25,22 @@ public class ViagemServiceImp implements ViagemService {
     private UsuarioRepo usuarioRepo;
 
     @Autowired
-    private ViagemMapper viagemMapper; // Injetando o ViagemMapper
+    private ViagemMapper viagemMapper;
 
     @Override
     public Viagem salvar(ViagemDTO viagemDTO) {
-        Long usuarioId = viagemDTO.getUsuarioId(); // ✅ Nome correto
+        Long usuarioId = viagemDTO.getUsuarioId();
         if (usuarioId == null) {
             throw new RuntimeException("Usuário inválido: ID é obrigatório");
         }
 
-        // Obtendo o usuário
         var usuario = usuarioRepo.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id " + usuarioId));
 
-        // Convertendo o ViagemDTO para entidade Viagem usando o mapper
         Viagem viagem = viagemMapper.toEntity(viagemDTO);
-        viagem.setUsuario(usuario); // Associando o usuário à viagem
+        viagem.setUsuario(usuario);
 
-        return viagemRepo.save(viagem); // Salvando a viagem no repositório
+        return viagemRepo.save(viagem);
     }
 
     @Override
@@ -54,20 +54,19 @@ public class ViagemServiceImp implements ViagemService {
     }
 
     @Override
-    public void deletarViagem(Long id, Long usuario_id) {
-        Optional<Viagem> optionalViagem = viagemRepo.findById(id);
+    @Transactional
+    public void deletarViagem(Long id) {
+        Viagem viagem = viagemRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Viagem não encontrada"));
 
-        if (optionalViagem.isEmpty()) {
-            throw new RuntimeException("Viagem não encontrada com id " + id);
+        // Remove da lista do usuário para o orphanRemoval funcionar
+        var usuario = viagem.getUsuario();
+        if (usuario != null) {
+            usuario.getViagens().remove(viagem);
+            usuarioRepo.save(usuario);
         }
 
-        Viagem viagem = optionalViagem.get();
-
-        if (!viagem.getUsuario().getId().equals(usuario_id)) {
-            throw new RuntimeException("Usuário não tem permissão para deletar esta viagem.");
-        }
-
-        viagemRepo.deleteById(id); // Deletando a viagem
+        viagemRepo.deleteById(id);
     }
 
     @Override
@@ -79,11 +78,10 @@ public class ViagemServiceImp implements ViagemService {
             throw new RuntimeException("Usuário não tem permissão para atualizar esta viagem.");
         }
 
-        // Atualizando os dados da viagem com as informações do DTO
         viagem.setTitulo(viagemDTO.getTitulo());
         viagem.setDataPartida(viagemDTO.getDataPartida());
         viagem.setDataChegada(viagemDTO.getDataChegada());
 
-        return viagemRepo.save(viagem); // Salvando a viagem atualizada
+        return viagemRepo.save(viagem);
     }
 }

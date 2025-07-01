@@ -14,7 +14,7 @@ public interface ViagemService {
 
     Optional<Viagem> buscarPorId(Long id);
 
-    void deletarViagem(Long id, Long usuario_id);
+    void deletarViagem(Long id);
 
     Viagem atualizarViagem(Long idViagem, Long idUsuario, ViagemDTO viagemDTO);
 }
