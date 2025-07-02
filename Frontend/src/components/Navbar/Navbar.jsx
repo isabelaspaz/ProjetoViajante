@@ -1,35 +1,33 @@
-import { Link } from "react-router-dom";
-import "./Navbar.css"; // Importando o CSS para estilização
+// src/components/Navbar/Navbar.jsx
+import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onNovaViagemClick }) => {
   return (
     <nav className="navbar">
-      {/* Logo com link para a tela inicial */}
-      <Link to="/tela-inicial" className="navbar-logo">
+      <a href="/tela-inicial" className="navbar-logo">
         <img src="/travel.png" alt="Logo TripApp" className="logo-image" />
-      </Link>
+      </a>
 
-      {/* Lista de Links */}
       <ul className="navbar-list">
         <li className="navbar-item">
-          <Link to="/nova-viagem" className="navbar-link">
+          <button className="navbar-link" onClick={onNovaViagemClick}>
             Nova Viagem
-          </Link>
+          </button>
         </li>
         <li className="navbar-item">
-          <Link to="/nova-mochila" className="navbar-link">
+          <a href="/nova-mochila" className="navbar-link">
             Nova Mochila
-          </Link>
+          </a>
         </li>
         <li className="navbar-item">
-          <Link to="/nova-despesa" className="navbar-link">
+          <a href="/nova-despesa" className="navbar-link">
             Nova Despesa
-          </Link>
+          </a>
         </li>
         <li className="navbar-item">
-          <Link to="/configuracoes" className="navbar-link">
+          <a href="/configuracoes" className="navbar-link">
             Configurações
-          </Link>
+          </a>
         </li>
       </ul>
     </nav>

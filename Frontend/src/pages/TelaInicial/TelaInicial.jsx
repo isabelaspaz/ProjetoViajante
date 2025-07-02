@@ -1,15 +1,20 @@
-import React from "react";
+import { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Menu from "../../components/Menu/Menu";
-import "./TelaInicial.css";
+import NovaViagem from "../../components/Viagem/NovaViagem";
 
 const TelaInicial = () => {
-  return (
-    <div className="tela-inicial">
-      <Navbar />
-      <Menu />
-    </div>
-  );
+    const [mostrarNovaViagem, setMostrarNovaViagem] = useState(false);
+
+    return (
+        <>
+            <Navbar onNovaViagemClick={() => setMostrarNovaViagem(true)} />
+            <Menu />
+            {mostrarNovaViagem && (
+                <NovaViagem onClose={() => setMostrarNovaViagem(false)} />
+            )}
+        </>
+    );
 };
 
 export default TelaInicial;

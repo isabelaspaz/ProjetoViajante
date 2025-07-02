@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";  // Import para navegação
 import Formulario from "../Formulario/Formulario";
-import Navbar from "../Navbar/Navbar";  // Import do Navbar
-import "./NovaViagem.css"; // Importando o CSS para estilização
+import "./NovaViagem.css";
 
-const NovaViagem = () => {
+const NovaViagem = ({ onClose }) => {
   const [titulo, setTitulo] = useState("");
   const [dataPartida, setDataPartida] = useState("");
   const [dataChegada, setDataChegada] = useState("");
@@ -15,8 +13,6 @@ const NovaViagem = () => {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [mensagem, setMensagem] = useState("");
-
-  const navigate = useNavigate();
 
   const dataAtual = new Date().toISOString().split("T")[0];
 
@@ -90,6 +86,7 @@ const NovaViagem = () => {
 
       if (resposta.ok) {
         setMensagem("Viagem cadastrada com sucesso!");
+        // Limpa campos
         setTitulo("");
         setDataPartida("");
         setDataChegada("");
@@ -107,20 +104,13 @@ const NovaViagem = () => {
     }
   };
 
-  const voltarTelaInicial = () => {
-    navigate("/tela-inicial");
-  };
-
   return (
-    <div className="nova-viagem-page">
-      <Navbar />
-
+    <div className="nova-viagem-overlay">
       <div className="nova-viagem-container">
-        {/* Botão X para fechar */}
         <button
           className="btn-fechar"
-          onClick={voltarTelaInicial}
-          aria-label="Voltar para tela inicial"
+          onClick={onClose}
+          aria-label="Fechar modal"
           type="button"
         >
           &times;
@@ -129,75 +119,112 @@ const NovaViagem = () => {
         <h2>Nova viagem</h2>
 
         <Formulario onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
-            name="titulo"
-            placeholder="Nome da viagem"
-          />
-          <input
-            label="Data de partida"
-            type="date"
-            value={dataPartida}
-            onChange={(e) => setDataPartida(e.target.value)}
-            name="dataPartida"
-          />
-          <input
-            label="Data de chegada"
-            type="date"
-            value={dataChegada}
-            onChange={(e) => setDataChegada(e.target.value)}
-            name="dataChegada"
-          />
-          <input
-            type="text"
-            value={cep}
-            onChange={(e) => setCep(e.target.value)}
-            name="cep"
-            placeholder="CEP"
-          />
-          <input
-            type="text"
-            value={rua}
-            onChange={(e) => setRua(e.target.value)}
-            name="rua"
-            placeholder="Rua"
-          />
-          <input
-            type="text"
-            value={numero}
-            onChange={(e) => setNumero(e.target.value)}
-            name="numero"
-            placeholder="Número"
-          />
-          <input
-            type="text"
-            value={bairro}
-            onChange={(e) => setBairro(e.target.value)}
-            name="bairro"
-            placeholder="Bairro"
-          />
-          <input
-            type="text"
-            value={cidade}
-            onChange={(e) => setCidade(e.target.value)}
-            name="cidade"
-            placeholder="Cidade"
-          />
-          <input
-            type="text"
-            value={estado}
-            onChange={(e) => setEstado(e.target.value)}
-            name="estado"
-            placeholder="Estado"
-          />
+          <div className="campo">
+            <input
+              type="text"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              name="titulo"
+              placeholder="Nome da viagem"
+              required
+            />
+          </div>
+
+          <div className="campo">
+            <small>Selecione a data de ida</small>
+            <input
+              type="date"
+              value={dataPartida}
+              onChange={(e) => setDataPartida(e.target.value)}
+              name="dataPartida"
+              required
+              min={dataAtual}
+            />
+          </div>
+
+          <div className="campo">
+            <small>Selecione a data de volta</small>
+            <input
+              type="date"
+              value={dataChegada}
+              onChange={(e) => setDataChegada(e.target.value)}
+              name="dataChegada"
+              required
+              min={dataAtual}
+            />
+          </div>
+
+          <div className="campo">
+            <input
+              type="text"
+              value={cep}
+              onChange={(e) => setCep(e.target.value)}
+              name="cep"
+              placeholder="CEP"
+              maxLength={9}
+            />
+          </div>
+
+          <div className="campo">
+            <input
+              type="text"
+              value={rua}
+              onChange={(e) => setRua(e.target.value)}
+              name="rua"
+              placeholder="Rua"
+            />
+          </div>
+
+          <div className="campo">
+            <input
+              type="text"
+              value={numero}
+              onChange={(e) => setNumero(e.target.value)}
+              name="numero"
+              placeholder="Número"
+            />
+          </div>
+
+          <div className="campo">
+            <input
+              type="text"
+              value={bairro}
+              onChange={(e) => setBairro(e.target.value)}
+              name="bairro"
+              placeholder="Bairro"
+            />
+          </div>
+
+          <div className="campo">
+            <input
+              type="text"
+              value={cidade}
+              onChange={(e) => setCidade(e.target.value)}
+              name="cidade"
+              placeholder="Cidade"
+            />
+          </div>
+
+          <div className="campo">
+            <input
+              type="text"
+              value={estado}
+              onChange={(e) => setEstado(e.target.value)}
+              name="estado"
+              placeholder="Estado"
+            />
+          </div>
+
           <button className="btn-cadastrar" type="submit">
             Cadastrar
           </button>
         </Formulario>
 
-        {mensagem && <p className={mensagem.includes("sucesso") ? "sucesso" : ""}>{mensagem}</p>}
+        {mensagem && (
+          <p className={mensagem.includes("sucesso") ? "sucesso" : "erro"}>
+            {mensagem}
+          </p>
+        )}
       </div>
     </div>
   );

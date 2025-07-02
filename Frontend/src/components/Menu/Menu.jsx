@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import CardViagem from "../CardViagem/CardViagem"; // Verifique se está correto
+import CardViagem from "../CardViagem/CardViagem";
 import MensagemFeedback from "../MensagemFeedback/MensagemFeedback";
 import Formulario from "../Formulario/Formulario";
 import "./Menu.css";
 
 const Menu = () => {
+  // Controle interno do estado da busca
+  const [busca, setBusca] = useState("");
   const [viagens, setViagens] = useState([]);
   const [mensagem, setMensagem] = useState("");
   const [viagemEditando, setViagemEditando] = useState(null);
@@ -30,7 +32,6 @@ const Menu = () => {
 
     try {
       const resp = await fetch(`http://localhost:8080/viagem/usuario/${usuarioId}`);
-
       if (resp.status === 204) {
         setViagens([]);
         setMensagem("Você ainda não possui viagens cadastradas.");
@@ -67,7 +68,6 @@ const Menu = () => {
   const buscarTotalDespesas = async (viagemId) => {
     try {
       const resp = await fetch(`http://localhost:8080/despesa/${viagemId}`);
-
       if (resp.status === 204) {
         setDadosExtras((prev) => ({
           ...prev,
@@ -82,7 +82,6 @@ const Menu = () => {
           (soma, d) => soma + (Number(d.preco || 0) * Number(d.quantidade || 0)),
           0
         );
-
         setDadosExtras((prev) => ({
           ...prev,
           [viagemId]: {
@@ -144,25 +143,41 @@ const Menu = () => {
 
   return (
     <div className="menu-container">
-      <h2 className="menu-title">Minhas Viagens</h2> {/* Título fora dos cards */}
-      <MensagemFeedback className="menu-feedback" mensagem={mensagem} />
-      <div className="menu-container-viagens">
-        {viagens.map((v) => (
-          <CardViagem
-            key={v.id}
-            viagem={v}
-            onEditar={abrirEdicao}
-            onExcluir={excluirViagem}
-            qtdMochilas={dadosExtras[v.id]?.qtdMochilas || 0}
-            totalDespesas={dadosExtras[v.id]?.totalDespesas ?? 0}
-            className="menu-card-viagem"
-          />
-        ))}
+      <div className="menu-header">
+        <h2 className="menu-title">Minhas Viagens</h2>
+
+        <input
+          type="text"
+          className="menu-busca"
+          placeholder="Buscar viagens..."
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          autoComplete="off"
+          aria-label="Buscar viagens"
+        />
       </div>
 
-      {/* Modal embutido para edição */}
+      <MensagemFeedback className="menu-feedback" mensagem={mensagem} />
+
+      <div className="menu-container-viagens">
+        {viagens
+          .filter((v) => v.titulo && v.titulo.toLowerCase().includes(busca.toLowerCase()))
+          .map((v) => (
+            <div key={v.id} className="menu-card-viagem">
+              <CardViagem
+                viagem={v}
+                onEditar={abrirEdicao}
+                onExcluir={excluirViagem}
+                qtdMochilas={dadosExtras[v.id]?.qtdMochilas || 0}
+                totalDespesas={dadosExtras[v.id]?.totalDespesas ?? 0}
+              />
+            </div>
+          ))}
+      </div>
+
+      {/* Modal de edição */}
       {viagemEditando && (
-        <section className="modal-embutido menu-modal">
+        <section className="menu-modal" role="dialog" aria-modal="true">
           <h3>Editar Viagem</h3>
           <button
             type="button"
@@ -178,6 +193,7 @@ const Menu = () => {
               salvarEdicao();
             }}
             className="menu-formulario"
+            modoModal={true}
           >
             <input
               type="text"
@@ -186,6 +202,7 @@ const Menu = () => {
               className="menu-campo-input"
               placeholder="Título"
               required
+              autoFocus
             />
             <input
               type="text"

@@ -1,10 +1,33 @@
+/* Overlay: fundo escurecido que cobre a tela toda */
+.nova-viagem-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* fundo escuro sem interferir no modal */
+    overflow: hidden;
+    /* evita scroll na página atrás do modal */
+}
+
+/* Container modal, centrado, max largura sem scroll */
 .nova-viagem-container {
     max-width: 520px;
-    margin: 10rem auto 4rem;
+    width: 90%;
+    /* REMOVIDO max-height e overflow-y */
+    overflow: hidden;
+    /* garante sem scroll */
+    margin: 0;
+    background-color: white;
     padding: 2.5rem 2rem 3rem;
-    background-color: var(--cor-secundaria);
-    border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    border-radius: 12px;
     font-family: var(--font-familia);
     color: var(--cor-texto);
     position: relative;
@@ -25,6 +48,7 @@
     cursor: pointer;
     transition: color 0.3s ease;
     padding: 0;
+    z-index: 1010;
 }
 
 .btn-fechar:hover,
@@ -49,44 +73,51 @@
     font-size: 1rem;
     text-align: center;
     color: var(--cor-error);
-    /* cor padrão para erro */
 }
 
-/* Se quiser mensagem de sucesso diferente, use essa classe no <p> */
+/* Mensagem sucesso */
 .nova-viagem-container p.sucesso {
     color: var(--cor-sucesso);
 }
 
 /* Botão cadastrar */
 .btn-cadastrar {
-    background-color: var(--cor-primaria);
-    color: white;
-    border: none;
-    padding: 0.8rem 2.2rem;
-    font-size: 1.1rem;
-    font-weight: var(--font-peso-bold);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    min-width: 130px;
+    background-color: var(--cor-primaria) !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.8rem 2.2rem !important;
+    font-size: 1.1rem !important;
+    font-weight: var(--font-peso-bold) !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease !important;
+    min-width: 130px !important;
+    display: block !important;
+    margin: 0 auto !important;
 }
 
 .btn-cadastrar:hover,
-.btn-cadastrar:focus {
+.btn-cadastrar:focus,
+.btn-cadastrar:active {
     background-color: var(--cor-primaria-escuro);
+    color: white;
     outline: none;
+    border: none;
+    box-shadow: none;
 }
 
-/* Espaçamento padrão entre inputs dentro do formulário (caso precise reforçar) */
+/* Espaçamento padrão entre inputs */
 .nova-viagem-container input {
     margin-bottom: 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Responsividade para telas menores */
 @media (max-width: 480px) {
     .nova-viagem-container {
-        margin: 2rem 1rem 3rem;
         padding: 2rem 1.5rem 2.5rem;
+        max-width: 90vw;
     }
 
     .btn-fechar {

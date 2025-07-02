@@ -1,10 +1,10 @@
 /* src/components/Navbar/Navbar.css */
+
 .navbar {
     background-color: white;
     padding: 1rem 2rem;
     display: flex;
     justify-content: flex-start;
-    /* todos à esquerda */
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
@@ -24,15 +24,14 @@
     padding: 0;
     margin: 0;
     margin-left: 0;
-    /* tira qualquer espaço extra à esquerda */
+    /* remove espaço extra à esquerda */
 }
-
-
 
 .navbar-item {
     font-size: 1.2rem;
 }
 
+/* Estilo comum para links e botão com a classe navbar-link */
 .navbar-link {
     text-decoration: none;
     color: var(--cor-texto);
@@ -40,6 +39,18 @@
     transition: color 0.3s, transform 0.2s;
     padding: 0.5rem 1.2rem;
     border-radius: 20px;
+    background: none;
+    /* importante para botão não ter fundo */
+    border: none;
+    /* importante para botão não ter borda */
+    cursor: pointer;
+    /* cursor de ponteiro para botão e link */
+    font-family: inherit;
+    /* herda fonte da navbar */
+    font-size: inherit;
+    /* herda tamanho da fonte */
+    display: inline-block;
+    /* para garantir comportamento parecido */
 }
 
 .navbar-link:hover {

@@ -304,40 +304,78 @@ const Mochilas = () => {
 
           <h4>Mochilas:</h4>
 
-          {(mochilasPorViagem[viagem.id] || []).map((m) => (
-            <div key={m.id} className="mochilas-card-mochila">
-              <h5>{m.titulo}</h5>
-              <button
-                type="button"
-                onClick={() => abrirEdicaoMochila(m, viagem.id)}
-                className="btn-editar"
-              >
-                Editar Mochila
-              </button>
-              <button
-                type="button"
-                onClick={() => excluirMochila(m.id, viagem.id)}
-                className="btn-excluir"
-              >
-                Excluir Mochila
-              </button>
+          {/* Cards lado a lado */}
+          <div className="mochilas-cards-container">
+            {(mochilasPorViagem[viagem.id] || []).map((m) => (
+              <div key={m.id} className="mochilas-card-mochila">
+                <h5>{m.titulo}</h5>
+                <button
+                  type="button"
+                  onClick={() => abrirEdicaoMochila(m, viagem.id)}
+                  className="btn-editar"
+                >
+                  Editar Mochila
+                </button>
+                <button
+                  type="button"
+                  onClick={() => excluirMochila(m.id, viagem.id)}
+                  className="btn-excluir"
+                >
+                  Excluir Mochila
+                </button>
 
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Quantidade</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(itensPorMochila[m.id] || []).map((item) => (
-                    <tr key={item.id}>
-                      <td>{item.nome}</td>
-                      <td>{item.descricao || "-"}</td>
-                      <td>{item.quantidade}</td>
-                      <td>
+
+
+                <Formulario
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    adicionarItem(m.id);
+                  }}
+                  className="mochilas-formulario-adicionar-item"
+                >
+                  <input
+                    placeholder="Item"
+                    value={novoItemPorMochila[m.id]?.nome || ""}
+                    onChange={(e) => atualizarNovoItem(m.id, "nome", e.target.value)}
+                    className="mochilas-input"
+                    required
+                  />
+                  <input
+                    placeholder="Descrição"
+                    value={novoItemPorMochila[m.id]?.descricao || ""}
+                    onChange={(e) => atualizarNovoItem(m.id, "descricao", e.target.value)}
+                    className="mochilas-input"
+                    required
+                  />
+                  <input
+                    placeholder="Quantidade"
+                    type="number"
+                    min="1"
+                    value={novoItemPorMochila[m.id]?.quantidade || ""}
+                    onChange={(e) => atualizarNovoItem(m.id, "quantidade", e.target.value)}
+                    className="mochilas-input"
+                    required
+                  />
+                  <button type="submit" className="mochilas-botao">
+                    Adicionar
+                  </button>
+                </Formulario>
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Descrição</th>
+                      <th>Quantidade</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(itensPorMochila[m.id] || []).map((item) => (
+                      <tr key={item.id}>
+                        <td>{item.nome}</td>
+                        <td>{item.descricao || "-"}</td>
+                        <td>{item.quantidade}</td>
                         <button
                           type="button"
                           onClick={() => abrirEdicao(item, m.id)}
@@ -352,87 +390,51 @@ const Mochilas = () => {
                         >
                           Excluir
                         </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <Formulario
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  adicionarItem(m.id);
-                }}
-                className="mochilas-formulario-adicionar-item"
-              >
-                <input
-                  placeholder="Nome"
-                  value={novoItemPorMochila[m.id]?.nome || ""}
-                  onChange={(e) => atualizarNovoItem(m.id, "nome", e.target.value)}
-                  className="mochilas-input"
-                  required
-                />
-                <input
-                  placeholder="Descrição"
-                  value={novoItemPorMochila[m.id]?.descricao || ""}
-                  onChange={(e) => atualizarNovoItem(m.id, "descricao", e.target.value)}
-                  className="mochilas-input"
-                  required
-                />
-                <input
-                  placeholder="Quantidade"
-                  type="number"
-                  min="1"
-                  value={novoItemPorMochila[m.id]?.quantidade || ""}
-                  onChange={(e) => atualizarNovoItem(m.id, "quantidade", e.target.value)}
-                  className="mochilas-input"
-                  required
-                />
-                <button type="submit" className="mochilas-botao">
-                  Adicionar Item
-                </button>
-              </Formulario>
-            </div>
-          ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
+          </div>
 
           <button
             type="button"
             onClick={() => abrirModalNovaMochila(viagem)}
             className="mochilas-botao"
           >
-            Adicionar Mochila
+            Nova mochila
           </button>
         </div>
       ))}
 
+
       {/* Modal para nova mochila */}
       {viagemSelecionada && (
-        <div className="mochilas-modal">
-          <div className="mochilas-modal-content">
+        <div className="nova-viagem-overlay">
+          <div className="nova-viagem-container">
             <button
               type="button"
-              className="btn-fechar-modal"
+              className="btn-fechar"
               aria-label="Fechar"
               onClick={() => setViagemSelecionada(null)}
             >
               &times;
             </button>
-            <h3>Nova Mochila</h3>
+            <h2>Nova Mochila</h2>
             <Formulario
               onSubmit={(e) => {
                 e.preventDefault();
                 salvarNovaMochila();
               }}
-              className="mochilas-formulario-modal"
             >
               <input
                 placeholder="Título"
                 value={novaMochila.titulo}
                 onChange={(e) => setNovaMochila({ ...novaMochila, titulo: e.target.value })}
-                className="mochilas-input"
                 required
               />
-              <button type="submit" className="mochilas-botao">
+              <button className="btn-cadastrar" type="submit">
                 Salvar
               </button>
             </Formulario>
@@ -498,7 +500,7 @@ const Mochilas = () => {
               className="mochilas-formulario-modal"
             >
               <input
-                placeholder="Nome"
+                placeholder="Item"
                 value={itemEditando.nome}
                 onChange={(e) =>
                   setItemEditando({ ...itemEditando, nome: e.target.value })

@@ -3,6 +3,7 @@ import CardViagem from "../CardViagem/CardViagem";
 import MensagemFeedback from "../MensagemFeedback/MensagemFeedback";
 import Formulario from "../Formulario/Formulario";
 import "./Despesas.css";
+import Navbar from "../Navbar/Navbar";
 
 const Despesas = () => {
   const [viagens, setViagens] = useState([]);
@@ -48,7 +49,7 @@ const Despesas = () => {
         setMensagem("Erro ao buscar despesas.");
       }
     } catch {
-      setMensagem("Erro ao buscar despesas.");
+      setMensagem("Erro ao buscar despesas (Fábio, descobre o erro disso <-).");
     }
   };
 
@@ -135,7 +136,7 @@ const Despesas = () => {
   };
 
   return (
-    <div className="despesas-container">
+    <><Navbar /><div className="despesas-container">
       <h2>Controle de Despesas</h2>
       <MensagemFeedback mensagem={mensagem} />
 
@@ -148,7 +149,16 @@ const Despesas = () => {
           </div>
 
           <div className="despesas-bloco">
-            <h4>Despesas:</h4>
+            <div className="adicionar-despesa">
+              <button
+                type="button"
+                className="btn-adicionar"
+                onClick={() => abrirModalNovaDespesa(viagem)}
+              >
+                +
+              </button>
+            </div>
+
 
             {(despesasPorViagem[viagem.id] || []).length === 0 ? (
               <p className="nenhuma-despesa">Nenhuma despesa cadastrada.</p>
@@ -156,48 +166,52 @@ const Despesas = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>Nome</th>
-                    <th>Preço</th>
-                    <th>Ações</th>
+                    <th>Despesa</th>
+                    <th>Custo</th>
+                    <th>Ação</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(despesasPorViagem[viagem.id] || []).map((d) => (
                     <tr key={d.id}>
                       <td>{d.nome}</td>
-                      <td>{d.preco}</td>
+                      <td>{parseFloat(d.preco).toFixed(2)}</td>
                       <td>
-                        <button
-                          type="button"
-                          className="btn-editar"
-                          onClick={() => abrirEdicao(d, viagem.id)}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          type="button"
-                          className="btn-excluir"
-                          onClick={() => excluirDespesa(d.id, viagem.id)}
-                        >
-                          Excluir
-                        </button>
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
+                          <button
+                            type="button"
+                            className="btn-editar"
+                            onClick={() => abrirEdicao(d, viagem.id)}
+                          >
+                            Editar
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-excluir"
+                            onClick={() => excluirDespesa(d.id, viagem.id)}
+                          >
+                            Excluir
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
+
               </table>
             )}
 
-            <div className="adicionar-despesa">
-              <button
-                type="button"
-                className="btn-adicionar"
-                onClick={() => abrirModalNovaDespesa(viagem)}
-              >
-                Adicionar Despesa
-              </button>
-            </div>
+
           </div>
+          <p className="total-despesas">
+            Total: R$
+            {(
+              (despesasPorViagem[viagem.id] || []).reduce(
+                (soma, d) => soma + parseFloat(d.preco || 0),
+                0
+              )
+            ).toFixed(2)}
+          </p>
         </div>
       ))}
 
@@ -220,8 +234,7 @@ const Despesas = () => {
                 type="text"
                 value={novaDespesa.nome}
                 onChange={(e) => setNovaDespesa({ ...novaDespesa, nome: e.target.value })}
-                required
-              />
+                required />
             </label>
             <label>
               Preço
@@ -230,8 +243,7 @@ const Despesas = () => {
                 step="0.01"
                 value={novaDespesa.preco}
                 onChange={(e) => setNovaDespesa({ ...novaDespesa, preco: e.target.value })}
-                required
-              />
+                required />
             </label>
             <button className="btn-salvar" type="submit">Salvar</button>
           </Formulario>
@@ -252,13 +264,12 @@ const Despesas = () => {
           </button>
           <Formulario onSubmit={(e) => { e.preventDefault(); salvarEdicao(); }}>
             <label>
-              Nome
+              Despesa
               <input
                 type="text"
                 value={despesaEditando.nome}
                 onChange={(e) => setDespesaEditando({ ...despesaEditando, nome: e.target.value })}
-                required
-              />
+                required />
             </label>
             <label>
               Preço
@@ -267,14 +278,13 @@ const Despesas = () => {
                 step="0.01"
                 value={despesaEditando.preco}
                 onChange={(e) => setDespesaEditando({ ...despesaEditando, preco: e.target.value })}
-                required
-              />
+                required />
             </label>
             <button className="btn-salvar" type="submit">Salvar</button>
           </Formulario>
         </section>
       )}
-    </div>
+    </div></>
   );
 };
 

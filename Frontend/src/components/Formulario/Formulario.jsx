@@ -1,11 +1,11 @@
 import React from "react";
 import "./Formulario.css";
 
-const Formulario = ({ children, onSubmit, className, ...props }) => {
+const Formulario = ({ children, onSubmit, className = "", modoModal = false, ...props }) => {
   return (
     <form
       onSubmit={onSubmit}
-      className={`formulario-container ${className || ""}`}
+      className={`formulario-container ${className} ${modoModal ? "formulario-modal" : ""}`}
       noValidate
       {...props}
     >

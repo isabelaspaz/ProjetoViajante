@@ -1,16 +1,24 @@
-/* Formulario.css */
-
 .formulario-container {
-    background-color: var(--cor-fundo);
+    background-color: white;
     padding: 2.5rem 2rem;
     max-width: 480px;
     margin: 2rem auto;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     font-family: var(--font-familia);
     color: var(--cor-texto);
     box-sizing: border-box;
     text-align: center;
+    
+}
+
+.formulario-container.formulario-modal {
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+    text-align: left;
 }
 
 .formulario-container h2 {
@@ -18,6 +26,11 @@
     font-weight: var(--font-peso-bold);
     margin-bottom: 1.8rem;
     color: var(--cor-primaria);
+}
+
+/* Quando estiver no modo modal, centralizar h2 no modal se quiser */
+.formulario-container.formulario-modal h2 {
+    text-align: center;
 }
 
 .formulario-container label {
@@ -41,7 +54,6 @@
     transition: border-color 0.3s ease;
     box-sizing: border-box;
     color: var(--cor-texto);
-    margin-bottom: 1.2rem;
 }
 
 .formulario-container input:focus,
@@ -96,21 +108,18 @@
     font-size: 1rem;
     text-align: center;
     color: var(--cor-error);
-    /* padrão erro */
 }
 
 .formulario-container .mensagem-sucesso {
     color: var(--cor-sucesso);
 }
 
-/* Link dentro do formulário (ex: "Já tem conta?") */
 .formulario-container .link-redirect {
     margin-top: 1.5rem;
     font-size: 1rem;
     color: var(--cor-texto-claro);
 }
 
-/* Remove estilo de botão para links de texto (usados no lugar de botões) */
 .formulario-container .link-redirect a,
 .formulario-container .link-redirect span {
     background: none;
@@ -123,7 +132,6 @@
     font-size: 1rem;
     transition: color 0.3s ease;
     display: inline-block;
-    /* facilita clique */
     outline: none;
 }
 
@@ -136,10 +144,14 @@
     outline: none;
 }
 
-/* Responsividade */
 @media (max-width: 480px) {
     .formulario-container {
         padding: 2rem 1.5rem;
         margin: 1.5rem;
+    }
+
+    .formulario-container.formulario-modal {
+        padding: 1rem 0;
+        margin: 0;
     }
 }
