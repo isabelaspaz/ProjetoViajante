@@ -1,9 +1,19 @@
+.mochilas-viagem-e-mochilas {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+
+
 .mochilas-container {
     max-width: 1100px;
     margin: 2rem auto;
     padding: 1rem;
     font-family: var(--font-familia);
     color: var(--cor-texto);
+
 }
 
 .mochilas-container h2 {
@@ -17,26 +27,26 @@
     margin-bottom: 3rem;
     border-bottom: 1px solid #ccc;
     padding-bottom: 2rem;
+
 }
 
 /* Cards lado a lado */
 .mochilas-cards-container {
+
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-    margin-top: 1rem;
+    gap: 1.2rem;
+    flex: 1;
 }
 
 /* Card de mochila */
 .mochilas-card-mochila {
-    background-color: white;
+    background-color: #fff;
+    padding: 1.2rem;
     border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    padding: 1.8rem;
-    flex: 1 1 320px;
-    max-width: 420px;
-    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 380px;
+    background-color: rgb(255, 255, 255);
 }
 
 /* Título da mochila */
@@ -138,4 +148,26 @@
     align-items: flex-start;
     gap: 0.4rem;
     padding-top: 0.5rem;
+}
+
+.mochilas-card-mochila-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h4 {
+    color: #1b7730;
+    font-size: 23px;
+}
+
+.mochilas-titulo-linha {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
 }

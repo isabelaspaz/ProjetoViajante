@@ -48,8 +48,8 @@
 }
 
 .btn-editar {
-    background-color: var(--cor-primaria) !important;
-    color: white !important;
+    background-color: var(--cor-primaria)!important;
+    color: white!important;
     margin-right: 0.5rem;
 }
 
@@ -59,8 +59,8 @@
 }
 
 .btn-excluir {
-    background-color: #ff5a5f !important;
-    color: white !important;
+    background-color: #ff5a5f!important;
+    color: white!important;
 }
 
 .btn-excluir:hover {
@@ -79,9 +79,9 @@
 
 .btn-editar,
 .btn-excluir {
-    padding: 0.6rem 1.2rem !important;
-    font-size: 0.95rem !important;
-    border: none !important;
+    padding: 0.6rem 1.2rem!important;
+    font-size: 0.95rem!important;
+    border: none!important;
     border-radius: 999px !important;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;

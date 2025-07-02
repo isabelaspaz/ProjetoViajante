@@ -4,6 +4,7 @@ import CardViagem from "../CardViagem/CardViagem";
 import MensagemFeedback from "../MensagemFeedback/MensagemFeedback";
 import Formulario from "../Formulario/Formulario";
 import "./Mochilas.css";
+import Navbar from "../Navbar/Navbar";
 
 const Mochilas = () => {
   const navigate = useNavigate();
@@ -13,10 +14,11 @@ const Mochilas = () => {
   const [itensPorMochila, setItensPorMochila] = useState({});
   const [novoItemPorMochila, setNovoItemPorMochila] = useState({});
   const [mensagem, setMensagem] = useState("");
-  const [viagemSelecionada, setViagemSelecionada] = useState(null);
-  const [novaMochila, setNovaMochila] = useState({ titulo: "" });
+  const [modalNovaMochilaAberto, setModalNovaMochilaAberto] = useState(false);
+  const [novaMochila, setNovaMochila] = useState({ titulo: "", viagemId: "" });
   const [mochilaEditando, setMochilaEditando] = useState(null);
   const [itemEditando, setItemEditando] = useState(null);
+
 
   useEffect(() => {
     buscarViagens();
@@ -45,10 +47,7 @@ const Mochilas = () => {
       const resp = await fetch(`http://localhost:8080/mochila/${viagemId}`);
       if (resp.ok) {
         const dados = await resp.json();
-        setMochilasPorViagem((prev) => ({
-          ...prev,
-          [viagemId]: dados,
-        }));
+        setMochilasPorViagem((prev) => ({ ...prev, [viagemId]: dados }));
         dados.forEach((m) => buscarItens(m.id));
       }
     } catch {
@@ -61,24 +60,23 @@ const Mochilas = () => {
       const resp = await fetch(`http://localhost:8080/mochilaItem/${mochilaId}`);
       if (resp.ok) {
         const dados = await resp.json();
-        setItensPorMochila((prev) => ({
-          ...prev,
-          [mochilaId]: dados,
-        }));
+        setItensPorMochila((prev) => ({ ...prev, [mochilaId]: dados }));
       }
     } catch {
-      setMensagem("Erro ao buscar itens.");
+      setMensagem("Erro ao buscar itens. - Não sei o que isso tá fazendo aqui!");
     }
-  };
-
-  const abrirModalNovaMochila = (viagem) => {
-    setViagemSelecionada(viagem);
-    setNovaMochila({ titulo: "" });
   };
 
   const salvarNovaMochila = async () => {
     const usuarioId = localStorage.getItem("usuarioId");
-    if (!usuarioId || !viagemSelecionada) return;
+    if (!usuarioId || !novaMochila.viagemId) {
+      setMensagem("Selecione uma viagem.");
+      return;
+    }
+    if (!novaMochila.titulo) {
+      setMensagem("Preencha o título da mochila.");
+      return;
+    }
 
     try {
       const resp = await fetch("http://localhost:8080/mochila", {
@@ -86,15 +84,16 @@ const Mochilas = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           titulo: novaMochila.titulo,
-          viagemId: viagemSelecionada.id,
+          viagemId: novaMochila.viagemId,
           usuarioId,
         }),
       });
 
       if (resp.ok) {
         setMensagem("Mochila adicionada.");
-        await buscarMochilas(viagemSelecionada.id);
-        setViagemSelecionada(null);
+        await buscarMochilas(novaMochila.viagemId);
+        setNovaMochila({ titulo: "", viagemId: "" });
+        setModalNovaMochilaAberto(false);
       } else {
         setMensagem("Erro ao adicionar mochila.");
       }
@@ -104,10 +103,7 @@ const Mochilas = () => {
   };
 
   const abrirEdicaoMochila = (mochila, viagemId) => {
-    setMochilaEditando({
-      ...mochila,
-      viagem: { id: viagemId },
-    });
+    setMochilaEditando({ ...mochila, viagem: { id: viagemId } });
   };
 
   const salvarEdicaoMochila = async () => {
@@ -130,10 +126,7 @@ const Mochilas = () => {
           const atualizadas = mochilas.map((m) =>
             m.id === mochilaEditando.id ? { ...m, titulo: mochilaEditando.titulo } : m
           );
-          return {
-            ...prev,
-            [mochilaEditando.viagem.id]: atualizadas,
-          };
+          return { ...prev, [mochilaEditando.viagem.id]: atualizadas };
         });
         setMochilaEditando(null);
       } else {
@@ -166,10 +159,7 @@ const Mochilas = () => {
   const atualizarNovoItem = (mochilaId, campo, valor) => {
     setNovoItemPorMochila((prev) => ({
       ...prev,
-      [mochilaId]: {
-        ...prev[mochilaId],
-        [campo]: valor,
-      },
+      [mochilaId]: { ...prev[mochilaId], [campo]: valor },
     }));
   };
 
@@ -231,10 +221,7 @@ const Mochilas = () => {
   };
 
   const abrirEdicao = (item, mochilaId) => {
-    setItemEditando({
-      ...item,
-      mochila: { id: mochilaId },
-    });
+    setItemEditando({ ...item, mochila: { id: mochilaId } });
   };
 
   const salvarEdicao = async () => {
@@ -263,13 +250,8 @@ const Mochilas = () => {
           const itensAtualizados = itens.map((i) =>
             i.id === itemEditando.id ? { ...i, ...corpo } : i
           );
-
-          return {
-            ...prev,
-            [itemEditando.mochila.id]: itensAtualizados,
-          };
+          return { ...prev, [itemEditando.mochila.id]: itensAtualizados };
         });
-
         setItemEditando(null);
       } else {
         const erro = await resp.text();
@@ -285,257 +267,278 @@ const Mochilas = () => {
   };
 
   return (
-    <div className="mochilas-container">
-      <h2>Controle de Mochilas</h2>
-      <MensagemFeedback mensagem={mensagem} />
 
-      {viagens.map((viagem) => (
-        <div key={viagem.id} className="mochilas-card-viagem">
+    <><Navbar />
+      <div className="mochilas-container">
+
+
+        <div className="mochilas-titulo-linha">
+          <h2>Controle de Mochilas</h2>
           <button
-            className="btn-fechar"
-            onClick={voltarTelaInicial}
-            aria-label="Voltar para tela inicial"
             type="button"
+            onClick={() => setModalNovaMochilaAberto(true)}
+            className="mochilas-botao"
+            title="Adicionar nova mochila"
           >
-            &times;
+            +
           </button>
+        </div>
 
-          <CardViagem viagem={viagem} />
+        <MensagemFeedback mensagem={mensagem} />
 
-          <h4>Mochilas:</h4>
-
-          {/* Cards lado a lado */}
-          <div className="mochilas-cards-container">
-            {(mochilasPorViagem[viagem.id] || []).map((m) => (
-              <div key={m.id} className="mochilas-card-mochila">
-                <h5>{m.titulo}</h5>
-                <button
-                  type="button"
-                  onClick={() => abrirEdicaoMochila(m, viagem.id)}
-                  className="btn-editar"
-                >
-                  Editar Mochila
-                </button>
-                <button
-                  type="button"
-                  onClick={() => excluirMochila(m.id, viagem.id)}
-                  className="btn-excluir"
-                >
-                  Excluir Mochila
-                </button>
+        {viagens.map((viagem) => (
+          <div key={viagem.id} className="mochilas-card-viagem">
 
 
 
-                <Formulario
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    adicionarItem(m.id);
-                  }}
-                  className="mochilas-formulario-adicionar-item"
-                >
-                  <input
-                    placeholder="Item"
-                    value={novoItemPorMochila[m.id]?.nome || ""}
-                    onChange={(e) => atualizarNovoItem(m.id, "nome", e.target.value)}
-                    className="mochilas-input"
-                    required
-                  />
-                  <input
-                    placeholder="Descrição"
-                    value={novoItemPorMochila[m.id]?.descricao || ""}
-                    onChange={(e) => atualizarNovoItem(m.id, "descricao", e.target.value)}
-                    className="mochilas-input"
-                    required
-                  />
-                  <input
-                    placeholder="Quantidade"
-                    type="number"
-                    min="1"
-                    value={novoItemPorMochila[m.id]?.quantidade || ""}
-                    onChange={(e) => atualizarNovoItem(m.id, "quantidade", e.target.value)}
-                    className="mochilas-input"
-                    required
-                  />
-                  <button type="submit" className="mochilas-botao">
-                    Adicionar
-                  </button>
-                </Formulario>
+            <div className="mochilas-viagem-e-mochilas">
 
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Descrição</th>
-                      <th>Quantidade</th>
 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(itensPorMochila[m.id] || []).map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.nome}</td>
-                        <td>{item.descricao || "-"}</td>
-                        <td>{item.quantidade}</td>
+
+
+              {/* Cards lado a lado */}
+              <div className="mochilas-cards-container">
+                {(mochilasPorViagem[viagem.id] || []).map((m) => (
+                  <div key={m.id} className="mochilas-card-mochila">
+
+                    <h4>{viagem.titulo}</h4>
+                    <div className="mochilas-card-mochila-header">
+
+                      <h5>{m.titulo}</h5>
+                      <div className="mochilas-card-mochila-botoes">
                         <button
                           type="button"
-                          onClick={() => abrirEdicao(item, m.id)}
+                          onClick={() => abrirEdicaoMochila(m, viagem.id)}
                           className="btn-editar"
                         >
                           Editar
                         </button>
                         <button
                           type="button"
-                          onClick={() => excluirItem(item.id, m.id)}
+                          onClick={() => excluirMochila(m.id, viagem.id)}
                           className="btn-excluir"
                         >
                           Excluir
                         </button>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+
+                      </div>
+                    </div>
+
+
+                    <Formulario
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        adicionarItem(m.id);
+                      }}
+                      className="mochilas-formulario-adicionar-item"
+                    >
+                      <input
+                        placeholder="Item"
+                        value={novoItemPorMochila[m.id]?.nome || ""}
+                        onChange={(e) => atualizarNovoItem(m.id, "nome", e.target.value)}
+                        className="mochilas-input"
+                        required />
+                      <input
+                        placeholder="Descrição"
+                        value={novoItemPorMochila[m.id]?.descricao || ""}
+                        onChange={(e) => atualizarNovoItem(m.id, "descricao", e.target.value)}
+                        className="mochilas-input"
+                        required />
+                      <input
+                        placeholder="Quantidade"
+                        type="number"
+                        min="1"
+                        value={novoItemPorMochila[m.id]?.quantidade || ""}
+                        onChange={(e) => atualizarNovoItem(m.id, "quantidade", e.target.value)}
+                        className="mochilas-input"
+                        required />
+                      <button type="submit" className="mochilas-botao">
+                        Adicionar
+                      </button>
+                    </Formulario>
+
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>Descrição</th>
+                          <th>Quantidade</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {(itensPorMochila[m.id] || []).map((item) => (
+                          <tr key={item.id}>
+                            <td>{item.nome}</td>
+                            <td>{item.descricao || "-"}</td>
+                            <td>{item.quantidade}</td>
+                            <button
+                              type="button"
+                              onClick={() => abrirEdicao(item, m.id)}
+                              className="btn-editar"
+                            >
+                              Editar
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => excluirItem(item.id, m.id)}
+                              className="btn-excluir"
+                            >
+                              Excluir
+                            </button>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
           </div>
-
-          <button
-            type="button"
-            onClick={() => abrirModalNovaMochila(viagem)}
-            className="mochilas-botao"
-          >
-            Nova mochila
-          </button>
-        </div>
-      ))}
+        ))}
 
 
-      {/* Modal para nova mochila */}
-      {viagemSelecionada && (
-        <div className="nova-viagem-overlay">
-          <div className="nova-viagem-container">
-            <button
-              type="button"
-              className="btn-fechar"
-              aria-label="Fechar"
-              onClick={() => setViagemSelecionada(null)}
-            >
-              &times;
-            </button>
-            <h2>Nova Mochila</h2>
-            <Formulario
-              onSubmit={(e) => {
-                e.preventDefault();
-                salvarNovaMochila();
-              }}
-            >
-              <input
-                placeholder="Título"
-                value={novaMochila.titulo}
-                onChange={(e) => setNovaMochila({ ...novaMochila, titulo: e.target.value })}
-                required
-              />
-              <button className="btn-cadastrar" type="submit">
-                Salvar
+        {/* Modal para nova mochila */}
+        {modalNovaMochilaAberto && (
+          <div className="nova-viagem-overlay">
+            <div className="nova-viagem-container">
+              <button
+                type="button"
+                className="btn-fechar"
+                aria-label="Fechar"
+                onClick={() => {
+                  setModalNovaMochilaAberto(false);
+                  setNovaMochila({ titulo: "", viagemId: "" });
+                }}
+              >
+                &times;
               </button>
-            </Formulario>
-          </div>
-        </div>
-      )}
+              <h2>Nova Mochila</h2>
+              <Formulario
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  salvarNovaMochila();
+                }}
+              >
+                <select
+                  value={novaMochila.viagemId || ""}
+                  onChange={(e) =>
+                    setNovaMochila({ ...novaMochila, viagemId: e.target.value })
+                  }
+                  required
+                >
+                  <option value="" disabled>
+                    Selecione a viagem
+                  </option>
+                  {viagens.map((viagem) => (
+                    <option key={viagem.id} value={viagem.id}>
+                      {viagem.titulo}
+                    </option>
+                  ))}
+                </select>
 
-      {/* Modal para editar mochila */}
-      {mochilaEditando && (
-        <div className="mochilas-modal">
-          <div className="mochilas-modal-content">
-            <button
-              type="button"
-              className="btn-fechar-modal"
-              aria-label="Fechar"
-              onClick={() => setMochilaEditando(null)}
-            >
-              &times;
-            </button>
-            <h3>Editar Mochila</h3>
-            <Formulario
-              onSubmit={(e) => {
-                e.preventDefault();
-                salvarEdicaoMochila();
-              }}
-              className="mochilas-formulario-modal"
-            >
-              <input
-                placeholder="Título"
-                value={mochilaEditando.titulo}
-                onChange={(e) =>
-                  setMochilaEditando({ ...mochilaEditando, titulo: e.target.value })
-                }
-                className="mochilas-input"
-                required
-              />
-              <button type="submit" className="mochilas-botao">
-                Salvar
-              </button>
-            </Formulario>
-          </div>
-        </div>
-      )}
+                <input
+                  placeholder="Nome da mochila"
+                  value={novaMochila.titulo}
+                  onChange={(e) =>
+                    setNovaMochila({ ...novaMochila, titulo: e.target.value })
+                  }
+                  required
+                />
 
-      {/* Modal para editar item */}
-      {itemEditando && (
-        <div className="mochilas-modal">
-          <div className="mochilas-modal-content">
-            <button
-              type="button"
-              className="btn-fechar-modal"
-              aria-label="Fechar"
-              onClick={() => setItemEditando(null)}
-            >
-              &times;
-            </button>
-            <h3>Editar Item</h3>
-            <Formulario
-              onSubmit={(e) => {
-                e.preventDefault();
-                salvarEdicao();
-              }}
-              className="mochilas-formulario-modal"
-            >
-              <input
-                placeholder="Item"
-                value={itemEditando.nome}
-                onChange={(e) =>
-                  setItemEditando({ ...itemEditando, nome: e.target.value })
-                }
-                className="mochilas-input"
-                required
-              />
-              <input
-                placeholder="Descrição"
-                value={itemEditando.descricao}
-                onChange={(e) =>
-                  setItemEditando({ ...itemEditando, descricao: e.target.value })
-                }
-                className="mochilas-input"
-                required
-              />
-              <input
-                placeholder="Quantidade"
-                type="number"
-                min="1"
-                value={itemEditando.quantidade}
-                onChange={(e) =>
-                  setItemEditando({ ...itemEditando, quantidade: e.target.value })
-                }
-                className="mochilas-input"
-                required
-              />
-              <button type="submit" className="mochilas-botao">
-                Salvar
-              </button>
-            </Formulario>
+                <button className="btn-cadastrar" type="submit">
+                  Salvar
+                </button>
+              </Formulario>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+
+
+
+        {/* Modal para editar mochila */}
+        {mochilaEditando && (
+          <div className="mochilas-modal">
+            <div className="mochilas-modal-content">
+              <button
+                type="button"
+                className="btn-fechar-modal"
+                aria-label="Fechar"
+                onClick={() => setMochilaEditando(null)}
+              >
+                &times;
+              </button>
+              <h3>Editar Mochila</h3>
+              <Formulario
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  salvarEdicaoMochila();
+                }}
+                className="mochilas-formulario-modal"
+              >
+                <input
+                  placeholder="Nome"
+                  value={mochilaEditando.titulo}
+                  onChange={(e) => setMochilaEditando({ ...mochilaEditando, titulo: e.target.value })}
+                  className="mochilas-input"
+                  required />
+                <button type="submit" className="mochilas-botao">
+                  Salvar
+                </button>
+              </Formulario>
+            </div>
+          </div>
+        )}
+
+        {/* Modal para editar item */}
+        {itemEditando && (
+          <div className="mochilas-modal">
+            <div className="mochilas-modal-content">
+              <button
+                type="button"
+                className="btn-fechar-modal"
+                aria-label="Fechar"
+                onClick={() => setItemEditando(null)}
+              >
+                &times;
+              </button>
+              <h3>Editar Item</h3>
+              <Formulario
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  salvarEdicao();
+                }}
+                className="mochilas-formulario-modal"
+              >
+                <input
+                  placeholder="Item"
+                  value={itemEditando.nome}
+                  onChange={(e) => setItemEditando({ ...itemEditando, nome: e.target.value })}
+                  className="mochilas-input"
+                  required />
+                <input
+                  placeholder="Descrição"
+                  value={itemEditando.descricao}
+                  onChange={(e) => setItemEditando({ ...itemEditando, descricao: e.target.value })}
+                  className="mochilas-input"
+                  required />
+                <input
+                  placeholder="Quantidade"
+                  type="number"
+                  min="1"
+                  value={itemEditando.quantidade}
+                  onChange={(e) => setItemEditando({ ...itemEditando, quantidade: e.target.value })}
+                  className="mochilas-input"
+                  required />
+                <button type="submit" className="mochilas-botao">
+                  Salvar
+                </button>
+              </Formulario>
+            </div>
+          </div>
+        )}
+      </div></>
   );
 };
 

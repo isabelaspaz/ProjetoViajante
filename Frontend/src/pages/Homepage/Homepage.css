@@ -1,197 +1,102 @@
-.mochilas-container {
+/* Homepage.css */
+
+.homepage {
     background-color: #fff;
-    color: #222;
+    /* fundo branco */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: var(--font-familia);
-    max-width: 800px;
-    margin: 3rem auto;
-    padding: 2.5rem;
+    color: #222;
+    /* texto escuro, quase preto */
+    position: relative;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+.overlay {
+    background-color: transparent;
+    /* sem overlay escuro */
+    width: 100%;
+    max-width: 480px;
+    padding: 3rem 2rem;
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    /* sombra suave */
 }
 
-.mochilas-container h2 {
-    font-size: 2rem;
+.header .logo {
+    width: 90px;
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    font-size: 2.6rem;
     font-weight: var(--font-peso-bold);
+    margin-bottom: 0.3rem;
     color: #00a650;
-    margin-bottom: 1.5rem;
-    text-align: center;
+    /* verde TripAdvisor */
 }
 
-.mochilas-card-viagem {
-    border-top: 1px solid #ddd;
-    padding-top: 2rem;
-    margin-top: 2rem;
-    position: relative;
+.header p {
+    font-size: 1.2rem;
+    color: #444;
+    /* texto escuro mas suave */
+    margin-bottom: 2.5rem;
 }
 
-.mochilas-card-viagem h4 {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
-    color: #00a650;
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
 }
 
-.mochilas-card-mochila {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-.mochilas-card-mochila h5 {
-    font-size: 1.1rem;
-    color: #222;
-    margin-bottom: 0.6rem;
-}
-
-.mochilas-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1.8px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 0.7rem;
-    font-size: 1rem;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-    font-family: inherit;
-}
-
-.mochilas-input:focus {
-    border-color: #00a650;
-    outline: none;
-}
-
-.mochilas-botao {
+.actions button {
     background-color: #00a650;
+    /* verde TripAdvisor */
     color: white;
     border: none;
-    padding: 0.7rem 1.8rem;
-    font-size: 1rem;
+    padding: 0.8rem 2.2rem;
+    font-size: 1.1rem;
     font-weight: var(--font-peso-bold);
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    min-width: 130px;
 }
 
-.mochilas-botao:hover {
+.actions button:hover {
     background-color: #008f45;
+    /* verde mais escuro no hover */
 }
 
-.btn-editar,
-.btn-excluir {
-    margin-right: 0.6rem;
-    font-size: 0.9rem;
-    padding: 0.4rem 0.9rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+.actions button:focus {
+    outline: 3px solid #008f45;
+    outline-offset: 2px;
 }
 
-.btn-editar {
-    background-color: #ffd966;
-    color: #222;
-}
-
-.btn-excluir {
-    background-color: #ff5e57;
-    color: white;
-}
-
-.btn-fechar {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.5rem;
-    background: transparent;
-    border: none;
-    color: #888;
-    cursor: pointer;
-}
-
-.mochilas-formulario-adicionar-item {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1rem;
-}
-
-table {
-    width: 100%;
-    margin-top: 1rem;
-    border-collapse: collapse;
-}
-
-table th,
-table td {
-    text-align: left;
-    padding: 0.6rem;
-    border-bottom: 1px solid #ccc;
-    font-size: 0.95rem;
-}
-
-table th {
-    background-color: #e9f7ef;
-    color: #222;
-}
-
-/* Modais */
-.mochilas-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mochilas-modal-content {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 420px;
-    position: relative;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.btn-fechar-modal {
-    position: absolute;
-    top: 0.8rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #888;
-    cursor: pointer;
-}
-
-.mochilas-formulario-modal {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-/* Responsividade */
+/* Responsividade simples */
 @media (max-width: 480px) {
-    .mochilas-container {
-        padding: 1.5rem;
+    .overlay {
+        padding: 2.5rem 1.5rem;
     }
 
-    .mochilas-card-viagem {
-        padding-top: 1rem;
+    .header h1 {
+        font-size: 2rem;
     }
 
-    .mochilas-botao,
-    .btn-editar,
-    .btn-excluir {
+    .header p {
+        font-size: 1rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .actions button {
         width: 100%;
-        margin-top: 0.5rem;
-    }
-
-    .mochilas-formulario-adicionar-item {
-        gap: 0.6rem;
+        min-width: unset;
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Homepage.css";
+import "./Homepage.css"; // Importando o CSS para estilização
 
 const Homepage = () => {
     const navigate = useNavigate();
