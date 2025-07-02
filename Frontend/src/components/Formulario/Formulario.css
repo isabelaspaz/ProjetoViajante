@@ -1,0 +1,145 @@
+/* Formulario.css */
+
+.formulario-container {
+    background-color: var(--cor-fundo);
+    padding: 2.5rem 2rem;
+    max-width: 480px;
+    margin: 2rem auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-familia);
+    color: var(--cor-texto);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.formulario-container h2 {
+    font-size: 2rem;
+    font-weight: var(--font-peso-bold);
+    margin-bottom: 1.8rem;
+    color: var(--cor-primaria);
+}
+
+.formulario-container label {
+    display: block;
+    font-weight: var(--font-peso-bold);
+    margin-bottom: 0.5rem;
+    color: var(--cor-texto);
+    font-size: 1rem;
+    text-align: left;
+}
+
+.formulario-container input,
+.formulario-container select,
+.formulario-container textarea {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-family: var(--font-familia);
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    color: var(--cor-texto);
+    margin-bottom: 1.2rem;
+}
+
+.formulario-container input:focus,
+.formulario-container select:focus,
+.formulario-container textarea:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 5px var(--cor-primaria);
+}
+
+.formulario-container input::placeholder,
+.formulario-container textarea::placeholder {
+    color: var(--cor-texto-claro);
+    opacity: 1;
+}
+
+.formulario-container button,
+.formulario-container .botao-trip,
+.formulario-container .btn-entrar {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    font-size: 1.1rem;
+    font-weight: var(--font-peso-bold);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 140, 186, 0.4);
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.formulario-container button:hover,
+.formulario-container .botao-trip:hover,
+.formulario-container .btn-entrar:hover {
+    background-color: var(--cor-primaria-hover);
+    box-shadow: 0 4px 10px rgba(0, 113, 163, 0.6);
+}
+
+.formulario-container button:focus,
+.formulario-container .botao-trip:focus,
+.formulario-container .btn-entrar:focus {
+    outline: 3px solid var(--cor-primaria-hover);
+    outline-offset: 2px;
+}
+
+.formulario-container .mensagem,
+.formulario-container .mensagem-feedback {
+    margin-top: 1.2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    color: var(--cor-error);
+    /* padrão erro */
+}
+
+.formulario-container .mensagem-sucesso {
+    color: var(--cor-sucesso);
+}
+
+/* Link dentro do formulário (ex: "Já tem conta?") */
+.formulario-container .link-redirect {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--cor-texto-claro);
+}
+
+/* Remove estilo de botão para links de texto (usados no lugar de botões) */
+.formulario-container .link-redirect a,
+.formulario-container .link-redirect span {
+    background: none;
+    border: none;
+    color: var(--cor-primaria);
+    font-weight: var(--font-peso-bold);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    display: inline-block;
+    /* facilita clique */
+    outline: none;
+}
+
+.formulario-container .link-redirect a:hover,
+.formulario-container .link-redirect span:hover,
+.formulario-container .link-redirect a:focus,
+.formulario-container .link-redirect span:focus {
+    color: var(--cor-primaria-hover);
+    text-decoration: none;
+    outline: none;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .formulario-container {
+        padding: 2rem 1.5rem;
+        margin: 1.5rem;
+    }
+}

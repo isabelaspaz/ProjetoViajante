@@ -1,32 +1,38 @@
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\controller\DespesaController.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\controller\MochilaController.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\controller\MochilaItemController.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\controller\UsuarioController.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\controller\ViagemController.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\dto\DespesaDTO.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\dto\MochilaDTO.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\dto\MochilaItemDTO.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\dto\UsuarioDTO.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\dto\ViagemDTO.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\entity\Despesa.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\entity\Mochila.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\entity\MochilaItem.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\entity\Usuario.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\entity\Viagem.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\ProjetoViajanteApplication.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\repository\DespesaRepo.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\repository\MochilaItemRepo.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\repository\MochilaRepo.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\repository\UsuarioRepo.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\repository\ViagemRepo.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\DespesaService.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\imp\DespesaServiceImp.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\imp\MochilaItemServiceImp.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\imp\MochilaServiceImp.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\imp\UsuarioServiceImp.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\imp\ViagemServiceImp.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\MochilaItemService.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\MochilaService.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\UsuarioService.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\service\ViagemService.java
-C:\Users\slame\OneDrive\Ambiente de Trabalho\ProjetoViajante\ProjetoViajante\ProjetoViajante\Backend\src\main\java\com\projetoViajante\util\HashUtil.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\config\CorsConfig.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\controller\DespesaController.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\controller\MochilaController.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\controller\MochilaItemController.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\controller\UsuarioController.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\controller\ViagemController.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\dto\DespesaDTO.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\dto\MochilaDTO.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\dto\MochilaItemDTO.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\dto\UsuarioDTO.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\dto\ViagemDTO.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\entity\Despesa.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\entity\Mochila.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\entity\MochilaItem.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\entity\Usuario.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\entity\Viagem.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\mapper\DespesaMapper.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\mapper\MochilaItemMapper.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\mapper\MochilaMapper.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\mapper\UsuarioMapper.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\mapper\ViagemMapper.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\ProjetoViajanteApplication.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\repository\DespesaRepo.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\repository\MochilaItemRepo.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\repository\MochilaRepo.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\repository\UsuarioRepo.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\repository\ViagemRepo.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\DespesaService.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\imp\DespesaServiceImp.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\imp\MochilaItemServiceImp.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\imp\MochilaServiceImp.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\imp\UsuarioServiceImp.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\imp\ViagemServiceImp.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\MochilaItemService.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\MochilaService.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\UsuarioService.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\service\ViagemService.java
+D:\Biblioteca\Desktop\ProjetoViajante - em andamento\Backend\src\main\java\com\projetoViajante\util\HashUtil.java

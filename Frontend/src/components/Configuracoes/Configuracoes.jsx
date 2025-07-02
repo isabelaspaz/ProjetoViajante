@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Formulario from "../Formulario/Formulario";
-import CampoInput from "../CampoInput/CampoInput";
-import Botao from "../Botao/Botao";
 import MensagemFeedback from "../MensagemFeedback/MensagemFeedback";
 import Navbar from "../Navbar/Navbar";
+import "./Configuracoes.css"; // Importando o CSS para estilização
 
 const Configuracoes = () => {
   const [usuario, setUsuario] = useState({ nome: "", email: "" });
@@ -18,13 +17,9 @@ const Configuracoes = () => {
     buscarDadosUsuario();
   }, []);
 
-  const emailValido = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  const emailValido = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const senhaValida = (senha) => {
-    return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(senha);
-  };
+  const senhaValida = (senha) => /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(senha);
 
   const buscarDadosUsuario = async () => {
     const usuarioId = localStorage.getItem("usuarioId");
@@ -66,7 +61,7 @@ const Configuracoes = () => {
     const corpo = {
       nome: usuario.nome,
       email: usuario.email,
-      novaSenha: novaSenha || null
+      novaSenha: novaSenha || null,
     };
 
     try {
@@ -96,33 +91,49 @@ const Configuracoes = () => {
   return (
     <div className="configuracoes-container">
       <Navbar />
+
+      {/* Botão X para voltar */}
+      <button
+        className="botao-fechar"
+        aria-label="Voltar"
+        onClick={() => navigate("/tela-inicial")}
+        type="button"
+      >
+        &times;
+      </button>
+
       <h2>Configurações da Conta</h2>
       <MensagemFeedback mensagem={mensagem} />
 
       <Formulario onSubmit={(e) => { e.preventDefault(); salvar(); }}>
-        <CampoInput
-          label="Nome"
+        <input
+          className="campo-nome"
+          placeholder="Nome"
           value={usuario.nome}
           onChange={(e) => setUsuario({ ...usuario, nome: e.target.value })}
+          required
         />
-        <CampoInput
-          label="Email"
+        <input
+          className="campo-email"
+          placeholder="E-mail"
           value={usuario.email}
           onChange={(e) => setUsuario({ ...usuario, email: e.target.value })}
+          required
+          type="email"
         />
-        <CampoInput
-          label="Nova Senha"
+        <input
+          placeholder="Nova senha"
           type="password"
           value={novaSenha}
           onChange={(e) => setNovaSenha(e.target.value)}
         />
-        <CampoInput
-          label="Confirmar Nova Senha"
+        <input
+          placeholder="Confirmar nova senha"
           type="password"
           value={confirmarSenha}
           onChange={(e) => setConfirmarSenha(e.target.value)}
         />
-        <Botao texto="Salvar Alterações" tipo="submit" />
+        <button className="botao-salvar" type="submit">Salvar Alterações</button>
       </Formulario>
     </div>
   );

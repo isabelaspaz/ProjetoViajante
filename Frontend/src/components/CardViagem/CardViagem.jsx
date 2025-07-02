@@ -1,5 +1,3 @@
-import Botao from "../Botao/Botao";
-
 const CardViagem = ({ viagem, onEditar, onExcluir, qtdMochilas, totalDespesas }) => {
   return (
     <div className="card-viagem">
@@ -13,8 +11,24 @@ const CardViagem = ({ viagem, onEditar, onExcluir, qtdMochilas, totalDespesas })
         Valor total das despesas: R$ {typeof totalDespesas === "number" ? totalDespesas.toFixed(2) : "0.00"}
       </p>
 
-      {onEditar && <Botao texto="Editar" onClick={() => onEditar(viagem)} />}
-      {onExcluir && <Botao texto="Excluir" onClick={() => onExcluir(viagem.id)} />}
+      {onEditar && (
+        <button
+          className="btn-editar"
+          onClick={() => onEditar(viagem)}
+          type="button"
+        >
+          Editar
+        </button>
+      )}
+      {onExcluir && (
+        <button
+          className="btn-excluir"
+          onClick={() => onExcluir(viagem.id)}
+          type="button"
+        >
+          Excluir
+        </button>
+      )}
     </div>
   );
 };

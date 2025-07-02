@@ -26,7 +26,6 @@ public class Despesa {
     private Long id;
 
     private String nome;
-    private Long quantidade;
     private Long preco;
 
     @ManyToOne

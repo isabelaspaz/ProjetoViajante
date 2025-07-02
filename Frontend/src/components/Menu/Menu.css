@@ -1,161 +1,146 @@
-/* Reset de estilos básicos */
-* {
-  margin: 0;
-  padding: 0;
+:root {
+  --font-familia: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-peso-bold: 700;
+  --cor-verde-tripadvisor: #00a650;
+  --cor-verde-tripadvisor-hover: #008f45;
+  --cor-texto-escuro: #222;
+  --cor-texto-suave: #444;
+  --cor-fundo-branco: #fff;
+  --cor-sombra: rgba(0, 0, 0, 0.1);
+}
+
+.menu-container {
+  background-color: var(--cor-fundo-branco);
+  font-family: var(--font-familia);
+  color: var(--cor-texto-escuro);
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px var(--cor-sombra);
+}
+
+.menu-title {
+  font-size: 2rem;
+  font-weight: var(--font-peso-bold);
+  color: var(--cor-verde-tripadvisor);
+  text-align: center;
+  margin-bottom: 2rem; /* Separação do container de cards */
+}
+
+.menu-container-viagens {
+  display: flex;
+  flex-wrap: wrap;        /* permite múltiplos cards em linha */
+  gap: 1.8rem;
+  justify-content: center;
+}
+
+.menu-card-viagem {
+  flex: 0 1 280px;  /* largura fixa para o card */
+  background: var(--cor-fundo-branco);
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
   box-sizing: border-box;
 }
 
-/* Corpo da página */
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa;
-  color: #495057;
-  line-height: 1.6;
-  padding: 2rem 0;
-}
-
-/* Container principal */
-.menu-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-/* Título */
-.menu-title {
-  font-size: 2rem;
-  color: #007bff;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-/* Feedback de mensagem */
-.menu-feedback {
-  margin: 1rem 0;
-  padding: 1rem;
-  background-color: #e9ecef;
-  color: #495057;
-  border-radius: 4px;
-  font-size: 1rem;
-  text-align: center;
-}
-
-/* Container de viagens */
-.menu-container-viagens {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  padding: 1rem;
-}
-
-/* Cartões de viagem */
-.menu-card-viagem {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 100%;
-  max-width: 300px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #f1f1f1; /* Cor de fundo do card */
-}
-
-.menu-card-viagem:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.menu-card-viagem img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.menu-card-viagem .card-content {
-  padding: 1rem;
-}
-
-.menu-card-viagem .card-content h3 {
-  font-size: 1.25rem;
-  color: #007bff;
-  margin-bottom: 0.5rem;
-}
-
-.menu-card-viagem .card-content p {
-  font-size: 1rem;
-  color: #868e96;
-  margin-bottom: 1rem;
-}
-
-.menu-card-viagem .card-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-}
-
-.menu-card-viagem .card-actions button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.menu-card-viagem .card-actions button:hover {
-  background-color: #0056b3;
-}
-
-/* Modal */
+/* Modal embutido */
 .menu-modal {
-  background-color: #ffffff;
-  border-radius: 8px;
+  background-color: #f9f9f9;
   padding: 2rem;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  margin-top: 2rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.menu-modal h3 {
+  color: var(--cor-verde-tripadvisor);
+  font-weight: var(--font-peso-bold);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 /* Formulário */
 .menu-formulario {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
 .menu-campo-input {
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border: 1.8px solid #ccc;
+  border-radius: 10px;
   font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.menu-campo-input:focus {
+  border-color: var(--cor-verde-tripadvisor);
+  outline: none;
 }
 
 .menu-botao {
-  padding: 0.75rem;
-  background-color: #007bff;
+  background-color: var(--cor-verde-tripadvisor);
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 0.8rem 2rem;
   font-size: 1rem;
+  font-weight: var(--font-peso-bold);
+  border-radius: 8px;
+  cursor: pointer;
   transition: background-color 0.3s ease;
+  align-self: flex-start;
 }
 
 .menu-botao:hover {
-  background-color: #0056b3;
+  background-color: var(--cor-verde-tripadvisor-hover);
+}
+
+.btn-fechar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #888;
+  cursor: pointer;
+}
+
+/* Mensagem feedback se tiver classe */
+.menu-feedback {
+  margin-bottom: 1.5rem;
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+  .menu-container {
+    padding: 1.5rem;
+  }
+
+  .menu-title {
+    font-size: 1.7rem;
+  }
+
+  .menu-modal h3 {
+    font-size: 1.3rem;
+  }
+
+  .menu-botao {
+    width: 100%;
+    text-align: center;
+  }
+
   .menu-container-viagens {
     flex-direction: column;
     align-items: center;
   }
 
   .menu-card-viagem {
-    width: 80%;
+    flex: 1 1 100%;
+    max-width: 400px;
   }
 }

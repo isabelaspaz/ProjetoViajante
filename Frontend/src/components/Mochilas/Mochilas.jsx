@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CardViagem from "../CardViagem/CardViagem";
-import CampoInput from "../CampoInput/CampoInput";
-import Botao from "../Botao/Botao";
 import MensagemFeedback from "../MensagemFeedback/MensagemFeedback";
-import Modal from "../Modal/Modal";
 import Formulario from "../Formulario/Formulario";
+import "./Mochilas.css";
 
 const Mochilas = () => {
+  const navigate = useNavigate();
+
   const [viagens, setViagens] = useState([]);
   const [mochilasPorViagem, setMochilasPorViagem] = useState({});
   const [itensPorMochila, setItensPorMochila] = useState({});
@@ -62,7 +63,7 @@ const Mochilas = () => {
         const dados = await resp.json();
         setItensPorMochila((prev) => ({
           ...prev,
-          [mochilaId]: [...dados],
+          [mochilaId]: dados,
         }));
       }
     } catch {
@@ -129,7 +130,6 @@ const Mochilas = () => {
           const atualizadas = mochilas.map((m) =>
             m.id === mochilaEditando.id ? { ...m, titulo: mochilaEditando.titulo } : m
           );
-
           return {
             ...prev,
             [mochilaEditando.viagem.id]: atualizadas,
@@ -280,6 +280,10 @@ const Mochilas = () => {
     }
   };
 
+  const voltarTelaInicial = () => {
+    navigate("/tela-inicial");
+  };
+
   return (
     <div className="mochilas-container">
       <h2>Controle de Mochilas</h2>
@@ -287,6 +291,15 @@ const Mochilas = () => {
 
       {viagens.map((viagem) => (
         <div key={viagem.id} className="mochilas-card-viagem">
+          <button
+            className="btn-fechar"
+            onClick={voltarTelaInicial}
+            aria-label="Voltar para tela inicial"
+            type="button"
+          >
+            &times;
+          </button>
+
           <CardViagem viagem={viagem} />
 
           <h4>Mochilas:</h4>
@@ -294,8 +307,20 @@ const Mochilas = () => {
           {(mochilasPorViagem[viagem.id] || []).map((m) => (
             <div key={m.id} className="mochilas-card-mochila">
               <h5>{m.titulo}</h5>
-              <Botao texto="Editar Mochila" onClick={() => abrirEdicaoMochila(m, viagem.id)} />
-              <Botao texto="Excluir Mochila" onClick={() => excluirMochila(m.id, viagem.id)} />
+              <button
+                type="button"
+                onClick={() => abrirEdicaoMochila(m, viagem.id)}
+                className="btn-editar"
+              >
+                Editar Mochila
+              </button>
+              <button
+                type="button"
+                onClick={() => excluirMochila(m.id, viagem.id)}
+                className="btn-excluir"
+              >
+                Excluir Mochila
+              </button>
 
               <table>
                 <thead>
@@ -313,96 +338,200 @@ const Mochilas = () => {
                       <td>{item.descricao || "-"}</td>
                       <td>{item.quantidade}</td>
                       <td>
-                        <Botao texto="Editar" onClick={() => abrirEdicao(item, m.id)} />
-                        <Botao texto="Excluir" onClick={() => excluirItem(item.id, m.id)} />
+                        <button
+                          type="button"
+                          onClick={() => abrirEdicao(item, m.id)}
+                          className="btn-editar"
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => excluirItem(item.id, m.id)}
+                          className="btn-excluir"
+                        >
+                          Excluir
+                        </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              <Formulario onSubmit={(e) => { e.preventDefault(); adicionarItem(m.id); }} className="mochilas-formulario-adicionar-item">
-                <CampoInput
-                  label="Nome"
+              <Formulario
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  adicionarItem(m.id);
+                }}
+                className="mochilas-formulario-adicionar-item"
+              >
+                <input
+                  placeholder="Nome"
                   value={novoItemPorMochila[m.id]?.nome || ""}
                   onChange={(e) => atualizarNovoItem(m.id, "nome", e.target.value)}
                   className="mochilas-input"
+                  required
                 />
-                <CampoInput
-                  label="Descrição"
+                <input
+                  placeholder="Descrição"
                   value={novoItemPorMochila[m.id]?.descricao || ""}
                   onChange={(e) => atualizarNovoItem(m.id, "descricao", e.target.value)}
                   className="mochilas-input"
+                  required
                 />
-                <CampoInput
-                  label="Quantidade"
+                <input
+                  placeholder="Quantidade"
                   type="number"
+                  min="1"
                   value={novoItemPorMochila[m.id]?.quantidade || ""}
                   onChange={(e) => atualizarNovoItem(m.id, "quantidade", e.target.value)}
                   className="mochilas-input"
+                  required
                 />
-                <Botao texto="Adicionar Item" tipo="submit" className="mochilas-botao" />
+                <button type="submit" className="mochilas-botao">
+                  Adicionar Item
+                </button>
               </Formulario>
             </div>
           ))}
 
-          <Botao texto="Adicionar Mochila" onClick={() => abrirModalNovaMochila(viagem)} className="mochilas-botao" />
+          <button
+            type="button"
+            onClick={() => abrirModalNovaMochila(viagem)}
+            className="mochilas-botao"
+          >
+            Adicionar Mochila
+          </button>
         </div>
       ))}
 
+      {/* Modal para nova mochila */}
       {viagemSelecionada && (
-        <Modal titulo="Nova Mochila" onFechar={() => setViagemSelecionada(null)} className="mochilas-modal">
-          <Formulario onSubmit={(e) => { e.preventDefault(); salvarNovaMochila(); }} className="mochilas-formulario-modal">
-            <CampoInput
-              label="Título"
-              value={novaMochila.titulo}
-              onChange={(e) => setNovaMochila({ ...novaMochila, titulo: e.target.value })}
-              className="mochilas-input"
-            />
-            <Botao texto="Salvar" tipo="submit" className="mochilas-botao" />
-          </Formulario>
-        </Modal>
+        <div className="mochilas-modal">
+          <div className="mochilas-modal-content">
+            <button
+              type="button"
+              className="btn-fechar-modal"
+              aria-label="Fechar"
+              onClick={() => setViagemSelecionada(null)}
+            >
+              &times;
+            </button>
+            <h3>Nova Mochila</h3>
+            <Formulario
+              onSubmit={(e) => {
+                e.preventDefault();
+                salvarNovaMochila();
+              }}
+              className="mochilas-formulario-modal"
+            >
+              <input
+                placeholder="Título"
+                value={novaMochila.titulo}
+                onChange={(e) => setNovaMochila({ ...novaMochila, titulo: e.target.value })}
+                className="mochilas-input"
+                required
+              />
+              <button type="submit" className="mochilas-botao">
+                Salvar
+              </button>
+            </Formulario>
+          </div>
+        </div>
       )}
 
+      {/* Modal para editar mochila */}
       {mochilaEditando && (
-        <Modal titulo="Editar Mochila" onFechar={() => setMochilaEditando(null)} className="mochilas-modal">
-          <Formulario onSubmit={(e) => { e.preventDefault(); salvarEdicaoMochila(); }} className="mochilas-formulario-modal">
-            <CampoInput
-              label="Título"
-              value={mochilaEditando.titulo}
-              onChange={(e) => setMochilaEditando({ ...mochilaEditando, titulo: e.target.value })}
-              className="mochilas-input"
-            />
-            <Botao texto="Salvar" tipo="submit" className="mochilas-botao" />
-          </Formulario>
-        </Modal>
+        <div className="mochilas-modal">
+          <div className="mochilas-modal-content">
+            <button
+              type="button"
+              className="btn-fechar-modal"
+              aria-label="Fechar"
+              onClick={() => setMochilaEditando(null)}
+            >
+              &times;
+            </button>
+            <h3>Editar Mochila</h3>
+            <Formulario
+              onSubmit={(e) => {
+                e.preventDefault();
+                salvarEdicaoMochila();
+              }}
+              className="mochilas-formulario-modal"
+            >
+              <input
+                placeholder="Título"
+                value={mochilaEditando.titulo}
+                onChange={(e) =>
+                  setMochilaEditando({ ...mochilaEditando, titulo: e.target.value })
+                }
+                className="mochilas-input"
+                required
+              />
+              <button type="submit" className="mochilas-botao">
+                Salvar
+              </button>
+            </Formulario>
+          </div>
+        </div>
       )}
 
+      {/* Modal para editar item */}
       {itemEditando && (
-        <Modal titulo="Editar Item" onFechar={() => setItemEditando(null)} className="mochilas-modal">
-          <Formulario onSubmit={(e) => { e.preventDefault(); salvarEdicao(); }} className="mochilas-formulario-modal">
-            <CampoInput
-              label="Nome"
-              value={itemEditando.nome}
-              onChange={(e) => setItemEditando({ ...itemEditando, nome: e.target.value })}
-              className="mochilas-input"
-            />
-            <CampoInput
-              label="Descrição"
-              value={itemEditando.descricao}
-              onChange={(e) => setItemEditando({ ...itemEditando, descricao: e.target.value })}
-              className="mochilas-input"
-            />
-            <CampoInput
-              label="Quantidade"
-              type="number"
-              value={itemEditando.quantidade}
-              onChange={(e) => setItemEditando({ ...itemEditando, quantidade: e.target.value })}
-              className="mochilas-input"
-            />
-            <Botao texto="Salvar" tipo="submit" className="mochilas-botao" />
-          </Formulario>
-        </Modal>
+        <div className="mochilas-modal">
+          <div className="mochilas-modal-content">
+            <button
+              type="button"
+              className="btn-fechar-modal"
+              aria-label="Fechar"
+              onClick={() => setItemEditando(null)}
+            >
+              &times;
+            </button>
+            <h3>Editar Item</h3>
+            <Formulario
+              onSubmit={(e) => {
+                e.preventDefault();
+                salvarEdicao();
+              }}
+              className="mochilas-formulario-modal"
+            >
+              <input
+                placeholder="Nome"
+                value={itemEditando.nome}
+                onChange={(e) =>
+                  setItemEditando({ ...itemEditando, nome: e.target.value })
+                }
+                className="mochilas-input"
+                required
+              />
+              <input
+                placeholder="Descrição"
+                value={itemEditando.descricao}
+                onChange={(e) =>
+                  setItemEditando({ ...itemEditando, descricao: e.target.value })
+                }
+                className="mochilas-input"
+                required
+              />
+              <input
+                placeholder="Quantidade"
+                type="number"
+                min="1"
+                value={itemEditando.quantidade}
+                onChange={(e) =>
+                  setItemEditando({ ...itemEditando, quantidade: e.target.value })
+                }
+                className="mochilas-input"
+                required
+              />
+              <button type="submit" className="mochilas-botao">
+                Salvar
+              </button>
+            </Formulario>
+          </div>
+        </div>
       )}
     </div>
   );

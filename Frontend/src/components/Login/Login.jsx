@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Botao from "../Botao/Botao";
-import CampoInput from "../CampoInput/CampoInput";
 import Formulario from "../Formulario/Formulario";
+import "./Login.css"; // CSS para a centralização
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,61 +24,57 @@ const Login = () => {
         const dados = await resposta.json();
         if (dados && dados.id) {
           localStorage.setItem("usuarioId", dados.id);
-          navigate("/menu");
+          navigate("/tela-inicial");
         } else {
           setErro("Erro ao processar login. ID de usuário não recebido.");
         }
       } else {
         setErro("Login inválido. Verifique e-mail e senha.");
       }
-    } catch (error) {
+    } catch {
       setErro("Erro ao conectar com o servidor.");
     }
   };
 
   return (
-    <div className="cadastro-container">
-      <h2>Login</h2>
+    <div className="pagina-centralizada">
+      <Formulario onSubmit={handleSubmit} className="formulario-container">
+        <h2>Login</h2>
 
-      <Formulario onSubmit={handleSubmit}>
-        <CampoInput
-          placeholder="E-mail"
+        <input
           type="email"
+          name="email"
+          placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          name="email"
+          required
         />
-        <CampoInput
-          placeholder="Senha"
+        <input
           type="password"
+          name="senha"
+          placeholder="Senha"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
-          name="senha"
+          required
         />
-        <Botao className="btn-entrar" texto="Entrar" tipo="submit" />
+        <button type="submit">Entrar</button>
+
+        <p className="link-redirect">
+          Não possui conta?{" "}
+          <a
+            role="button"
+            tabIndex={0}
+            onClick={() => navigate("/cadastro")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") navigate("/cadastro");
+            }}
+          >
+            Cadastre-se
+          </a>
+        </p>
+
+        {erro && <p className="mensagem-feedback">{erro}</p>}
       </Formulario>
-
-
-      <p style={{ textAlign: "center", marginTop: "1.5rem" }}>
-        Não possui conta?{" "}
-        <button
-          onClick={() => navigate("/cadastro")}
-          style={{
-            background: "none",
-            border: "none",
-            color: "#00aa6c",
-            cursor: "pointer",
-            fontWeight: "bold",
-            textDecoration: "underline",
-            padding: 0,
-            fontSize: "1rem",
-          }}
-        >
-          Cadastre-se
-        </button>
-      </p>
-
-      {erro && <p className="mensagem" style={{ color: "red" }}>{erro}</p>}
     </div>
   );
 };

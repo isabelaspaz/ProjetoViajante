@@ -1,0 +1,175 @@
+:root {
+    --cor-principal: #2d7a9a;
+    --cor-secundaria: #f9f9f9;
+    --cor-botao: #1f5f77;
+    --cor-texto: #333;
+    --borda: 1.8px solid #ccc;
+    --raio: 12px;
+    --sombra: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.mochilas-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+}
+
+.mochilas-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--cor-principal);
+}
+
+.mochilas-card-viagem {
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background-color: var(--cor-secundaria);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    position: relative;
+}
+
+.mochilas-card-mochila {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: var(--raio);
+    border: var(--borda);
+}
+
+.mochilas-card-mochila h5 {
+    margin-bottom: 0.5rem;
+    color: var(--cor-texto);
+}
+
+.mochilas-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin: 0.4rem 0;
+    border: var(--borda);
+    border-radius: var(--raio);
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.mochilas-input:focus {
+    outline: none;
+    border-color: var(--cor-principal);
+}
+
+.mochilas-botao {
+    background-color: var(--cor-botao);
+    color: #fff;
+    border: none;
+    padding: 0.65rem 1.2rem;
+    border-radius: var(--raio);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.mochilas-botao:hover {
+    background-color: #164d60;
+}
+
+.mochilas-formulario-adicionar-item {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.btn-editar,
+.btn-excluir {
+    margin: 0.3rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: var(--raio);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btn-editar {
+    background-color: #ffd966;
+    color: #333;
+}
+
+.btn-excluir {
+    background-color: #ff5e57;
+    color: #fff;
+}
+
+.btn-fechar {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.mochilas-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.mochilas-modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: var(--raio);
+    width: 90%;
+    max-width: 420px;
+    position: relative;
+    box-shadow: var(--sombra);
+}
+
+.btn-fechar-modal {
+    position: absolute;
+    top: 0.7rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.mochilas-formulario-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 0.6rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
+}
+
+table th {
+    background-color: #eaeaea;
+}

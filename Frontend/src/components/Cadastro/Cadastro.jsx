@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Formulario from "../Formulario/Formulario";
-import CampoInput from "../CampoInput/CampoInput";
+import "./Cadastro.css"; // vamos colocar o CSS da centralização aqui
 
 const Cadastro = () => {
   const [nome, setNome] = useState("");
@@ -52,57 +52,62 @@ const Cadastro = () => {
   };
 
   return (
-    <div className="cadastro-container">
-      <h2>Cadastro</h2>
+    <div className="pagina-centralizada">
+      <Formulario onSubmit={handleSubmit} className="formulario-container">
+        <h2>Cadastro</h2>
 
-      <Formulario onSubmit={handleSubmit}>
-        <CampoInput
+        <input
           placeholder="Nome"
           type="text"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           name="nome"
+          required
         />
-        <CampoInput
+        <input
           placeholder="E-mail"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           name="email"
+          required
         />
-        <CampoInput
+        <input
           placeholder="Senha"
           type="password"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
           name="senha"
+          required
         />
 
-        <button className="botao-trip" type="submit">
-          Cadastrar
-        </button>
+        <button type="submit">Cadastrar</button>
+
+        {mensagem && (
+          <p
+            className={`mensagem ${mensagem.toLowerCase().includes("sucesso")
+                ? "mensagem-sucesso"
+                : "mensagem-feedback"
+              }`}
+          >
+            {mensagem}
+          </p>
+        )}
+
+        <p className="link-redirect" style={{ marginTop: "1.5rem" }}>
+          Já possui conta?{" "}
+          <a
+            role="button"
+            tabIndex={0}
+            onClick={() => navigate("/login")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") navigate("/login");
+            }}
+          >
+            Fazer login
+          </a>
+        </p>
       </Formulario>
-
-      {mensagem && <p className="mensagem">{mensagem}</p>}
-
-      <p style={{ textAlign: "center", marginTop: "1.5rem" }}>
-        Já possui conta?{" "}
-        <button
-          onClick={() => navigate("/login")}
-          style={{
-            background: "none",
-            border: "none",
-            color: "#00aa6c",
-            cursor: "pointer",
-            fontWeight: "bold",
-            textDecoration: "underline",
-            padding: 0,
-            fontSize: "1rem",
-          }}
-        >
-          Fazer login
-        </button>
-      </p>
     </div>
   );
 };

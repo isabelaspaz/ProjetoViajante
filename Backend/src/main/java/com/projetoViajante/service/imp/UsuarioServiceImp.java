@@ -22,17 +22,27 @@ public class UsuarioServiceImp implements UsuarioService {
     private UsuarioMapper usuarioMapper;
 
     @Override
+
     public Usuario cadastrarUsuario(UsuarioDTO usuarioDTO) {
 
+        System.out.println("🔵 [SERVICE] Iniciando cadastro de usuário...");
+        System.out.println("📥 [SERVICE] Dados recebidos: " + usuarioDTO);
+
         if (usuarioRepo.findByEmail(usuarioDTO.getEmail()).isPresent()) {
+            System.out.println("⚠️ [SERVICE] E-mail já cadastrado: " + usuarioDTO.getEmail());
             throw new IllegalArgumentException("E-mail já cadastrado.");
         }
 
         String senhaHash = HashUtil.gerarHashSHA256(usuarioDTO.getSenha());
         usuarioDTO.setSenha(senhaHash);
+        System.out.println("🔐 [SERVICE] Senha criptografada: " + senhaHash);
+
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
+        System.out.println("🛠️ [SERVICE] Mapeado para entidade: " + usuario);
 
         Usuario savedUser = usuarioRepo.save(usuario);
+        System.out.println("✅ [SERVICE] Usuário salvo com sucesso: " + savedUser);
+
         return savedUser;
     }
 

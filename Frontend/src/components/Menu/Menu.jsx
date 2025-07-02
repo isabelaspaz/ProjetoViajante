@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import CardViagem from "../CardViagem/CardViagem";  // Garanta que o componente CardViagem está correto
-import Modal from "../Modal/Modal";
-import CampoInput from "../CampoInput/CampoInput";
-import Botao from "../Botao/Botao";
+import CardViagem from "../CardViagem/CardViagem"; // Verifique se está correto
 import MensagemFeedback from "../MensagemFeedback/MensagemFeedback";
 import Formulario from "../Formulario/Formulario";
-import "./Menu.css";  // Certifique-se de que o CSS está sendo importado corretamente
+import "./Menu.css";
 
 const Menu = () => {
   const [viagens, setViagens] = useState([]);
@@ -147,7 +144,7 @@ const Menu = () => {
 
   return (
     <div className="menu-container">
-      <h2 className="menu-title">Minhas Viagens</h2>
+      <h2 className="menu-title">Minhas Viagens</h2> {/* Título fora dos cards */}
       <MensagemFeedback className="menu-feedback" mensagem={mensagem} />
       <div className="menu-container-viagens">
         {viagens.map((v) => (
@@ -158,38 +155,59 @@ const Menu = () => {
             onExcluir={excluirViagem}
             qtdMochilas={dadosExtras[v.id]?.qtdMochilas || 0}
             totalDespesas={dadosExtras[v.id]?.totalDespesas ?? 0}
-            className="menu-card-viagem"  // Certifique-se de aplicar a classe corretamente
+            className="menu-card-viagem"
           />
         ))}
       </div>
 
+      {/* Modal embutido para edição */}
       {viagemEditando && (
-        <Modal titulo="Editar Viagem" onFechar={() => setViagemEditando(null)} className="menu-modal">
-          <Formulario onSubmit={(e) => { e.preventDefault(); salvarEdicao(); }} className="menu-formulario">
-            <CampoInput 
-              label="Título" 
-              type="text" 
-              value={titulo} 
-              onChange={(e) => setTitulo(e.target.value)} 
-              className="menu-campo-input" 
+        <section className="modal-embutido menu-modal">
+          <h3>Editar Viagem</h3>
+          <button
+            type="button"
+            className="btn-fechar"
+            onClick={() => setViagemEditando(null)}
+            aria-label="Fechar"
+          >
+            &times;
+          </button>
+          <Formulario
+            onSubmit={(e) => {
+              e.preventDefault();
+              salvarEdicao();
+            }}
+            className="menu-formulario"
+          >
+            <input
+              type="text"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              className="menu-campo-input"
+              placeholder="Título"
+              required
             />
-            <CampoInput 
-              label="Cidade" 
-              type="text" 
-              value={cidade} 
-              onChange={(e) => setCidade(e.target.value)} 
-              className="menu-campo-input" 
+            <input
+              type="text"
+              value={cidade}
+              onChange={(e) => setCidade(e.target.value)}
+              className="menu-campo-input"
+              placeholder="Cidade"
+              required
             />
-            <CampoInput 
-              label="Estado" 
-              type="text" 
-              value={estado} 
-              onChange={(e) => setEstado(e.target.value)} 
-              className="menu-campo-input" 
+            <input
+              type="text"
+              value={estado}
+              onChange={(e) => setEstado(e.target.value)}
+              className="menu-campo-input"
+              placeholder="Estado"
+              required
             />
-            <Botao texto="Salvar" tipo="submit" className="menu-botao" />
+            <button type="submit" className="menu-botao">
+              Salvar
+            </button>
           </Formulario>
-        </Modal>
+        </section>
       )}
     </div>
   );

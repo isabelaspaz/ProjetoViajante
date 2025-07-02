@@ -25,30 +25,37 @@ import com.projetoViajante.service.imp.UsuarioServiceImp;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioServiceImp usuarioService;
+
 
     private final UsuarioServiceImp usuarioServiceImp;
-    
-    public UsuarioController(UsuarioServiceImp usuarioServiceImp){
+
+    public UsuarioController(UsuarioServiceImp usuarioServiceImp) {
         this.usuarioServiceImp = usuarioServiceImp;
     }
 
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody UsuarioDTO usuarioDTO) {
+         System.out.println("\n\n🔥🔥🔥 ENTROU NO MÉTODO salvar() 🔥🔥🔥\n\n");
+        System.out.println("🔵 [DEBUG] Requisição recebida em /usuario (POST)");
+        System.out.println("📥 [DEBUG] Dados recebidos: " + usuarioDTO);
 
         try {
-            Usuario user = usuarioService.cadastrarUsuario(usuarioDTO);
+            Usuario user = usuarioServiceImp.cadastrarUsuario(usuarioDTO);
+            System.out.println("✅ [DEBUG] Usuário cadastrado com sucesso: " + user);
             return ResponseEntity.ok(user);
         } catch (IllegalArgumentException e) {
+            System.out.println("⚠️ [DEBUG] Erro de validação: " + e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("❌ [DEBUG] Erro inesperado: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Erro interno ao cadastrar usuário.");
         }
-
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
-        return usuarioService.buscarUsuario(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return usuarioServiceImp.buscarUsuario(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/ping")
@@ -58,7 +65,7 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> usuario) {
-        Optional<Usuario> user = usuarioService.autenticarUsuario(usuario.get("email"), usuario.get("senha"));
+        Optional<Usuario> user = usuarioServiceImp.autenticarUsuario(usuario.get("email"), usuario.get("senha"));
 
         if (user.isPresent()) {
             Usuario u = user.get();
@@ -74,7 +81,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
         try {
-            Usuario user = usuarioService.atualizarUsuario(id, usuarioDTO);
+            Usuario user = usuarioServiceImp.atualizarUsuario(id, usuarioDTO);
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -82,14 +89,13 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletarUsuario(@PathVariable long id){
+    public ResponseEntity<?> deletarUsuario(@PathVariable long id) {
         try {
             usuarioServiceImp.deletarUsuario(id);
             return ResponseEntity.noContent().build();
-        }  catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 
 }

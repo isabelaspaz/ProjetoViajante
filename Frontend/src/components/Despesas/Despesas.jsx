@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import CardViagem from "../CardViagem/CardViagem";
-import CampoInput from "../CampoInput/CampoInput";
-import Botao from "../Botao/Botao";
 import MensagemFeedback from "../MensagemFeedback/MensagemFeedback";
-import Modal from "../Modal/Modal";
 import Formulario from "../Formulario/Formulario";
+import "./Despesas.css";
 
 const Despesas = () => {
   const [viagens, setViagens] = useState([]);
   const [despesasPorViagem, setDespesasPorViagem] = useState({});
   const [mensagem, setMensagem] = useState("");
   const [viagemSelecionada, setViagemSelecionada] = useState(null);
-  const [novaDespesa, setNovaDespesa] = useState({ nome: "", quantidade: "", preco: "" });
+  const [novaDespesa, setNovaDespesa] = useState({ nome: "", preco: "" });
   const [despesaEditando, setDespesaEditando] = useState(null);
   const [viagemIdDaEdicao, setViagemIdDaEdicao] = useState(null);
 
@@ -56,7 +54,7 @@ const Despesas = () => {
 
   const abrirModalNovaDespesa = (viagem) => {
     setViagemSelecionada(viagem);
-    setNovaDespesa({ nome: "", quantidade: "", preco: "" });
+    setNovaDespesa({ nome: "", preco: "" });
   };
 
   const salvarNovaDespesa = async () => {
@@ -69,7 +67,6 @@ const Despesas = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nome: novaDespesa.nome,
-          quantidade: novaDespesa.quantidade,
           preco: novaDespesa.preco,
           viagemId: viagemSelecionada.id,
           usuarioId,
@@ -145,7 +142,7 @@ const Despesas = () => {
       {viagens.map((viagem) => (
         <div key={viagem.id} className="card-viagem-completo">
           <div className="cabecalho-viagem">
-            <h3>Viagem {viagem.id}</h3>
+            <h3>Viagem {viagem.titulo}</h3>
             <p><strong>Cidade:</strong> {viagem.cidade}</p>
             <p><strong>Estado:</strong> {viagem.estado}</p>
           </div>
@@ -160,7 +157,6 @@ const Despesas = () => {
                 <thead>
                   <tr>
                     <th>Nome</th>
-                    <th>Quantidade</th>
                     <th>Preço</th>
                     <th>Ações</th>
                   </tr>
@@ -169,11 +165,22 @@ const Despesas = () => {
                   {(despesasPorViagem[viagem.id] || []).map((d) => (
                     <tr key={d.id}>
                       <td>{d.nome}</td>
-                      <td>{d.quantidade}</td>
                       <td>{d.preco}</td>
                       <td>
-                        <Botao texto="Editar" onClick={() => abrirEdicao(d, viagem.id)} />
-                        <Botao texto="Excluir" onClick={() => excluirDespesa(d.id, viagem.id)} />
+                        <button
+                          type="button"
+                          className="btn-editar"
+                          onClick={() => abrirEdicao(d, viagem.id)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-excluir"
+                          onClick={() => excluirDespesa(d.id, viagem.id)}
+                        >
+                          Excluir
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -182,60 +189,90 @@ const Despesas = () => {
             )}
 
             <div className="adicionar-despesa">
-              <Botao texto="Adicionar Despesa" onClick={() => abrirModalNovaDespesa(viagem)} />
+              <button
+                type="button"
+                className="btn-adicionar"
+                onClick={() => abrirModalNovaDespesa(viagem)}
+              >
+                Adicionar Despesa
+              </button>
             </div>
           </div>
         </div>
       ))}
 
+      {/* Modal embutido para Nova Despesa */}
       {viagemSelecionada && (
-        <Modal titulo="Nova Despesa" onFechar={() => setViagemSelecionada(null)}>
+        <section className="modal-embutido nova-despesa">
+          <h3>Nova Despesa</h3>
+          <button
+            type="button"
+            className="btn-fechar"
+            onClick={() => setViagemSelecionada(null)}
+            aria-label="Fechar"
+          >
+            &times;
+          </button>
           <Formulario onSubmit={(e) => { e.preventDefault(); salvarNovaDespesa(); }}>
-            <CampoInput
-              label="Nome"
-              value={novaDespesa.nome}
-              onChange={(e) => setNovaDespesa({ ...novaDespesa, nome: e.target.value })}
-            />
-            <CampoInput
-              label="Quantidade"
-              type="number"
-              value={novaDespesa.quantidade}
-              onChange={(e) => setNovaDespesa({ ...novaDespesa, quantidade: e.target.value })}
-            />
-            <CampoInput
-              label="Preço"
-              type="number"
-              value={novaDespesa.preco}
-              onChange={(e) => setNovaDespesa({ ...novaDespesa, preco: e.target.value })}
-            />
-            <Botao texto="Salvar" tipo="submit" />
+            <label>
+              Nome
+              <input
+                type="text"
+                value={novaDespesa.nome}
+                onChange={(e) => setNovaDespesa({ ...novaDespesa, nome: e.target.value })}
+                required
+              />
+            </label>
+            <label>
+              Preço
+              <input
+                type="number"
+                step="0.01"
+                value={novaDespesa.preco}
+                onChange={(e) => setNovaDespesa({ ...novaDespesa, preco: e.target.value })}
+                required
+              />
+            </label>
+            <button className="btn-salvar" type="submit">Salvar</button>
           </Formulario>
-        </Modal>
+        </section>
       )}
 
+      {/* Modal embutido para Editar Despesa */}
       {despesaEditando && (
-        <Modal titulo="Editar Despesa" onFechar={() => setDespesaEditando(null)}>
+        <section className="modal-embutido editar-despesa">
+          <h3>Editar Despesa</h3>
+          <button
+            type="button"
+            className="btn-fechar"
+            onClick={() => setDespesaEditando(null)}
+            aria-label="Fechar"
+          >
+            &times;
+          </button>
           <Formulario onSubmit={(e) => { e.preventDefault(); salvarEdicao(); }}>
-            <CampoInput
-              label="Nome"
-              value={despesaEditando.nome}
-              onChange={(e) => setDespesaEditando({ ...despesaEditando, nome: e.target.value })}
-            />
-            <CampoInput
-              label="Quantidade"
-              type="number"
-              value={despesaEditando.quantidade}
-              onChange={(e) => setDespesaEditando({ ...despesaEditando, quantidade: e.target.value })}
-            />
-            <CampoInput
-              label="Preço"
-              type="number"
-              value={despesaEditando.preco}
-              onChange={(e) => setDespesaEditando({ ...despesaEditando, preco: e.target.value })}
-            />
-            <Botao texto="Salvar" tipo="submit" />
+            <label>
+              Nome
+              <input
+                type="text"
+                value={despesaEditando.nome}
+                onChange={(e) => setDespesaEditando({ ...despesaEditando, nome: e.target.value })}
+                required
+              />
+            </label>
+            <label>
+              Preço
+              <input
+                type="number"
+                step="0.01"
+                value={despesaEditando.preco}
+                onChange={(e) => setDespesaEditando({ ...despesaEditando, preco: e.target.value })}
+                required
+              />
+            </label>
+            <button className="btn-salvar" type="submit">Salvar</button>
           </Formulario>
-        </Modal>
+        </section>
       )}
     </div>
   );

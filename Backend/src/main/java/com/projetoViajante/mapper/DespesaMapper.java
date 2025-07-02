@@ -14,7 +14,6 @@ public class DespesaMapper {
         
         Despesa despesa = new Despesa();
         despesa.setNome(dto.getNome());
-        despesa.setQuantidade(dto.getQuantidade());
         despesa.setPreco(dto.getPreco());
 
         if (dto.getViagemId() != null) {
@@ -34,8 +33,8 @@ public class DespesaMapper {
 
     public DespesaDTO toDTO(Despesa entity) {
 
-        DespesaDTO dto = new DespesaDTO(entity.getId(), entity.getNome(), entity.getQuantidade(), entity.getPreco(),
-                entity.getViagem().getId(), entity.getUsuario().getId());
+        DespesaDTO dto = new DespesaDTO(entity.getId(), entity.getNome(), entity.getPreco(),
+                entity.getViagem().getId(), entity.getUsuario().getId(), null);
 
         return dto;
     }

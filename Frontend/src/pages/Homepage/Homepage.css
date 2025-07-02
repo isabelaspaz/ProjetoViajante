@@ -1,107 +1,197 @@
-/* Container base para login e cadastro */
-.cadastro-container {
-    max-width: 400px;
-    margin: 80px auto;
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+.mochilas-container {
+    background-color: #fff;
+    color: #222;
+    font-family: var(--font-familia);
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Título das páginas */
-.cadastro-container h2 {
-    text-align: center;
-    color: #00aa6c;
+.mochilas-container h2 {
+    font-size: 2rem;
+    font-weight: var(--font-peso-bold);
+    color: #00a650;
     margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+    text-align: center;
 }
 
-/* Formulário: inputs empilhados com espaçamento */
-.cadastro-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.mochilas-card-viagem {
+    border-top: 1px solid #ddd;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    position: relative;
 }
 
-/* Inputs (regras para o CampoInput, se usar input padrão) */
-.cadastro-container input {
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
+.mochilas-card-viagem h4 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: #00a650;
+}
+
+.mochilas-card-mochila {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.mochilas-card-mochila h5 {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 0.6rem;
+}
+
+.mochilas-input {
     width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.8px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 0.7rem;
+    font-size: 1rem;
     box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
 }
 
-.cadastro-container input:focus {
-    border-color: #00aa6c;
+.mochilas-input:focus {
+    border-color: #00a650;
+    outline: none;
 }
 
-/* Botão principal (cadastrar, entrar) */
-.botao-trip {
-    background-color: #00aa6c;
+.mochilas-botao {
+    background-color: #00a650;
     color: white;
-    padding: 12px;
     border: none;
-    border-radius: 30px;
+    padding: 0.7rem 1.8rem;
     font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: bold;
-    width: 100%;
-}
-
-.btn-entrar {
-    background-color: #00aa6c;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 30px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: bold;
-    width: 100%;
-}
-
-.btn-entrar:hover {
-    background-color: #008f5a;
-}
-
-.botao-trip:hover {
-    background-color: #008f5a;
-}
-
-/* Botão secundário (voltar, novo cadastro) */
-.botao-voltar {
-    background-color: #00aa6c;
-    color: white;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 0.9rem;
+    font-weight: var(--font-peso-bold);
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0, 170, 108, 0.4);
-    margin: 20px auto 0;
-    display: block;
-    max-width: 140px;
 }
 
-.botao-voltar:hover {
-    background-color: #008f5a;
-    box-shadow: 0 4px 12px rgba(0, 143, 90, 0.6);
+.mochilas-botao:hover {
+    background-color: #008f45;
 }
 
-/* Mensagem de erro ou sucesso */
-.mensagem {
+.btn-editar,
+.btn-excluir {
+    margin-right: 0.6rem;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.9rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background-color: #ffd966;
+    color: #222;
+}
+
+.btn-excluir {
+    background-color: #ff5e57;
+    color: white;
+}
+
+.btn-fechar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+}
+
+.mochilas-formulario-adicionar-item {
+    display: flex;
+    flex-direction: column;
     margin-top: 1rem;
-    text-align: center;
-    font-weight: 500;
-    color: #e63946;
-    /* vermelho para erros */
+}
+
+table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    text-align: left;
+    padding: 0.6rem;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+table th {
+    background-color: #e9f7ef;
+    color: #222;
+}
+
+/* Modais */
+.mochilas-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mochilas-modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 420px;
+    position: relative;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-fechar-modal {
+    position: absolute;
+    top: 0.8rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.mochilas-formulario-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .mochilas-container {
+        padding: 1.5rem;
+    }
+
+    .mochilas-card-viagem {
+        padding-top: 1rem;
+    }
+
+    .mochilas-botao,
+    .btn-editar,
+    .btn-excluir {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .mochilas-formulario-adicionar-item {
+        gap: 0.6rem;
+    }
 }

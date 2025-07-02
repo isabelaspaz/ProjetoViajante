@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import Botao from "../Botao/Botao";
-import CampoInput from "../CampoInput/CampoInput";
+import { useNavigate } from "react-router-dom";  // Import para navegação
 import Formulario from "../Formulario/Formulario";
+import Navbar from "../Navbar/Navbar";  // Import do Navbar
+import "./NovaViagem.css"; // Importando o CSS para estilização
 
 const NovaViagem = () => {
   const [titulo, setTitulo] = useState("");
@@ -14,6 +15,8 @@ const NovaViagem = () => {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [mensagem, setMensagem] = useState("");
+
+  const navigate = useNavigate();
 
   const dataAtual = new Date().toISOString().split("T")[0];
 
@@ -87,7 +90,6 @@ const NovaViagem = () => {
 
       if (resposta.ok) {
         setMensagem("Viagem cadastrada com sucesso!");
-        // Limpa os campos do formulário
         setTitulo("");
         setDataPartida("");
         setDataChegada("");
@@ -105,78 +107,98 @@ const NovaViagem = () => {
     }
   };
 
+  const voltarTelaInicial = () => {
+    navigate("/tela-inicial");
+  };
+
   return (
-    <div className="nova-viagem-container">
-      <h2>Nova Viagem</h2>
-      <Formulario onSubmit={handleSubmit}>
-        <CampoInput
-          type="text"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          name="titulo"
-          placeholder="Título da Viagem"
-        />
-        <CampoInput
-          label="Data de Partida"
-          type="date"
-          value={dataPartida}
-          onChange={(e) => setDataPartida(e.target.value)}
-          name="dataPartida"
-          placeholder="Selecione a data de partida"
-        />
-        <CampoInput
-          label="Data de Chegada"
-          type="date"
-          value={dataChegada}
-          onChange={(e) => setDataChegada(e.target.value)}
-          name="dataChegada"
-          placeholder="Selecione a data de chegada"
-        />
-        <CampoInput
-          type="text"
-          value={cep}
-          onChange={(e) => setCep(e.target.value)}
-          name="cep"
-          placeholder="Digite o CEP"
-        />
-        <CampoInput
-          type="text"
-          value={rua}
-          onChange={(e) => setRua(e.target.value)}
-          name="rua"
-          placeholder="Digite a rua"
-        />
-        <CampoInput
-          type="text"
-          value={numero}
-          onChange={(e) => setNumero(e.target.value)}
-          name="numero"
-          placeholder="Digite o número"
-        />
-        <CampoInput
-          type="text"
-          value={bairro}
-          onChange={(e) => setBairro(e.target.value)}
-          name="bairro"
-          placeholder="Digite o bairro"
-        />
-        <CampoInput
-          type="text"
-          value={cidade}
-          onChange={(e) => setCidade(e.target.value)}
-          name="cidade"
-          placeholder="Digite a cidade"
-        />
-        <CampoInput
-          type="text"
-          value={estado}
-          onChange={(e) => setEstado(e.target.value)}
-          name="estado"
-          placeholder="Digite o estado"
-        />
-        <Botao texto="Cadastrar Viagem" tipo="submit" />
-      </Formulario>
-      {mensagem && <p>{mensagem}</p>}
+    <div className="nova-viagem-page">
+      <Navbar />
+
+      <div className="nova-viagem-container">
+        {/* Botão X para fechar */}
+        <button
+          className="btn-fechar"
+          onClick={voltarTelaInicial}
+          aria-label="Voltar para tela inicial"
+          type="button"
+        >
+          &times;
+        </button>
+
+        <h2>Nova viagem</h2>
+
+        <Formulario onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+            name="titulo"
+            placeholder="Nome da viagem"
+          />
+          <input
+            label="Data de partida"
+            type="date"
+            value={dataPartida}
+            onChange={(e) => setDataPartida(e.target.value)}
+            name="dataPartida"
+          />
+          <input
+            label="Data de chegada"
+            type="date"
+            value={dataChegada}
+            onChange={(e) => setDataChegada(e.target.value)}
+            name="dataChegada"
+          />
+          <input
+            type="text"
+            value={cep}
+            onChange={(e) => setCep(e.target.value)}
+            name="cep"
+            placeholder="CEP"
+          />
+          <input
+            type="text"
+            value={rua}
+            onChange={(e) => setRua(e.target.value)}
+            name="rua"
+            placeholder="Rua"
+          />
+          <input
+            type="text"
+            value={numero}
+            onChange={(e) => setNumero(e.target.value)}
+            name="numero"
+            placeholder="Número"
+          />
+          <input
+            type="text"
+            value={bairro}
+            onChange={(e) => setBairro(e.target.value)}
+            name="bairro"
+            placeholder="Bairro"
+          />
+          <input
+            type="text"
+            value={cidade}
+            onChange={(e) => setCidade(e.target.value)}
+            name="cidade"
+            placeholder="Cidade"
+          />
+          <input
+            type="text"
+            value={estado}
+            onChange={(e) => setEstado(e.target.value)}
+            name="estado"
+            placeholder="Estado"
+          />
+          <button className="btn-cadastrar" type="submit">
+            Cadastrar
+          </button>
+        </Formulario>
+
+        {mensagem && <p className={mensagem.includes("sucesso") ? "sucesso" : ""}>{mensagem}</p>}
+      </div>
     </div>
   );
 };

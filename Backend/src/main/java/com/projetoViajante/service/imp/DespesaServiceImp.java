@@ -33,7 +33,6 @@ public class DespesaServiceImp implements DespesaService {
 
         Despesa despesa = new Despesa();
         despesa.setNome(despesaDTO.getNome());
-        despesa.setQuantidade(despesaDTO.getQuantidade());
         despesa.setPreco(despesaDTO.getPreco());
         despesa.setViagem(viagem);
         despesa.setUsuario(viagem.getUsuario());
@@ -53,7 +52,6 @@ public class DespesaServiceImp implements DespesaService {
                 .orElseThrow(() -> new RuntimeException("Despesa não encontrada com o ID: " + idDespesa));
 
         despesa.setNome(despesaDTO.getNome());
-        despesa.setQuantidade(despesaDTO.getQuantidade());
         despesa.setPreco(despesaDTO.getPreco());
 
         return despesaRepo.save(despesa);

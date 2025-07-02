@@ -1,0 +1,13 @@
+/* index.css */
+
+:root {
+    --cor-primaria: #00a650;
+    --cor-primaria-hover: #008f45;
+    --cor-texto: #222222;
+    --cor-texto-claro: #444444;
+    --cor-fundo: #ffffff;
+    --font-familia: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    --font-peso-normal: 400;
+    --font-peso-bold: 600;
+    --font-tamanho-base: 16px;
+}

@@ -4,7 +4,6 @@ public class DespesaDTO {
 
     private Long id;
     private String nome;
-    private Long quantidade;
     private Long preco;
     private Long viagemId;
     private Long usuarioId;
@@ -15,7 +14,6 @@ public class DespesaDTO {
     public DespesaDTO(Long id, String nome, Long quantidade, Long preco, Long viagemId, Long usuarioId) {
         this.id = id;
         this.nome = nome;
-        this.quantidade = quantidade;
         this.preco = preco;
         this.viagemId = viagemId;
         this.usuarioId = usuarioId;
@@ -35,14 +33,6 @@ public class DespesaDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Long getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Long quantidade) {
-        this.quantidade = quantidade;
     }
 
     public Long getPreco() {
