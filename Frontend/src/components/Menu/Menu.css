@@ -58,17 +58,25 @@
 .menu-container-viagens {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    /* um pouco menor para telas pequenas */
     gap: 1.5rem;
     width: 100%;
+    max-height: 60vh; /* ou ajuste conforme necessário */
+    overflow-y: auto;
+    padding-right: 0.5rem; /* espaço para scrollbar */
+    box-sizing: border-box;
+  }
+  
+
+  .card-viagem {
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.menu-card-viagem {
-    width: 100%;
-    min-width: 260px;
-    /* evita encolher demais */
-    box-sizing: border-box;
-}
 
 /* Modal e formulário seguem igual */
 .menu-modal {

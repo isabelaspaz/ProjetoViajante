@@ -19,19 +19,33 @@
 .nova-viagem-container {
     max-width: 520px;
     width: 90%;
-    /* REMOVIDO max-height e overflow-y */
-    overflow: hidden;
-    /* garante sem scroll */
+    max-height: 90vh;            /* Limita a altura total do modal */
+    overflow-y: auto;            /* Ativa scroll quando necessário */
     margin: 0;
     background-color: white;
     padding: 2.5rem 2rem 3rem;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-
     border-radius: 12px;
     font-family: var(--font-familia);
     color: var(--cor-texto);
     position: relative;
     box-sizing: border-box;
+    scrollbar-width: thin;         /* Firefox */
+    scrollbar-color: #ccc transparent;
+}
+
+/* Estiliza a scrollbar no Chrome/Edge */
+.nova-viagem-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.nova-viagem-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 6px;
+}
+
+.nova-viagem-container::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 /* Botão fechar no canto superior direito */
