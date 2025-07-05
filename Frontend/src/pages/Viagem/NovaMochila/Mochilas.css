@@ -1,0 +1,98 @@
+/* Itens da mochila */
+.itens-mochila {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 4px solid var(--color-primary);
+    font-family: Arial, sans-serif;
+    color: var(--color-text-dark);
+}
+
+.itens-mochila ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.itens-mochila li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    color: var(--color-text-medium);
+}
+
+.itens-mochila li:last-child {
+    border-bottom: none;
+}
+
+.itens-mochila button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    padding: 0 0.25rem;
+    transition: color 0.3s ease;
+}
+
+.itens-mochila button:hover,
+.itens-mochila button:focus {
+    color: var(--color-primary-dark);
+    outline: none;
+}
+
+/* Formulário para adicionar itens na mochila */
+.itens-mochila form {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    max-width: 600px;
+}
+
+.itens-mochila form input[type="text"],
+.itens-mochila form input[type="number"] {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    flex: 1 1 auto;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.itens-mochila form input[type="number"] {
+    max-width: 80px;
+}
+
+.itens-mochila form input::placeholder {
+    color: #999;
+}
+
+.itens-mochila form input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(0, 122, 51, 0.2);
+}
+
+.itens-mochila form button {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    box-shadow: var(--shadow-light);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.itens-mochila form button:hover,
+.itens-mochila form button:focus {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-dark);
+    outline: none;
+}
