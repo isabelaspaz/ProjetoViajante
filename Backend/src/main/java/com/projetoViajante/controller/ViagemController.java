@@ -64,17 +64,16 @@ public class ViagemController {
         }
     }
 
-    @PutMapping("/{idViagem}/usuario/{idUsuario}")
-    public ResponseEntity<?> atualizarViagem(
+    @DeleteMapping("/{idViagem}/usuario/{idUsuario}")
+    public ResponseEntity<?> deletarViagem(
             @PathVariable Long idViagem,
-            @PathVariable Long idUsuario,
-            @RequestBody ViagemDTO viagemDTO) {
-
+            @PathVariable Long idUsuario) {
         try {
-            Viagem viagemAtualizada = viagemServiceImp.atualizarViagem(idViagem, idUsuario, viagemDTO);
-            return ResponseEntity.ok(viagemAtualizada);
+            viagemServiceImp.deletarViagem(idViagem, idUsuario);
+            return ResponseEntity.ok("Viagem deletada com sucesso.");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(403).body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

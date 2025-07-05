@@ -1,0 +1,215 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    /* ativa scroll vertical quando necessário */
+}
+
+.titulo_e_mais {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    gap: 1rem;
+    /* espaço entre título e botão */
+}
+
+.titulo-principal {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2e7d32;
+    /* margin-bottom: 0; remove a margem pra não empurrar o botão pra baixo */
+    text-align: left;
+    flex-grow: 1;
+    flex-shrink: 0;
+    /* evita encolher demais */
+}
+
+.btn-nova-viagem {
+    display: inline-flex;
+    justify-content: center;
+    /* centraliza horizontalmente */
+    align-items: center;
+    /* centraliza verticalmente */
+    margin: 0;
+    width: 56px;
+    height: 56px;
+    background-color: #34a853;
+    color: white;
+    font-size: 2.8rem;
+    font-weight: 700;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+}
+
+
+.btn-nova-viagem:hover {
+    background-color: #2c8e44;
+}
+
+
+
+/* Formulário para cadastrar viagem */
+.form-viagem {
+    max-width: 600px;
+    background: white;
+    margin: 0 auto 3rem auto;
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: space-between;
+}
+
+.form-viagem small {
+    display: block;
+    font-size: 0.85rem;
+    color: #333333;
+    font-weight: 500;
+    flex-basis: 100%;
+    margin-top: 0 !important;
+    /* força margem zero */
+    padding-top: 0 !important;
+    /* remove qualquer padding */
+    line-height: 1 !important;
+    /* linha bem compacta */
+}
+
+/* Inputs do formulário */
+.form-viagem input {
+    margin-bottom: 0 !important;
+    flex: 1 1 48%;
+    padding: 0.8rem 1rem;
+    border: 1.8px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: #444;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-viagem input::placeholder {
+    color: #999;
+}
+
+.form-viagem input:focus {
+    border-color: #34a853;
+    box-shadow: 0 0 8px #34a853aa;
+    outline: none;
+}
+
+/* Quando o input for de data, ocupa 48% */
+.form-viagem input[type="date"] {
+    flex: 1 1 48%;
+}
+
+/* Botões dentro do formulário */
+.form-viagem button[type="submit"],
+.form-viagem button[type="button"] {
+    flex: 1 1 100%;
+    padding: 0.9rem 0;
+    font-size: 1.15rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Botão salvar */
+.form-viagem button[type="submit"] {
+    background-color: #34a853;
+    color: white;
+}
+
+.form-viagem button[type="submit"]:hover {
+    background-color: #2c8e44;
+}
+
+/* Botão cancelar */
+.form-viagem button[type="button"] {
+    background-color: #bbb;
+    color: #444;
+}
+
+.form-viagem button[type="button"]:hover {
+    background-color: #999;
+    color: white;
+}
+
+/* Lista de viagens */
+.lista-viagens {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Cartão individual da viagem */
+.viagem-card {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+    border-left: 8px solid #34a853;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.viagem-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.viagem-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.6rem;
+    color: #2e7d32;
+}
+
+.viagem-card p {
+    margin: 0.25rem 0;
+    font-size: 1.05rem;
+    color: #555;
+}
+
+/* Mensagem de nenhuma viagem */
+.sem-viagens {
+    text-align: center;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 2rem;
+}
+
+.acoes-card {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    gap: 0.75rem;
+}
+
+.icone-acao {
+    width: 28px;
+    /* tamanho das imagens */
+    height: 28px;
+    cursor: pointer;
+    user-select: none;
+    transition: filter 0.2s ease;
+}
+
+.icone-acao:hover,
+.icone-acao:focus {
+    filter: brightness(0.8);
+    outline: none;
+}

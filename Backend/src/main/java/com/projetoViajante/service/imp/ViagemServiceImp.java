@@ -84,4 +84,15 @@ public class ViagemServiceImp implements ViagemService {
 
         return viagemRepo.save(viagem);
     }
+
+    public void deletarViagem(Long idViagem, Long idUsuario) {
+        Viagem viagem = viagemRepo.findById(idViagem)
+                .orElseThrow(() -> new RuntimeException("Viagem não encontrada"));
+
+        if (!viagem.getUsuario().getId().equals(idUsuario)) {
+            throw new RuntimeException("Usuário não tem permissão para excluir esta viagem.");
+        }
+
+        viagemRepo.delete(viagem);
+    }
 }
