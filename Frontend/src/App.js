@@ -9,6 +9,18 @@ import Mochilas from './pages/Viagem/NovaMochila/Mochilas';
 import Despesas from './pages/Viagem/NovaDespesa/Despesas';
 
 // Este componente precisa estar dentro do <Router> para usar useLocation
+console.log({ Homepage, Login, Cadastro, TelaInicial, Viagens, Mochilas, Despesas });
+console.log({
+  Homepage,
+  Login,
+  Cadastro,
+  TelaInicial,
+  Viagens,
+  Mochilas,
+  Despesas
+});
+
+
 function AppRoutes() {
   const location = useLocation();
 
@@ -19,7 +31,10 @@ function AppRoutes() {
   return (
     <>
       {shouldShowNavbar && <Navbar />}
+
+
       <Routes>
+
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
