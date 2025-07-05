@@ -1,13 +1,13 @@
-/* index.css */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-:root {
-    --cor-primaria: #00a650;
-    --cor-primaria-hover: #008f45;
-    --cor-texto: #222222;
-    --cor-texto-claro: #444444;
-    --cor-fundo: #ffffff;
-    --font-familia: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    --font-peso-normal: 400;
-    --font-peso-bold: 600;
-    --font-tamanho-base: 16px;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }

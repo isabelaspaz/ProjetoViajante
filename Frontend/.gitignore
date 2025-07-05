@@ -1,71 +1,23 @@
-# Java compiled class files
-*.class
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Log files
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package files
-*.jar
-*.war
-*.ear
-
-# Eclipse files
-*.pydevproject
-.project
-.classpath
-.cproject
-.settings/
-.loadpath
-
-# IntelliJ IDEA files
-*.iml
-.idea/
-out/
-
-# VS Code
-.vscode/
-
-# Build directories
-target/
-bin/
-build/
-
-# Maven
-log/
-!src/main/resources/log/
-.mvn/
-!mvnw
-!mvnw.cmd
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Spring Boot devtools restart folder
-.spring-boot-devtools.properties
-
-# Node.js dependencies
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-# Testing
+# testing
 /coverage
 
-# Production
+# production
 /build
 
-# Misc environment files
+# misc
+.DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
