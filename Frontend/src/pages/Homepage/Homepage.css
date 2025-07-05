@@ -1,0 +1,106 @@
+/* No seu CSS global (por exemplo, index.css ou App.css) */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* evita scroll se não necessário */
+    height: 100%;
+}
+
+
+.homepage {
+    background-color: var(--color-background-light);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-large);
+    box-sizing: border-box;
+}
+
+/* Container branco com sombra */
+.content-box {
+    background-color: var(--color-background-light);
+    padding: var(--spacing-large);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Cabeçalho com logo e texto */
+.header {
+    margin-bottom: 3rem;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: var(--spacing-medium);
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-small);
+    color: var(--color-text-dark);
+}
+
+.header p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    max-width: 400px;
+    margin: 0 auto;
+    color: var(--color-text-medium);
+}
+
+/* Botões */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-large);
+    
+}
+
+.actions button {
+    background-color: var(--color-primary);
+    border: none;
+    padding: 0.9rem 2.5rem;
+    border-radius: var(--border-radius);
+    color: var(--color-text-light);
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-light);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.actions button:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-dark);
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+        max-width: 280px;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: var(--spacing-medium);
+    }
+
+    .actions button {
+        width: 100%;
+    }
+}

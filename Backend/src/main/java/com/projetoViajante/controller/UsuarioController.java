@@ -25,8 +25,6 @@ import com.projetoViajante.service.imp.UsuarioServiceImp;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-
-
     private final UsuarioServiceImp usuarioServiceImp;
 
     public UsuarioController(UsuarioServiceImp usuarioServiceImp) {
@@ -35,7 +33,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody UsuarioDTO usuarioDTO) {
-         System.out.println("\n\n🔥🔥🔥 ENTROU NO MÉTODO salvar() 🔥🔥🔥\n\n");
+        System.out.println("\n\n🔥🔥🔥 ENTROU NO MÉTODO salvar() 🔥🔥🔥\n\n");
         System.out.println("🔵 [DEBUG] Requisição recebida em /usuario (POST)");
         System.out.println("📥 [DEBUG] Dados recebidos: " + usuarioDTO);
 
